@@ -5,7 +5,7 @@
     @parent
     login/register?
     <form>
-    	<input type="text"/>
+    	<input type="text" class="form-control"/>
     </form>
 
 @endsection
