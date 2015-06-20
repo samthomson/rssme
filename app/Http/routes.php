@@ -11,12 +11,17 @@
 |
 */
 
-Route::get('/', function () {
-	// make app view or force them to login/register
-    return view('app/home');
-});
+
 
 Route::get('/login', function () {
 	//  login/register
     return view('app/login');
+});
+
+
+Route::group(['middleware' => 'auth'], function () {
+	Route::get('/', function () {
+		// make app view or force them to login/register
+	    return view('app/home');
+	});
 });
