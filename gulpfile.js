@@ -24,7 +24,14 @@ elixir(function(mix) {
     ]);
 });
 
+elixir(function(mix) {
+    mix.scripts([
+        "jquery-2.1.4.min.js",
+        "bootstrap.min.js"
+    ]);
+});
+
 
 elixir(function(mix) {
-    mix.version("css/all.css");
+    mix.version(["css/all.css", "js/all.js"]);
 });
