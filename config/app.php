@@ -12,6 +12,7 @@ return [
     | application. If disabled, a simple generic error page is shown.
     |
     */
+    'title' => 'rssme',
 
     'debug' => env('APP_DEBUG', false),
 
