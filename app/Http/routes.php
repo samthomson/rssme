@@ -12,5 +12,11 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+	// make app view or force them to login/register
+    return view('app/home');
+});
+
+Route::get('/login', function () {
+	//  login/register
+    return view('app/login');
 });
