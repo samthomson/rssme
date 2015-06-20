@@ -24,6 +24,20 @@ Route::group(['middleware' => 'auth'], function () {
 		// make app view or force them to login/register
 	    return view('app/home');
 	});
+
+	Route::get('/feeds/manage', function () {
+		// list all feeds
+	});
+	Route::get('/feeds/add', function () {
+		// make feed add form
+	    return view('app/feeds/add');
+	});
+	Route::post('/feeds/add', ['uses' => 'Feeds@create']);
+
+	Route::post('/feeds/{id}/delete', function () {
+		// delete feed by id (for user)
+	});
+
 });
 
 

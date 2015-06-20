@@ -24,6 +24,7 @@
 
 		<div class="col-xs-6">
 			<form role="form" method="post" name="login" action="/auth/login">
+				{!! csrf_field() !!}
 				<div class="form-group">
 					<h2>login</h2>
 				</div>
