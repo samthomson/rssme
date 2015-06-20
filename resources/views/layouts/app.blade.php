@@ -28,7 +28,7 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" alt="{{Auth::user()->email}}">Account <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="#">logout</a></li>
+            <li><a href="/auth/logout">logout</a></li>
           </ul>
         </li>
       </ul>
