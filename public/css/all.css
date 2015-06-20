@@ -7387,8 +7387,7 @@ fieldset[disabled] .btn-danger.active {
 }
 /*# sourceMappingURL=bootstrap-theme.css.map */
 
-* {
-  color: red; }
+/* app specific scss */
 
 /*# sourceMappingURL=app.css.map */
 /*# sourceMappingURL=all.css.map */

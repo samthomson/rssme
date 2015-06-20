@@ -1,1 +1,1 @@
-home, app
+home, app: {{Auth::id()}}

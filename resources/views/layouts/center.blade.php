@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
 
-@section('content')
-    <p>centered...</p>
-@endsection
+<div class="container">
+	@yield('centered_content')
+</div>

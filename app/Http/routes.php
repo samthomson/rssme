@@ -13,7 +13,7 @@
 
 
 
-Route::get('/login', function () {
+Route::get('/auth/login', function () {
 	//  login/register
     return view('app/login');
 });
@@ -25,3 +25,9 @@ Route::group(['middleware' => 'auth'], function () {
 	    return view('app/home');
 	});
 });
+
+
+Route::controllers([
+    'auth' => 'Auth\AuthController',
+    'password' => 'Auth\PasswordController',
+]);
