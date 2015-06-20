@@ -2,7 +2,8 @@
 
 <html>
     <head>
-        <title>App Name - @yield('title')</title>
+        <title>rss - @yield('title', 'news aggregator')</title>
+        <link href="{{ asset("css/app.css") }}" rel="stylesheet">
     </head>
     <body>
         <div class="">
