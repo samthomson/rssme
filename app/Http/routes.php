@@ -27,6 +27,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::get('/feeds/manage', function () {
 		// list all feeds
+	    return view('app/feeds/manage');
 	});
 	Route::get('/feeds/add', function () {
 		// make feed add form
