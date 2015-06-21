@@ -1,7 +1,7 @@
-@extends('layouts.center')
+@extends('layouts.app')
 
 
-@section('centered_content')
+@section('app_content')
 	<form role="form" method="post" name="addfeed" action="/feeds/add">
 		{!! csrf_field() !!}
 		<div class="form-group">

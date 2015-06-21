@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFeedsTable extends Migration
+class CreateUserfeedTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,13 +12,10 @@ class CreateFeedsTable extends Migration
      */
     public function up()
     {
-        Schema::create('feeds', function (Blueprint $table) {
+        Schema::create('feed_userfeed', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('url');
-            $table->integer('hit_count')->default(0);
-            $table->integer('item_count')->default(0);
-            $table->dateTime('lastPulled')->nullable();
-            $table->timestamps();
+            $table->integer('feed_id');
+            $table->integer('user_id');
         });
     }
 
@@ -29,6 +26,6 @@ class CreateFeedsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('feeds');
+        Schema::drop('feed_userfeed');
     }
 }

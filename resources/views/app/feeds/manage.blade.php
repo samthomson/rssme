@@ -1,7 +1,7 @@
-@extends('layouts.center')
+@extends('layouts.app')
 
 
-@section('centered_content')
+@section('app_content')
 	<h2>manage</h2>
 	<?php
 		//$oFeeds = App\Feeds\Feed::all();
@@ -20,5 +20,7 @@
 	@else
 		no feeds
 	@endif
+	<hr/>
+	<a href="/feeds/add">add</a>
 
 @endsection

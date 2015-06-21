@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 #use Illuminate\Http\Request;
 
 use App\Feeds\Feed;
+use App\Feeds\UserFeed;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -20,12 +21,31 @@ class Feeds extends Controller
     {
         // 
         if (Request::has('feedurl')){
-            $oFeed = new Feed;
 
-            $oFeed->url = Request::get('feedurl');
+            // get id of a feed (new or existing)
+            $oFeed = Feed::where("url", Request::get('feedurl'))->first();
+
+            $iFeedId = -1;
+
+            if(!isset($oFeed)){
+                $oFeed = new Feed;
+
+                $oFeed->url = Request::get('feedurl');
+                
+                $oFeed->save();
+                $iFeedId = $oFeed->id;
+            }else{
+                $iFeedId = $oFeed->id;
+            }
+            
+            $oUserFeed = new UserFeed;
+
+
+            Auth::user()->feeds()->save($oUserFeed);
             $oFeed->user_id = Auth::id();
 
-            $oFeed->save();
+
+            
             return redirect('/');
         }
     }
