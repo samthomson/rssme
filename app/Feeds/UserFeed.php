@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserFeed extends Model
 {
-    protected $table = 'feed_userfeed';
+    protected $table = 'feed_user';
     public $timestamps = false;
 
     

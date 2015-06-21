@@ -37,12 +37,12 @@ class Feeds extends Controller
             }else{
                 $iFeedId = $oFeed->id;
             }
-            
+
             $oUserFeed = new UserFeed;
 
 
             Auth::user()->feeds()->save($oUserFeed);
-            $oFeed->user_id = Auth::id();
+            //$oUserFeed->user_id = Auth::id();
 
 
             
