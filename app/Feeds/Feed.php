@@ -11,6 +11,6 @@ class Feed extends Model
 
     public function feedItems()
     {
-    	return $this->belongsToMany('App\Feeds\UserFeed');
+    	return $this->hasMany('App\Feeds\FeedItem');
     }
 }
