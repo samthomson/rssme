@@ -52,10 +52,15 @@ class Feeds extends Controller
 
     public static function delete($id)
     {
-        $oFeed = Auth::user()->feeds()->where("id", $id);
-        if($oFeed){
-            $oFeed->delete();
-        }
+        // delete the pivot relation  
+        $oFeedUser = UserFeed::where("feed_id", $id)->where("user_id", Auth::id())->first();
+
+        $iFeedId = $oFeedUser->id;
+
+        $oFeedUser->delete();
+
+        // if this user was the last/only with that feed, delete the feed
+        Feed::where("id", $iFeedId)->delete();
         return redirect('/feeds/manage');
     }
 }
