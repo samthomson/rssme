@@ -39,14 +39,11 @@ class Feeds extends Controller
             }
 
             $oUserFeed = new UserFeed;
-
-
-            Auth::user()->feeds()->save($oUserFeed);
-            //$oUserFeed->user_id = Auth::id();
-
-
+            $oUserFeed->feed_id = $iFeedId;
+            $oUserFeed->user_id = Auth::id();
+            $oUserFeed->save();
             
-            return redirect('/');
+            return redirect('/feeds/manage');
         }
     }
 
@@ -60,7 +57,11 @@ class Feeds extends Controller
         $oFeedUser->delete();
 
         // if this user was the last/only with that feed, delete the feed
-        Feed::where("id", $iFeedId)->delete();
+        $oaFeed = Feed::where("id", $iFeedId)->get();
+
+        if(count($oaFeed) == 1){
+            $oaFeed[0]->delete();
+        }
         return redirect('/feeds/manage');
     }
 }
