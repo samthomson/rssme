@@ -13,40 +13,20 @@
 	            		$join->on('feeditems.feed_id', '=', 'feed_user.feed_id')
 	            		->where('feed_user.user_id', '=', Auth::id());
 	            	})
+	            ->join('feeds', "feeds.id", "=", "feed_user.feed_id")
+	            ->orderBy('feeditems.pubDate', 'desc')
+	            ->select(['feeditems.url', 'feeditems.title', 'feeds.url as feedurl'])
 	            	->get();
 
 	        ?>
 
 			@foreach($oaItems as $oItem)
 
-				<a href="{{$oItem->url}}">{{$oItem->title}}</a><br/>
+				<a href="{{$oItem->url}}">{{$oItem->feedurl}} {{$oItem->title}}</a><br/>
 
 
 			@endforeach
-/*
 
-				$oUser = Auth::user();
-
-				$oUser->load('feeds.feedItems');
-
-				print_r($oUser->feeds->feedItems);exit();
-
-				foreach($oUser->feeds->feedItems as $oItem)
-				{
-					echo $oItem->title, "<br/>";
-
-					//print_r($oItem->feeds);
-				}
-				// Auth::user()->feedItems;
-*/
-				/*
-				$oaItems = $oaItems->feeds->feedItems;
-
-				echo count($oaItems), " items";
-
-				print_r($oaItems);
-				*/
-			?>
 		</div>
 	</div>
 
