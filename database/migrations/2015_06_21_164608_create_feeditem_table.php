@@ -14,6 +14,7 @@ class CreateFeeditemTable extends Migration
     {
         Schema::create('feeditems', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('feed_id');
             $table->string('title');
             $table->string('url');
             $table->dateTime('pubDate');

@@ -44,3 +44,7 @@ Route::controllers([
     'auth' => 'Auth\AuthController',
     'password' => 'Auth\PasswordController',
 ]);
+
+
+/* spoof */
+Route::get('/pullallfeeds', ['uses' => 'Feeds@pullAll']);

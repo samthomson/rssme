@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class FeedItem extends Model
 {
     //
+    protected $table = 'feeditems';
 
     public function feed()
     {

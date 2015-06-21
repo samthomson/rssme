@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Feeds\Feed;
 use App\Feeds\UserFeed;
+use App\Feeds\FeedItem;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -13,6 +14,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Request;
 
 use Auth;
+use Carbon\Carbon;
 
 class Feeds extends Controller
 {    
@@ -63,5 +65,46 @@ class Feeds extends Controller
             $oaFeed[0]->delete();
         }
         return redirect('/feeds/manage');
+    }
+
+    public static function pullAll()
+    {
+        $oaFeeds = Feed::all();
+
+        foreach ($oaFeeds as $oFeed) {
+            echo "pulling: ", $oFeed->url, "<br/>";
+
+
+            $context  = stream_context_create(array('http' => array('header' => 'Accept: application/xml')));
+
+
+            $xmlFeed = file_get_contents($oFeed->url, false, $context);
+            $xmlFeed = simplexml_load_string($xmlFeed);
+
+            $iItemsFetched = 0;
+
+            foreach($xmlFeed->channel->item as $oItem){
+
+                $oFeedItem = new FeedItem;
+                $oFeedItem->feed_id = $oFeed->id;
+                $oFeedItem->title = $oItem->title;
+                $oFeedItem->url = $oItem->link;
+
+                $cdFeedPubDate = new Carbon($oItem->pubDate);
+                $oFeedItem->pubDate = $cdFeedPubDate->toDateTimeString();
+                $oFeedItem->save();
+
+                $iItemsFetched++;
+            }
+
+            $oFeed->hit_count = $oFeed->hit_count + 1;
+            $oFeed->item_count = $oFeed->item_count + $iItemsFetched;
+
+            $mytime = Carbon::now();
+
+            $oFeed->lastPulled = $mytime->toDateTimeString();
+            $oFeed->save();
+
+        }
     }
 }
