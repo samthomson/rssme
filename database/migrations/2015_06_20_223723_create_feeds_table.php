@@ -17,6 +17,7 @@ class CreateFeedsTable extends Migration
             $table->string('url');
             $table->integer('hit_count')->default(0);
             $table->integer('item_count')->default(0);
+            $table->integer('user_id');
             $table->timestamps();
         });
     }

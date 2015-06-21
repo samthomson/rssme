@@ -29,8 +29,8 @@ class Feeds extends Controller
     }
 
 
-    public static function delete()
+    public static function delete($id)
     {
-        //
+        
     }
 }
