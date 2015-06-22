@@ -16,6 +16,7 @@ class CreateUserfeedTable extends Migration
             $table->increments('id');
             $table->integer('feed_id');
             $table->integer('user_id');
+            $table->string('name')->default('');
         });
     }
 

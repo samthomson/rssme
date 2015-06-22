@@ -8,6 +8,9 @@
 			<h2>add feed</h2>
 		</div>
 		<div class="form-group">
+			<input type="text" name="feedname" class="form-control" id="feedname" placeholder="feed name">
+		</div>
+		<div class="form-group">
 			<input type="text" name="feedurl" class="form-control" id="feedurl" placeholder="feed url">
 		</div>
 		<div class="form-group">

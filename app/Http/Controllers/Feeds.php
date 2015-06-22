@@ -44,10 +44,44 @@ class Feeds extends Controller
             $oUserFeed = new UserFeed;
             $oUserFeed->feed_id = $iFeedId;
             $oUserFeed->user_id = Auth::id();
+            $oUserFeed->name = Request::has('feedname') ? Request::get('feedname') : '[feed]';
             $oUserFeed->save();
             
             return redirect('/feeds/manage');
         }
+    }
+
+    public static function update($iUserFeedId)
+    {
+        // look up item and
+        $oUserFeed = UserFeed::find($iUserFeedId);
+        //->with('feed');
+
+        if(isset($oUserFeed)){
+            if($oUserFeed->user_id == Auth::id()){
+                // feed item found, and owned by logged in user
+                if(Request::has('feedname'))
+                    $oUserFeed->name = Request::get('feedname');
+
+                $oUserFeed->save();
+            }
+        }
+        return redirect('/feeds/manage');
+    }
+
+    public static function edit($iUserFeedId)
+    {
+        // look up item and
+        $oUserFeed = UserFeed::find($iUserFeedId);
+        //->with('feed');
+
+        if(isset($oUserFeed)){
+            if($oUserFeed->user_id == Auth::id()){
+                // feed item found, and owned by logged in user
+                return view('app.feeds.edit', ['oUserFeed' => $oUserFeed]);
+            }
+        }
+        echo "no";exit();
     }
 
     public static function delete($id)
@@ -80,7 +114,7 @@ class Feeds extends Controller
                     })
                 ->leftJoin('feeds', "feeds.id", "=", "feed_user.feed_id")
                 ->orderBy('feeditems.pubDate', 'desc')
-                ->select(['feeditems.url as url', 'feeditems.title as title', 'feeds.url as feedurl', 'feeditems.pubDate as date'])
+                ->select(['feeditems.url as url', 'feeditems.title as title', 'feeds.url as feedurl', 'feeditems.pubDate as date', 'feed_user.name as name'])
                     ->simplePaginate(20);
 
         return view('app.home', ['oaFeedItems' => $oaFeedItems]);

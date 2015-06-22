@@ -7393,7 +7393,7 @@ fieldset[disabled] .btn-danger.active {
   color: black; }
 
 .feed-item:visited {
-  font-weight: normal !important;
+  font-weight: 100 !important;
   color: gray; }
 
 ul.pager li.disabled {

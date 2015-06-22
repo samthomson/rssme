@@ -34,6 +34,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::delete('/feeds/{id}', ['uses' => 'Feeds@delete']);
 	Route::get('/feeds/{id}', ['uses' => 'Feeds@edit']);
+	Route::post('/feeds/{id}', ['uses' => 'Feeds@update']);
 
 });
 

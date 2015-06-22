@@ -11,6 +11,7 @@
 				<table class="table table-condensed">
 					<thead>
 				        <tr>
+							<td>name</td>
 							<td>title</td>
 							<td>date</td>
 				        </tr>
@@ -20,6 +21,7 @@
 						@foreach($oaFeedItems as $oItem)
 
 							<tr>
+								<td>{{$oItem->name}}</td>
 								<td><a target="_blank" class="feed-item" href="{{$oItem->url}}">{{$oItem->title}}</a></td>
 								<?php
 

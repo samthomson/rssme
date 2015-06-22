@@ -5,35 +5,40 @@
 	<h2>manage</h2>
 	<?php
 		//$oFeeds = App\Feeds\Feed::all();
-		$oFeeds = Auth::user()->feeds;
+		$oUserFeeds = Auth::user()->userFeeds;
+		$oUserFeeds->load('feed');
 	?>
 
-	@if(count($oFeeds))
+	@if(count($oUserFeeds))
 		<table class="table table-condensed">
 			<thead>
 		        <tr>
+					<td>Name</td>
 					<td>Url</td>
 					<td>last checked</td>
 					<td>status</td>
 					<td>items pulled</td>
+					<td>edit</td>
 					<td>delete</td>
 		        </tr>
 		    </thead>
 		    <tbody>
-			@foreach ($oFeeds as $oFeed)
+
+			@foreach ($oUserFeeds as $oUserFeed)
 
 				<tr>
-					<td>{{$oFeed->url}}</td>
+					<td>{{$oUserFeed->name}}</td>
+					<td>{{$oUserFeed->feed->url}}</td>
 					<?php
-						$oLastHit = new Carbon\Carbon($oFeed->lastPulled);
-						$iSecondsSinceUpdated = $oLastHit->diffInSeconds();#
+						$oLastHit = new Carbon\Carbon($oUserFeed->feed->lastPulled);
+						$iSecondsSinceUpdated = $oLastHit->diffInSeconds();
 
 						$sSinceClass = "never";
 						$sSinceText = "never";
 						$sLastHit = "never";
 
 
-						if($oFeed->lastPulled !== null)
+						if($oUserFeed->feed->lastPulled !== null)
 						{
 							if($iSecondsSinceUpdated > 14399){
 								$sSinceClass = "day_plus";
@@ -63,9 +68,10 @@
 					<td title="{{--$oLastHit->toDayDateTimeString()--}}">{{$sLastHit}}</td>
 					<td>
 					<span class="label pulled-since {{$sSinceClass}}">{{$sSinceText}}</span></td>
-					<td>{{$oFeed->item_count}}</td>
+					<td>{{$oUserFeed->feed->item_count}}</td>
+					<td><a href="/feeds/{{$oUserFeed->id}}">edit</a></td>
 					<td>
-						<form action="/feeds/{{$oFeed->id}}" method="post" onsubmit="return confirm('you sure?');">
+						<form action="/feeds/{{$oUserFeed->id}}" method="post" onsubmit="return confirm('you sure?');">
 							<input type="hidden" name="_method" value="DELETE">
 							<input type="hidden" name="_token" value="{{ csrf_token() }}">
 							<input type="submit" value="delete">

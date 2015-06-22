@@ -37,6 +37,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
         return $this->belongsToMany('App\Feeds\Feed');
     }
+    public function userFeeds(){
+        return $this->hasMany('App\Feeds\UserFeed');
+    }
     public function feedItems()
     {
         return $this->hasManyThrough('App\Feeds\FeedItem', 'App\Feeds\UserFeed');
