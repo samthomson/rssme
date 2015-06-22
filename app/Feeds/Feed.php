@@ -11,6 +11,6 @@ class Feed extends Model
 
     public function feedItems()
     {
-    	return $this->hasMany('App\Feeds\FeedItem');
+    	return $this->hasMany('App\Feeds\FeedItem')->orderBy('pubDate', 'desc');
     }
 }

@@ -8,9 +8,11 @@
 			
 			@foreach($oaFeedItems as $oItem)
 
-				<a href="{{$oItem->url}}">{{$oItem->feedurl}} {{$oItem->title}}</a><br/>
+				<a href="{{$oItem->url}}">{{$oItem->feedurl}}: {{$oItem->title}}</a><br/>
 
 			@endforeach
+
+			<?php echo $oaFeedItems->render(); ?>
 
 		</div>
 	</div>

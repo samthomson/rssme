@@ -71,15 +71,16 @@ class Feeds extends Controller
     public static function makeHome()
     {
         // get users feeds, send to view
-        $oaFeedItems = DB::table('feeditems')
-                ->join('feed_user', function($join)
+
+        $oaFeedItems = DB::table('feed_user')
+                ->leftJoin('feeditems', function($join)
                     {
-                        $join->on('feeditems.feed_id', '=', 'feed_user.feed_id')
+                        $join->on('feed_user.feed_id', '=', 'feeditems.feed_id')
                         ->where('feed_user.user_id', '=', Auth::id());
                     })
-                ->join('feeds', "feeds.id", "=", "feed_user.feed_id")
+                ->leftJoin('feeds', "feeds.id", "=", "feed_user.feed_id")
                 ->orderBy('feeditems.pubDate', 'desc')
-                ->select(['feeditems.url', 'feeditems.title', 'feeds.url as feedurl'])
+                ->select(['feeditems.url as url', 'feeditems.title as title', 'feeds.url as feedurl'])
                     ->paginate(20);
 
         return view('app.home', ['oaFeedItems' => $oaFeedItems]);
@@ -92,6 +93,17 @@ class Feeds extends Controller
         foreach ($oaFeeds as $oFeed) {
             echo "pulling: ", $oFeed->url, "<br/>";
 
+            // get the guid of the last pulled item so we know where to stop
+
+            $oFeedItem = $oFeed->feedItems->first();
+
+            // stop at null, unless we have some feed items already, then stop at most recent
+            $sStopAt = null;
+            if(isset($oFeedItem)){
+                // there are already items from this feed
+                $sStopAt = $oFeedItem->guid;
+            }
+
 
             $context  = stream_context_create(array('http' => array('header' => 'Accept: application/xml')));
 
@@ -101,18 +113,35 @@ class Feeds extends Controller
 
             $iItemsFetched = 0;
 
+            $bStopImport = false;
+                
             foreach($xmlFeed->channel->item as $oItem){
 
-                $oFeedItem = new FeedItem;
-                $oFeedItem->feed_id = $oFeed->id;
-                $oFeedItem->title = $oItem->title;
-                $oFeedItem->url = $oItem->link;
+                if($sStopAt !== null){
+                    //echo "last: ", $sStopAt, "<br/>";
+                    if((string)$sStopAt === (string)$oItem->guid){
+                        // skip this item
+                        echo "<strong>", "skip these items", $oItem->guid, "</strong>", "<br/>";
+                        $bStopImport = true;
+                    }
+                }
+                if(!$bStopImport){                    
 
-                $cdFeedPubDate = new Carbon($oItem->pubDate);
-                $oFeedItem->pubDate = $cdFeedPubDate->toDateTimeString();
-                $oFeedItem->save();
+                    $oFeedItem = new FeedItem;
+                    $oFeedItem->feed_id = $oFeed->id;
+                    $oFeedItem->title = $oItem->title;
+                    $oFeedItem->url = $oItem->link;
+                    $oFeedItem->guid = $oItem->guid;
 
-                $iItemsFetched++;
+                    $cdFeedPubDate = new Carbon($oItem->pubDate);
+                    $oFeedItem->pubDate = $cdFeedPubDate->toDateTimeString();
+                    $oFeedItem->save();
+                    echo "save item: ", $oFeedItem->guid, "<br/>";
+
+                    $iItemsFetched++;
+                }else{
+                    //echo "skipped an item?<br/>";
+                }
             }
 
             $oFeed->hit_count = $oFeed->hit_count + 1;
@@ -122,6 +151,8 @@ class Feeds extends Controller
 
             $oFeed->lastPulled = $mytime->toDateTimeString();
             $oFeed->save();
+
+            echo "<hr/>";
 
         }
     }
