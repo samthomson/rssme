@@ -15,6 +15,7 @@ class CreateFeedsTable extends Migration
         Schema::create('feeds', function (Blueprint $table) {
             $table->increments('id');
             $table->string('url');
+            $table->string('name');
             $table->integer('hit_count')->default(0);
             $table->integer('item_count')->default(0);
             $table->dateTime('lastPulled')->nullable();

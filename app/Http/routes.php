@@ -33,6 +33,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/feeds/add', ['uses' => 'Feeds@create']);
 
 	Route::delete('/feeds/{id}', ['uses' => 'Feeds@delete']);
+	Route::get('/feeds/{id}', ['uses' => 'Feeds@edit']);
 
 });
 

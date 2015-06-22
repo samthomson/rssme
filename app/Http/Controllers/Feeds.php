@@ -81,7 +81,7 @@ class Feeds extends Controller
                 ->leftJoin('feeds', "feeds.id", "=", "feed_user.feed_id")
                 ->orderBy('feeditems.pubDate', 'desc')
                 ->select(['feeditems.url as url', 'feeditems.title as title', 'feeds.url as feedurl'])
-                    ->paginate(20);
+                    ->simplePaginate(20);
 
         return view('app.home', ['oaFeedItems' => $oaFeedItems]);
     }

@@ -1,1 +1,22 @@
 /* app specific scss */
+
+.feed-item{
+	font-weight:bold;
+	color: black;
+}
+
+.feed-item:visited{
+	font-weight:normal !important;
+	color: gray;
+}
+
+
+ul.pager li.disabled{
+	display: none;
+}
+
+.pulled-since.never{color:white;background-color:gray;}
+.pulled-since.active{color:white;background-color:green;}
+.pulled-since.recent{color:white;background-color:orange;}
+.pulled-since.day{color:white;background-color:red;}
+.pulled-since.day_plus{color:white;background-color:black;}
