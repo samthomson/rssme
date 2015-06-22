@@ -20,10 +20,7 @@ Route::get('/auth/login', function () {
 
 
 Route::group(['middleware' => 'auth'], function () {
-	Route::get('/', function () {
-		// make app view or force them to login/register
-	    return view('app/home');
-	});
+	Route::get('/', ['uses' => 'Feeds@makeHome']);
 
 	Route::get('/feeds/manage', function () {
 		// list all feeds

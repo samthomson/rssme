@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Request;
 
 use Auth;
 use Carbon\Carbon;
+use DB;
 
 class Feeds extends Controller
 {    
@@ -65,6 +66,23 @@ class Feeds extends Controller
             $oaFeed[0]->delete();
         }
         return redirect('/feeds/manage');
+    }
+
+    public static function makeHome()
+    {
+        // get users feeds, send to view
+        $oaFeedItems = DB::table('feeditems')
+                ->join('feed_user', function($join)
+                    {
+                        $join->on('feeditems.feed_id', '=', 'feed_user.feed_id')
+                        ->where('feed_user.user_id', '=', Auth::id());
+                    })
+                ->join('feeds', "feeds.id", "=", "feed_user.feed_id")
+                ->orderBy('feeditems.pubDate', 'desc')
+                ->select(['feeditems.url', 'feeditems.title', 'feeds.url as feedurl'])
+                    ->paginate(20);
+
+        return view('app.home', ['oaFeedItems' => $oaFeedItems]);
     }
 
     public static function pullAll()
