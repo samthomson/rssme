@@ -19,10 +19,9 @@
 					<td>delete</td>
 		        </tr>
 		    </thead>
-		@foreach ($oFeeds as $oFeed)
+		    <tbody>
+			@foreach ($oFeeds as $oFeed)
 
-
-			<tbody>
 				<tr>
 					<td>{{$oFeed->url}}</td>
 					<?php
@@ -73,12 +72,9 @@
 						</form>
 					</td>
 				</tr>
+
+				@endforeach
 			</tbody>
-
-			
-			<br/>
-
-		@endforeach
 		</table>
 	@else
 		no feeds
