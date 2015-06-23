@@ -11,6 +11,7 @@
 
 	@if(count($oUserFeeds))
 		<table class="table table-condensed">
+
 			<thead>
 		        <tr>
 					<td>Name</td>
@@ -30,6 +31,7 @@
 					<td>{{$oUserFeed->name}}</td>
 					<td>{{$oUserFeed->feed->url}}</td>
 					<?php
+					
 						$oLastHit = new Carbon\Carbon($oUserFeed->feed->lastPulled);
 						$iSecondsSinceUpdated = $oLastHit->diffInSeconds();
 
@@ -57,13 +59,8 @@
 								$sSinceText = "< 15 mins";
 							}
 							$sLastHit = $oLastHit->diffForHumans();
-						}else{
-
 						}
-
-
-						
-
+	
 					?>
 					<td title="{{--$oLastHit->toDayDateTimeString()--}}">{{$sLastHit}}</td>
 					<td>

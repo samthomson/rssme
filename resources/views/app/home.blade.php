@@ -9,18 +9,22 @@
 
 			@if(count($oaFeedItems))
 				<table class="table table-condensed">
+					<!--
 					<thead>
 				        <tr>
+							<td>thumb</td>
 							<td>name</td>
 							<td>title</td>
 							<td>date</td>
 				        </tr>
 				    </thead>
+				    -->
 		    		<tbody>
 					
 						@foreach($oaFeedItems as $oItem)
 
-							<tr>
+							<tr class="feed-item">
+								<td><img src="{{$oItem->thumb or ''}}" class="feed-thumb"/></td>
 								<td>{{$oItem->name}}</td>
 								<td><a target="_blank" class="feed-item" href="{{$oItem->url}}">{{$oItem->title}}</a></td>
 								<?php

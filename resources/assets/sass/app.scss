@@ -1,8 +1,13 @@
 /* app specific scss */
 
+body{
+	background-color: #F5F5F5;
+}
+
 .feed-item{
 	font-weight:bold;
 	color: black;
+	background-color: white;
 }
 
 .feed-item:visited{
@@ -20,3 +25,10 @@ ul.pager li.disabled{
 .pulled-since.recent{color:white;background-color:orange;}
 .pulled-since.day{color:white;background-color:red;}
 .pulled-since.day_plus{color:white;background-color:black;}
+
+
+.feed-item img.feed-thumb{
+	max-width: 32px;
+	height: auto;
+	max-height: 24px;
+}

@@ -47,3 +47,41 @@ Route::controllers([
 
 /* spoof */
 Route::get('/pullallfeeds', ['uses' => 'Feeds@pullAll']);
+
+
+Route::get('/test', function () {
+
+	$context  = stream_context_create(array('http' => array('header' => 'Accept: application/xml')));
+
+            
+
+    $xmlFeed = file_get_contents('http://techcrunch.com/feed/', false, $context);
+    //$xmlFeed = self::removeColonsFromRSS($xmlFeed);
+    $xmlFeed = simplexml_load_string($xmlFeed);
+
+
+    foreach($xmlFeed->channel->item as $oItem){
+
+    	$namespaces = $oItem->getNameSpaces( true );
+/*
+    	foreach ( $oItem->getNameSpaces( true ) as $key => $children )
+    	{
+    		$$key = $oItem->children( $children );
+    		//print_r($$key);
+
+    		echo "t: ".$oItem->media->thumbnail['url'];
+    		print_r($$key->media->thumbnail);
+    		//print_r($$key->thumbnail[0]);
+    	}
+*/
+    	$namespaces = $oItem->getNameSpaces( true );
+		$media = $oItem->children( $namespaces['media'] );
+
+		//echo (string)$media->thumbnail['url'];
+
+		$thumb = $oItem->children('media', true)->thumbnail->attributes()->url;
+
+		echo $thumb;
+		
+	}
+});

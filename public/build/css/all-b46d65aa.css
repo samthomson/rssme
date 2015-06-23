@@ -7388,9 +7388,13 @@ fieldset[disabled] .btn-danger.active {
 /*# sourceMappingURL=bootstrap-theme.css.map */
 
 /* app specific scss */
+body {
+  background-color: #F5F5F5; }
+
 .feed-item {
   font-weight: bold;
-  color: black; }
+  color: black;
+  background-color: white; }
 
 .feed-item:visited {
   font-weight: 100 !important;
@@ -7418,6 +7422,11 @@ ul.pager li.disabled {
 .pulled-since.day_plus {
   color: white;
   background-color: black; }
+
+.feed-item img.feed-thumb {
+  max-width: 32px;
+  height: auto;
+  max-height: 24px; }
 
 /*# sourceMappingURL=app.css.map */
 /*# sourceMappingURL=all.css.map */

@@ -84,10 +84,10 @@ class Feeds extends Controller
         echo "no";exit();
     }
 
-    public static function delete($id)
+    public static function delete($iUserFeedId)
     {
         // delete the pivot relation  
-        $oFeedUser = UserFeed::where("feed_id", $id)->where("user_id", Auth::id())->first();
+        $oFeedUser = UserFeed::where("feed_id", $iUserFeedId)->where("user_id", Auth::id())->first();
 
         $iFeedId = $oFeedUser->id;
 
@@ -114,7 +114,7 @@ class Feeds extends Controller
                     })
                 ->leftJoin('feeds', "feeds.id", "=", "feed_user.feed_id")
                 ->orderBy('feeditems.pubDate', 'desc')
-                ->select(['feeditems.url as url', 'feeditems.title as title', 'feeds.url as feedurl', 'feeditems.pubDate as date', 'feed_user.name as name'])
+                ->select(['feeditems.url as url', 'feeditems.title as title', 'feeds.url as feedurl', 'feeditems.pubDate as date', 'feed_user.name as name', 'feeditems.thumb as thumb'])
                     ->simplePaginate(20);
 
         return view('app.home', ['oaFeedItems' => $oaFeedItems]);
@@ -141,8 +141,10 @@ class Feeds extends Controller
 
             $context  = stream_context_create(array('http' => array('header' => 'Accept: application/xml')));
 
+            
 
             $xmlFeed = file_get_contents($oFeed->url, false, $context);
+            //$xmlFeed = self::removeColonsFromRSS($xmlFeed);
             $xmlFeed = simplexml_load_string($xmlFeed);
 
             $iItemsFetched = 0;
@@ -169,8 +171,18 @@ class Feeds extends Controller
 
                     $cdFeedPubDate = new Carbon($oItem->pubDate);
                     $oFeedItem->pubDate = $cdFeedPubDate->toDateTimeString();
+
+                    $oThumbItem = $oItem->{'media:thumbnail'};
+
+
+                    if(isset($oItem->children('media', true)->thumbnail)){
+
+                        if(isset($oItem->children('media', true)->thumbnail->attributes()->url)){
+                            $oFeedItem->thumb = $oItem->children('media', true)->thumbnail->attributes()->url;
+                        }
+                    }
                     $oFeedItem->save();
-                    echo "save item: ", $oFeedItem->guid, "<br/>";
+                    //echo "save item: ", $oFeedItem->guid, "<br/>";
 
                     $iItemsFetched++;
                 }else{
@@ -189,5 +201,22 @@ class Feeds extends Controller
             echo "<hr/>";
 
         }
+
     }
+
+    public static function removeColonsFromRSS($feed) {
+        // pull out colons from start tags
+        // (<\w+):(\w+>)
+        $pattern = '/(<\w+):(\w+>)/i';
+        $replacement = '$1$2';
+        $feed = preg_replace($pattern, $replacement, $feed);
+        // pull out colons from end tags
+        // (<\/\w+):(\w+>)
+        $pattern = '/(<\/\w+):(\w+>)/i';
+        $replacement = '$1$2';
+        $feed = preg_replace($pattern, $replacement, $feed);
+        return $feed;
+    }
+
+
 }
