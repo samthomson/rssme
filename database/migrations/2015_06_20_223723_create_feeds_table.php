@@ -16,6 +16,7 @@ class CreateFeedsTable extends Migration
             $table->increments('id');
             $table->string('url');
             $table->string('name');
+            $table->string('thumb');
             $table->integer('hit_count')->default(0);
             $table->integer('item_count')->default(0);
             $table->dateTime('lastPulled')->nullable();

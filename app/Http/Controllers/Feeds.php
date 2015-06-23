@@ -37,6 +37,9 @@ class Feeds extends Controller
                 
                 $oFeed->save();
                 $iFeedId = $oFeed->id;
+
+                // pull it
+                self::pullFeed($iFeedId);
             }else{
                 $iFeedId = $oFeed->id;
             }
@@ -114,10 +117,111 @@ class Feeds extends Controller
                     })
                 ->leftJoin('feeds', "feeds.id", "=", "feed_user.feed_id")
                 ->orderBy('feeditems.pubDate', 'desc')
-                ->select(['feeditems.url as url', 'feeditems.title as title', 'feeds.url as feedurl', 'feeditems.pubDate as date', 'feed_user.name as name', 'feeditems.thumb as thumb'])
+                ->select(['feeditems.url as url', 'feeditems.title as title', 'feeds.url as feedurl', 'feeditems.pubDate as date', 'feed_user.name as name', 'feeditems.thumb as thumb', 'feeds.thumb as feedthumb'])
                     ->simplePaginate(20);
 
         return view('app.home', ['oaFeedItems' => $oaFeedItems]);
+    }
+
+    public static function pullFeed($id){
+        $oFeed = Feed::find($id);
+
+        if(isset($oFeed))
+        {
+            try{
+
+                echo "pulling: ", $oFeed->url, "<br/>";
+
+                // get the guid of the last pulled item so we know where to stop
+
+                $oFeedItem = $oFeed->feedItems->first();
+
+                // stop at null, unless we have some feed items already, then stop at most recent
+                $sStopAt = null;
+                if(isset($oFeedItem)){
+                    // there are already items from this feed
+                    $sStopAt = $oFeedItem->guid;
+                }
+
+
+                $context  = stream_context_create(array('http' => array('header' => 'Accept: application/xml')));
+
+                
+
+                $xmlFeed = file_get_contents($oFeed->url, false, $context);
+                //$xmlFeed = self::removeColonsFromRSS($xmlFeed);
+                $xmlFeed = simplexml_load_string($xmlFeed);
+
+                $iItemsFetched = 0;
+
+                $bStopImport = false;
+
+                if(isset($xmlFeed->channel->image->url)){
+                    $oFeed->thumb = $xmlFeed->channel->image->url;
+                }
+                    
+                foreach($xmlFeed->channel->item as $oItem){
+
+                    if($sStopAt !== null){
+                        //echo "last: ", $sStopAt, "<br/>";
+                        if((string)$sStopAt === (string)$oItem->guid){
+                            // skip this item
+                            echo "<strong>", "skip these items", $oItem->guid, "</strong>", "<br/>";
+                            $bStopImport = true;
+                        }
+                    }
+                    if(!$bStopImport){                    
+
+                        $oFeedItem = new FeedItem;
+                        $oFeedItem->feed_id = $oFeed->id;
+                        $oFeedItem->title = $oItem->title;
+                        $oFeedItem->url = $oItem->link;
+                        $oFeedItem->guid = $oItem->guid;
+
+                        $cdFeedPubDate = new Carbon($oItem->pubDate);
+                        $oFeedItem->pubDate = $cdFeedPubDate->toDateTimeString();
+
+                        $oThumbItem = $oItem->{'media:thumbnail'};
+
+                        $bPic = false;
+
+                        if(isset($oItem->children('media', true)->thumbnail)){
+
+                            if(isset($oItem->children('media', true)->thumbnail->attributes()->url)){
+                                $oFeedItem->thumb = $oItem->children('media', true)->thumbnail->attributes()->url;
+                                $bPic = true;
+                            }
+                        }
+
+                        if(!$bPic){
+                            if(isset($oItem->enclosure)){
+                                if(isset($oItem->enclosure['url'])){
+                                    $oFeedItem->thumb = $oItem->enclosure['url'];
+                                    $bPic = true;
+                                }
+                            }
+                        }
+
+                        $oFeedItem->save();
+                        //echo "save item: ", $oFeedItem->guid, "<br/>";
+
+                        $iItemsFetched++;
+                    }else{
+                        //echo "skipped an item?<br/>";
+                    }
+                }
+
+                $oFeed->hit_count = $oFeed->hit_count + 1;
+                $oFeed->item_count = $oFeed->item_count + $iItemsFetched;
+
+                $mytime = Carbon::now();
+
+                $oFeed->lastPulled = $mytime->toDateTimeString();
+                $oFeed->save();
+            }catch(Exception $e){
+                echo "fetching feed (", $oFeed->id, ") ", $oFeed->url, " failed", "<br/>";
+            }
+        }
     }
 
     public static function pullAll()
@@ -125,83 +229,9 @@ class Feeds extends Controller
         $oaFeeds = Feed::all();
 
         foreach ($oaFeeds as $oFeed) {
-            echo "pulling: ", $oFeed->url, "<br/>";
-
-            // get the guid of the last pulled item so we know where to stop
-
-            $oFeedItem = $oFeed->feedItems->first();
-
-            // stop at null, unless we have some feed items already, then stop at most recent
-            $sStopAt = null;
-            if(isset($oFeedItem)){
-                // there are already items from this feed
-                $sStopAt = $oFeedItem->guid;
-            }
-
-
-            $context  = stream_context_create(array('http' => array('header' => 'Accept: application/xml')));
-
-            
-
-            $xmlFeed = file_get_contents($oFeed->url, false, $context);
-            //$xmlFeed = self::removeColonsFromRSS($xmlFeed);
-            $xmlFeed = simplexml_load_string($xmlFeed);
-
-            $iItemsFetched = 0;
-
-            $bStopImport = false;
-                
-            foreach($xmlFeed->channel->item as $oItem){
-
-                if($sStopAt !== null){
-                    //echo "last: ", $sStopAt, "<br/>";
-                    if((string)$sStopAt === (string)$oItem->guid){
-                        // skip this item
-                        echo "<strong>", "skip these items", $oItem->guid, "</strong>", "<br/>";
-                        $bStopImport = true;
-                    }
-                }
-                if(!$bStopImport){                    
-
-                    $oFeedItem = new FeedItem;
-                    $oFeedItem->feed_id = $oFeed->id;
-                    $oFeedItem->title = $oItem->title;
-                    $oFeedItem->url = $oItem->link;
-                    $oFeedItem->guid = $oItem->guid;
-
-                    $cdFeedPubDate = new Carbon($oItem->pubDate);
-                    $oFeedItem->pubDate = $cdFeedPubDate->toDateTimeString();
-
-                    $oThumbItem = $oItem->{'media:thumbnail'};
-
-
-                    if(isset($oItem->children('media', true)->thumbnail)){
-
-                        if(isset($oItem->children('media', true)->thumbnail->attributes()->url)){
-                            $oFeedItem->thumb = $oItem->children('media', true)->thumbnail->attributes()->url;
-                        }
-                    }
-                    $oFeedItem->save();
-                    //echo "save item: ", $oFeedItem->guid, "<br/>";
-
-                    $iItemsFetched++;
-                }else{
-                    //echo "skipped an item?<br/>";
-                }
-            }
-
-            $oFeed->hit_count = $oFeed->hit_count + 1;
-            $oFeed->item_count = $oFeed->item_count + $iItemsFetched;
-
-            $mytime = Carbon::now();
-
-            $oFeed->lastPulled = $mytime->toDateTimeString();
-            $oFeed->save();
-
+            self::pullFeed($oFeed->id);
             echo "<hr/>";
-
         }
-
     }
 
     public static function removeColonsFromRSS($feed) {

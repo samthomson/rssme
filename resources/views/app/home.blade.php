@@ -3,8 +3,8 @@
 
 @section('app_content')
 	<div class="row">
-		<!--<div class="col-xs-3">feeds?</div>-->
-		<div class="col-xs-12">
+		<div class="col-xs-3">feeds?</div>
+		<div class="col-xs-9">
 
 
 			@if(count($oaFeedItems))
@@ -22,9 +22,11 @@
 		    		<tbody>
 					
 						@foreach($oaFeedItems as $oItem)
-
+							<?php
+								$sPic = $oItem->thumb !== '' ? $oItem->thumb : $oItem->feedthumb;
+							?>
 							<tr class="feed-item">
-								<td><img src="{{$oItem->thumb or ''}}" class="feed-thumb"/></td>
+								<td><img src="{{$sPic}}" class="feed-thumb"/></td>
 								<td>{{$oItem->name}}</td>
 								<td><a target="_blank" class="feed-item" href="{{$oItem->url}}">{{$oItem->title}}</a></td>
 								<?php
