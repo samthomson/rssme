@@ -7401,11 +7401,12 @@ body {
   height: 100%; }
 
 .feed-item td a span {
-  padding: 5px; }
+  padding: 5px;
+  line-height: 32px; }
 
 tr td {
   padding: 0px !important;
-  height: 48px; }
+  height: 32px; }
 
 .feed-item td a:visited {
   font-weight: 100 !important;

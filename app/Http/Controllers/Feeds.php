@@ -17,6 +17,8 @@ use Auth;
 use Carbon\Carbon;
 use DB;
 
+use DOMDocument;
+
 class Feeds extends Controller
 {    
 
@@ -230,7 +232,37 @@ class Feeds extends Controller
                             }
                         }
 
-                        // still no pic? resort to scanning for img in downloaded webpage...!
+                        // still no pic? look for og:image in downloaded webpage...!
+                        /*
+                        e.g.
+
+<meta property="og:image" content="http://assets.atlasobscura.com/media/W1siZiIsInVwbG9hZHMvYXNzZXRzLzI4OGFiOWE2N2FhYjkyNjgyYl8yNTgzNjU5NjEzXzUxNGM2YWUzYjhfYi5qcGciXSxbInAiLCJ0aHVtYiIsIjYwMHhcdTAwM2UiXSxbInAiLCJjb252ZXJ0IiwiLXF1YWxpdHkgOTEiXV0/image.jpg"/>
+
+                        */
+
+                        if(!$bPic){
+                            $page_content = file_get_contents($oItem->link);
+
+
+                            $dom_obj = new DOMDocument();
+                            libxml_use_internal_errors(true);
+                            $dom_obj->loadHTML($page_content);
+                            $meta_val = null;
+
+                            foreach($dom_obj->getElementsByTagName('meta') as $meta) {
+
+                                if($meta->getAttribute('property')=='og:image'){ 
+
+                                    $meta_val = $meta->getAttribute('content');
+
+                                    break;
+                                }
+                            }
+                            $oFeedItem->thumb = $meta_val;
+                            $bPic = true;
+                        }
+
+                        /*
                         if(!$bPic){
                             $sHtml = '';
 
@@ -244,6 +276,7 @@ class Feeds extends Controller
                                 break;
                             }
                         }
+                        */
 
                         $oFeedItem->save();
                         //echo "save item: ", $oFeedItem->guid, "<br/>";

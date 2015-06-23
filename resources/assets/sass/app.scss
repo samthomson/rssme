@@ -1,5 +1,6 @@
 /* app specific scss */
 $silver_background: #F5F5F5;
+$i_feed_item_height: 32px;
 
 body{
 	background-color: $silver_background;
@@ -14,11 +15,11 @@ body{
 	display: block;
 	height: 100%;
 }
-.feed-item td a span{padding:5px;}
+.feed-item td a span{padding:5px;line-height: $i_feed_item_height;}
 
 tr td {
 	padding: 0px !important;
-	height: 48px;
+	height: $i_feed_item_height;
 }
 
 .feed-item td a:visited{
