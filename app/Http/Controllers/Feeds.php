@@ -158,10 +158,12 @@ class Feeds extends Controller
                 $context  = stream_context_create(array('http' => array('header' => 'Accept: application/xml')));
 
                 
-
                 $xmlFeed = file_get_contents($oFeed->url, false, $context);
-                //$xmlFeed = self::removeColonsFromRSS($xmlFeed);
                 $xmlFeed = simplexml_load_string($xmlFeed);
+
+
+                //$xmlFeed = simplexml_load_file($oFeed->url);
+
 
                 $iItemsFetched = 0;
 
@@ -213,6 +215,24 @@ class Feeds extends Controller
                             }
                         }
 
+                        // still no pic? resort to scanning for img in item, then page
+                        if(!$bPic){
+                            /*
+                            $dom = new DOMDocument();
+                            $dom->loadHTML((string)$oItem);
+                            $xml = simplexml_import_dom($dom);
+                            $images = $xml -> xpath('//img/@src');
+                            */
+                            preg_match_all('/<img [^>]*src=["|\']([^"|\']+)/i', $oItem->asXml(), $matches);
+                            foreach ($matches[1] as $key=>$value) {
+                                $oFeedItem->thumb = $value;
+                                $bPic = true;
+                                break;
+                            }
+
+                            //print_r($images);
+                        }
+
                         $oFeedItem->save();
                         //echo "save item: ", $oFeedItem->guid, "<br/>";
 
@@ -221,6 +241,8 @@ class Feeds extends Controller
                         //echo "skipped an item?<br/>";
                     }
                 }
+
+                $oFeed->lastPulledCount = $iItemsFetched;
 
                 $oFeed->hit_count = $oFeed->hit_count + 1;
                 $oFeed->item_count = $oFeed->item_count + $iItemsFetched;

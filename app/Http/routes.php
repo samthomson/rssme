@@ -47,6 +47,7 @@ Route::controllers([
 
 /* spoof */
 Route::get('/pullallfeeds', ['uses' => 'Feeds@pullAll']);
+Route::get('/pullallfeeds/{id}', ['uses' => 'Feeds@pullFeed']);
 
 
 Route::get('/test', function () {
