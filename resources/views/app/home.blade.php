@@ -3,8 +3,8 @@
 
 @section('app_content')
 	<div class="row">
-		<div class="col-xs-3">feeds?</div>
-		<div class="col-xs-9">
+		<div class="col-xs-2">feeds?</div>
+		<div class="col-xs-10">
 
 
 			@if(count($oaFeedItems))
