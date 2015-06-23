@@ -109,7 +109,7 @@ class Feeds extends Controller
     {
         // get users feeds, send to view
 
-        $oaFeedItems = DB::table('feed_user')
+        $oQuery = DB::table('feed_user')
                 ->leftJoin('feeditems', function($join)
                     {
                         $join->on('feed_user.feed_id', '=', 'feeditems.feed_id')
@@ -117,10 +117,21 @@ class Feeds extends Controller
                     })
                 ->leftJoin('feeds', "feeds.id", "=", "feed_user.feed_id")
                 ->orderBy('feeditems.pubDate', 'desc')
-                ->select(['feeditems.url as url', 'feeditems.title as title', 'feeds.url as feedurl', 'feeditems.pubDate as date', 'feed_user.name as name', 'feeditems.thumb as thumb', 'feeds.thumb as feedthumb'])
-                    ->simplePaginate(20);
+                ->select(['feeditems.url as url', 'feeditems.title as title', 'feeds.url as feedurl', 'feeditems.pubDate as date', 'feed_user.name as name', 'feeditems.thumb as thumb', 'feeds.thumb as feedthumb']);
 
-        return view('app.home', ['oaFeedItems' => $oaFeedItems]);
+        if(Request::has('feed')){
+            $oQuery->where("feeds.id", "=", Request::get('feed'));
+        }
+
+        $oaFeedItems = $oQuery->simplePaginate(20);
+
+        ////$oaFeeds = Auth::user()->feeds;
+
+        $oaFeeds = Auth::user()->userFeeds;
+        $oaFeeds->load('feed');
+
+
+        return view('app.home', ['oaFeedItems' => $oaFeedItems, 'oaFeeds' => $oaFeeds]);
     }
 
     public static function pullFeed($id){

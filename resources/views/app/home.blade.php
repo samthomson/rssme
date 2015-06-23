@@ -3,7 +3,11 @@
 
 @section('app_content')
 	<div class="row">
-		<div class="col-xs-2">feeds?</div>
+		<div class="col-xs-2">
+			@foreach($oaFeeds as $oFeed)
+				<a href="/?feed={{$oFeed->feed_id}}">{{$oFeed->name}}</a><br/>
+			@endforeach
+		</div>
 		<div class="col-xs-10">
 
 
