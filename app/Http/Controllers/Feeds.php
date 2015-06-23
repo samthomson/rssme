@@ -220,22 +220,29 @@ class Feeds extends Controller
                             }
                         }
 
-                        // still no pic? resort to scanning for img in item, then page
+                        // still no pic? resort to scanning for img in item
                         if(!$bPic){
-                            /*
-                            $dom = new DOMDocument();
-                            $dom->loadHTML((string)$oItem);
-                            $xml = simplexml_import_dom($dom);
-                            $images = $xml -> xpath('//img/@src');
-                            */
                             preg_match_all('/<img [^>]*src=["|\']([^"|\']+)/i', $oItem->asXml(), $matches);
                             foreach ($matches[1] as $key=>$value) {
                                 $oFeedItem->thumb = $value;
                                 $bPic = true;
                                 break;
                             }
+                        }
 
-                            //print_r($images);
+                        // still no pic? resort to scanning for img in downloaded webpage...!
+                        if(!$bPic){
+                            $sHtml = '';
+
+                            $sHtml = file_get_contents($oItem->link);
+
+                            preg_match_all('/<img [^>]*src=["|\']([^"|\']+)/i', $sHtml, $matches);
+                            foreach ($matches[1] as $key=>$value) {
+                                $oFeedItem->thumb = $value;
+                                $bPic = true;
+                                echo $oFeedItem->thumb, "<br/>";
+                                break;
+                            }
                         }
 
                         $oFeedItem->save();

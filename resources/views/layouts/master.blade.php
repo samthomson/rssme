@@ -6,7 +6,7 @@
         <!--<link href="{{ asset("css/app.css") }}" rel="stylesheet"-->
         <link rel="stylesheet" href="{{ elixir('css/all.css') }}">
 
-        <link href='http://fonts.googleapis.com/css?family=Nunito' rel='stylesheet' type='text/css'>
+        <link rel='stylesheet' id='g_font-css'  href='http://fonts.googleapis.com/css?family=Noto+Sans%3A400%2C700%2C400italic%2C700italic&#038;ver=3.5.1' type='text/css' media='all' />
     </head>
     <body>
         <div class="">

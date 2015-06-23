@@ -7389,16 +7389,28 @@ fieldset[disabled] .btn-danger.active {
 
 /* app specific scss */
 body {
-  background-color: #F5F5F5; }
+  background-color: #F5F5F5;
+  font-family: 'Noto Sans', sans-serif; }
 
-.feed-item {
+.feed-item td a {
   font-weight: bold;
   color: black;
-  background-color: white; }
+  background-color: white;
+  font-size: smaller;
+  display: block;
+  height: 100%; }
 
-.feed-item:visited {
+.feed-item td a span {
+  padding: 5px; }
+
+tr td {
+  padding: 0px !important;
+  height: 48px; }
+
+.feed-item td a:visited {
   font-weight: 100 !important;
-  color: gray; }
+  color: gray;
+  background-color: #F5F5F5; }
 
 ul.pager li.disabled {
   display: none; }
@@ -7427,6 +7439,9 @@ ul.pager li.disabled {
   max-width: 32px;
   height: auto;
   max-height: 24px; }
+
+.navbar-brand {
+  font-size: xx-large; }
 
 /*# sourceMappingURL=app.css.map */
 /*# sourceMappingURL=all.css.map */
