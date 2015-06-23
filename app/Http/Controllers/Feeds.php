@@ -110,15 +110,20 @@ class Feeds extends Controller
         // get users feeds, send to view
 
         $oQuery = DB::table('feed_user')
-                ->leftJoin('feeditems', function($join)
+                ->join('feeditems', function($join)
                     {
                         $join->on('feed_user.feed_id', '=', 'feeditems.feed_id')
                         ->where('feed_user.user_id', '=', Auth::id());
                     })
-                ->leftJoin('feeds', "feeds.id", "=", "feed_user.feed_id")
+                ->join('feeds', "feeds.id", "=", "feed_user.feed_id")
                 ->orderBy('feeditems.pubDate', 'desc')
                 ->select(['feeditems.url as url', 'feeditems.title as title', 'feeds.url as feedurl', 'feeditems.pubDate as date', 'feed_user.name as name', 'feeditems.thumb as thumb', 'feeds.thumb as feedthumb']);
+/*
 
+                     ->select(DB::raw('count(*) as user_count, status'))
+                     ->where('status', '<>', 1)
+                     ->groupBy('status')
+*/
         if(Request::has('feed')){
             $oQuery->where("feeds.id", "=", Request::get('feed'));
         }
