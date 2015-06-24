@@ -121,7 +121,7 @@ class Feeds extends Controller
                     })
                 ->join('feeds', "feeds.id", "=", "feed_user.feed_id")
                 ->orderBy('feeditems.pubDate', 'desc')
-                ->select(['feeditems.url as url', 'feeditems.title as title', 'feeds.url as feedurl', 'feeditems.pubDate as date', 'feed_user.name as name', 'feeditems.thumb as thumb', 'feeds.thumb as feedthumb']);
+                ->select(['feeditems.url as url', 'feeditems.title as title', 'feeds.url as feedurl', 'feeditems.pubDate as date', 'feed_user.name as name', 'feeditems.thumb as thumb', 'feeds.thumb as feedthumb', 'feed_user.colour as feed_colour']);
 /*
 
                      ->select(DB::raw('count(*) as user_count, status'))
@@ -144,9 +144,9 @@ class Feeds extends Controller
     }
 
     public static function scrapeThumbFromFeedItem($iFeedItemId){
-        $oFeedItem = FeedItem::find($iFeedItemId)->with('feed');
+        $oFeedItem = FeedItem::find($iFeedItemId);
 
-        $page_content = file_get_contents($oFeedItem->feed->url);
+        $page_content = file_get_contents($oFeedItem->url);
 
 
         $dom_obj = new DOMDocument();
@@ -282,6 +282,7 @@ class Feeds extends Controller
 
                         */
 
+                        $oFeedItem->save();
                         if(!$bPic){
 
                             self::scrapeThumbFromFeedItem($oFeedItem->id);
@@ -293,7 +294,6 @@ class Feeds extends Controller
                             // download it locally as a thumb
                         }
 
-                        $oFeedItem->save();
                         //echo "save item: ", $oFeedItem->guid, "<br/>";
 
                         $iItemsFetched++;

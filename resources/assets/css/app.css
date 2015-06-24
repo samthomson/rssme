@@ -64,4 +64,11 @@ ul.pager li.disabled {
 .brand.me {
   color: #bdc3c7; }
 
+.circle {
+  display: inline-block;
+  border-radius: 11px;
+  height: 22px;
+  width: 22px;
+  margin-top: 11px; }
+
 /*# sourceMappingURL=app.css.map */

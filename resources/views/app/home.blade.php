@@ -38,6 +38,7 @@
 							<tr class="feed-item">
 
 
+								<td><?php echo $sStartLink; ?><span class="circle" style="background-color:{{$oItem->feed_colour or ''}};"></span></td>
 								<td><?php echo $sStartLink; ?><img src="{{$sPic}}" class="feed-thumb"/><?php echo $sEndLink; ?></td>
 								<td><?php echo $sStartLink; ?>{{$oItem->name}}<?php echo $sEndLink; ?></td>
 								<td><?php echo $sStartLink; ?>

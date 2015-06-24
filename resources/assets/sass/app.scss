@@ -53,3 +53,11 @@ ul.pager li.disabled{
 .brand{ letter-spacing: 1.2;}
 .brand.rss{color:#f39c12;}
 .brand.me{color:#bdc3c7;}
+
+.circle{
+	display:inline-block;
+	border-radius:$i_feed_item_height/4;
+	height:$i_feed_item_height/2;
+	width:$i_feed_item_height/2;
+	margin-top:$i_feed_item_height/4;
+}
