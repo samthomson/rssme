@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Request;
 use Auth;
 use Carbon\Carbon;
 use DB;
+use App\Library;
 
 use DOMDocument;
 
@@ -50,6 +51,7 @@ class Feeds extends Controller
             $oUserFeed->feed_id = $iFeedId;
             $oUserFeed->user_id = Auth::id();
             $oUserFeed->name = Request::has('feedname') ? Request::get('feedname') : '[feed]';
+            $oUserFeed->colour = Library\Helper::sRandomUserFeedColour();
             $oUserFeed->save();
             
             return redirect('/feeds/manage');
@@ -142,9 +144,9 @@ class Feeds extends Controller
     }
 
     public static function scrapeThumbFromFeedItem($iFeedItemId){
-        $oFeedItem = FeedItem::find($iFeedItemId);
+        $oFeedItem = FeedItem::find($iFeedItemId)->with('feed');
 
-        $page_content = file_get_contents($oFeedItem->url);
+        $page_content = file_get_contents($oFeedItem->feed->url);
 
 
         $dom_obj = new DOMDocument();
@@ -163,6 +165,22 @@ class Feeds extends Controller
         }
         $oFeedItem->thumb = $meta_val;
         $oFeedItem->save();
+
+        /*
+        if(!$bPic){
+            $sHtml = '';
+
+            $sHtml = file_get_contents($oItem->link);
+
+            preg_match_all('/<img [^>]*src=["|\']([^"|\']+)/i', $sHtml, $matches);
+            foreach ($matches[1] as $key=>$value) {
+                $oFeedItem->thumb = $value;
+                $bPic = true;
+                echo $oFeedItem->thumb, "<br/>";
+                break;
+            }
+        }
+        */
     }
 
     public static function pullFeed($id){
@@ -270,22 +288,6 @@ class Feeds extends Controller
                             
                             $bPic = true;
                         }
-
-                        /*
-                        if(!$bPic){
-                            $sHtml = '';
-
-                            $sHtml = file_get_contents($oItem->link);
-
-                            preg_match_all('/<img [^>]*src=["|\']([^"|\']+)/i', $sHtml, $matches);
-                            foreach ($matches[1] as $key=>$value) {
-                                $oFeedItem->thumb = $value;
-                                $bPic = true;
-                                echo $oFeedItem->thumb, "<br/>";
-                                break;
-                            }
-                        }
-                        */
 
                         if($bPic){
                             // download it locally as a thumb
