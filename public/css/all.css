@@ -7402,11 +7402,14 @@ body {
 
 .feed-item td a span {
   padding: 4px;
-  line-height: 44px; }
+  line-height: 44px;
+  /*white-space:nowrap;*/
+  text-overflow: ellipsis; }
 
 tr td {
   padding: 0px !important;
-  height: 44px; }
+  height: 44px;
+  overflow-x: hidden; }
 
 .feed-item td a:visited {
   font-weight: 100 !important;
@@ -7459,6 +7462,10 @@ ul.pager li.disabled {
   height: 22px;
   width: 22px;
   margin-top: 11px; }
+
+table {
+  /*table-layout: fixed;
+    word-wrap: break-word;*/ }
 
 /*# sourceMappingURL=app.css.map */
 /*# sourceMappingURL=all.css.map */
