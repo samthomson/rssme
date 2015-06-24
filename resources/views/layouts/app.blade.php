@@ -10,7 +10,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/">{{Config::get('app.title')}}</a>
+      <a class="navbar-brand" href="/"><span class="brand rss">rss</span><span class="brand me">me</span></a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->

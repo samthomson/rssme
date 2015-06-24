@@ -19,6 +19,7 @@
 					<td>last checked</td>
 					<td>status</td>
 					<td>items pulled</td>
+					<td>pull now</td>
 					<td>edit</td>
 					<td>delete</td>
 		        </tr>
@@ -66,6 +67,7 @@
 					<td>
 					<span class="label pulled-since {{$sSinceClass}}">{{$sSinceText}}</span></td>
 					<td>{{$oUserFeed->feed->item_count}}</td>
+					<td><a target="_blank" href="/pullallfeeds/{{$oUserFeed->feed_id}}">pull now</a></td>
 					<td><a href="/feeds/{{$oUserFeed->id}}">edit</a></td>
 					<td>
 						<form action="/feeds/{{$oUserFeed->id}}" method="post" onsubmit="return confirm('you sure?');">

@@ -12,12 +12,12 @@ body {
   height: 100%; }
 
 .feed-item td a span {
-  padding: 5px;
-  line-height: 32px; }
+  padding: 4px;
+  line-height: 44px; }
 
 tr td {
   padding: 0px !important;
-  height: 32px; }
+  height: 44px; }
 
 .feed-item td a:visited {
   font-weight: 100 !important;
@@ -48,11 +48,20 @@ ul.pager li.disabled {
   background-color: black; }
 
 .feed-item img.feed-thumb {
-  max-width: 32px;
+  max-width: 48px;
   height: auto;
-  max-height: 24px; }
+  max-height: 36px; }
 
 .navbar-brand {
-  font-size: xx-large; }
+  font-size: 44px; }
+
+.brand {
+  letter-spacing: 1.2; }
+
+.brand.rss {
+  color: #f39c12; }
+
+.brand.me {
+  color: #bdc3c7; }
 
 /*# sourceMappingURL=app.css.map */

@@ -141,6 +141,30 @@ class Feeds extends Controller
         return view('app.home', ['oaFeedItems' => $oaFeedItems, 'oaFeeds' => $oaFeeds]);
     }
 
+    public static function scrapeThumbFromFeedItem($iFeedItemId){
+        $oFeedItem = FeedItem::find($iFeedItemId);
+
+        $page_content = file_get_contents($oFeedItem->url);
+
+
+        $dom_obj = new DOMDocument();
+        libxml_use_internal_errors(true);
+        $dom_obj->loadHTML($page_content);
+        $meta_val = null;
+
+        foreach($dom_obj->getElementsByTagName('meta') as $meta) {
+
+            if($meta->getAttribute('property')=='og:image'){ 
+
+                $meta_val = $meta->getAttribute('content');
+
+                break;
+            }
+        }
+        $oFeedItem->thumb = $meta_val;
+        $oFeedItem->save();
+    }
+
     public static function pullFeed($id){
         $oFeed = Feed::find($id);
 
@@ -241,24 +265,9 @@ class Feeds extends Controller
                         */
 
                         if(!$bPic){
-                            $page_content = file_get_contents($oItem->link);
 
-
-                            $dom_obj = new DOMDocument();
-                            libxml_use_internal_errors(true);
-                            $dom_obj->loadHTML($page_content);
-                            $meta_val = null;
-
-                            foreach($dom_obj->getElementsByTagName('meta') as $meta) {
-
-                                if($meta->getAttribute('property')=='og:image'){ 
-
-                                    $meta_val = $meta->getAttribute('content');
-
-                                    break;
-                                }
-                            }
-                            $oFeedItem->thumb = $meta_val;
+                            self::scrapeThumbFromFeedItem($oFeedItem->id);
+                            
                             $bPic = true;
                         }
 
@@ -277,6 +286,10 @@ class Feeds extends Controller
                             }
                         }
                         */
+
+                        if($bPic){
+                            // download it locally as a thumb
+                        }
 
                         $oFeedItem->save();
                         //echo "save item: ", $oFeedItem->guid, "<br/>";
