@@ -12,46 +12,38 @@
 
 
 			@if(count($oaFeedItems))
-				<div class="table-responsive">
-					<table class="table table-condensed">
-						<!--
-						<thead>
-					        <tr>
-								<td>thumb</td>
-								<td>name</td>
-								<td>title</td>
-								<td>date</td>
-					        </tr>
-					    </thead>
-					    -->
-			    		<tbody>
+
+				@foreach($oaFeedItems as $oItem)
+					<?php
+						$sPic = $oItem->thumb !== '' ? $oItem->thumb : $oItem->feedthumb;
+
+						$oLastHit = new Carbon\Carbon($oItem->date);
+						$sSince = $oLastHit->diffForHumans();
+
+					?>
+
+					<a target="_blank" class="feed-item" href="{{$oItem->url}}">
+						<div class="row feed-item">
+
+
+							<div class="col-xs-3">
+								<span class="circle" style="background-color:{{$oItem->feed_colour or ''}};"></span>
+
+								<span><img src="{{$sPic}}" class="feed-thumb"/></span>
+
+								<span>{{$oItem->name}}</span>
+							</div>
+							<div class="col-xs-8">
+								<span class="limit ellipsis">{{$oItem->title}}</span>
+							</div>
 						
-							@foreach($oaFeedItems as $oItem)
-								<?php
-									$sPic = $oItem->thumb !== '' ? $oItem->thumb : $oItem->feedthumb;
-
-									$oLastHit = new Carbon\Carbon($oItem->date);
-									$sSince = $oLastHit->diffForHumans();
-
-									$sStartLink = '<a target="_blank" class="feed-item" href="'.$oItem->url.'"><span>';
-									$sEndLink = '</span></a>';
-								?>
-								<tr class="feed-item">
-
-
-									<td><?php echo $sStartLink; ?><span class="circle" style="background-color:{{$oItem->feed_colour or ''}};"></span></td>
-									<td><?php echo $sStartLink; ?><img src="{{$sPic}}" class="feed-thumb"/><?php echo $sEndLink; ?></td>
-									<td><?php echo $sStartLink; ?>{{$oItem->name}}<?php echo $sEndLink; ?></td>
-									<td><?php echo $sStartLink; ?>
-								{{$oItem->title}}<?php echo $sEndLink; ?></td>
-								
-									<td title="{{$oLastHit->toDayDateTimeString()}}"><?php echo $sStartLink; ?>{{$sSince}}<?php echo $sEndLink; ?></td>
-								
-								</tr>
-							@endforeach
-						</tbody>
-					</table>
-				</div>
+							<div class="col-xs-1" title="{{$oLastHit->toDayDateTimeString()}}">
+								<span class="limit ellipsis">{{$sSince}}</span>
+							</div>
+						
+						</div>
+					</a>
+				@endforeach
 
 				<?php echo $oaFeedItems->render(); ?>
 

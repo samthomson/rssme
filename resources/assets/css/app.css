@@ -3,26 +3,34 @@ body {
   background-color: #F5F5F5;
   font-family: 'Noto Sans', sans-serif; }
 
-.feed-item td a {
+a.feed-item {
   font-weight: bold;
   color: black;
   background-color: white;
   font-size: smaller;
-  display: block;
-  height: 100%; }
+  display: block; }
 
-.feed-item td a span {
+a.feed-item span {
   padding: 4px;
-  line-height: 44px;
-  /*white-space:nowrap;*/
+  line-height: 44px; }
+
+span.limit {
+  max-width: 100%;
+  white-space: nowrap;
+  position: absolute;
+  overflow: hidden; }
+
+.limit.ellipsis {
   text-overflow: ellipsis; }
 
-tr td {
-  padding: 0px !important;
-  height: 44px;
-  overflow-x: hidden; }
-
-.feed-item td a:visited {
+/*
+div.row div {
+	padding: 0px !important;
+	height: $i_feed_item_height;
+	overflow-x:hidden;
+}
+*/
+a.feed-item:visited {
   font-weight: 100 !important;
   color: gray;
   background-color: #F5F5F5; }
@@ -73,9 +81,5 @@ ul.pager li.disabled {
   height: 22px;
   width: 22px;
   margin-top: 11px; }
-
-table {
-  /*table-layout: fixed;
-    word-wrap: break-word;*/ }
 
 /*# sourceMappingURL=app.css.map */
