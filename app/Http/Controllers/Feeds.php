@@ -16,8 +16,10 @@ use Illuminate\Support\Facades\Request;
 use Auth;
 use Carbon\Carbon;
 use DB;
-use App\Library;
+use App\Library\Helper;
 use App\Auto\Task;
+
+use Intervention\Image\Facades\Image;
 
 use DOMDocument;
 
@@ -39,6 +41,20 @@ class Feeds extends Controller
         $oTask->job = "scrape-feed-item-image";
         $oTask->detail = $iFeedItemId;
         $oTask->save();
+    }
+
+    public static function test()
+    {
+        //self::scrapeThumbFromFeedItem(9);
+
+        // re-schedule feeds to be crawled
+
+        $iMinOffset = 0;
+        foreach(Feed::all() as $oFeed)
+        {
+            self::scheduleFeedPull($oFeed->id, $iMinOffset);
+            $iMinOffset++;
+        }
     }
     public static function create()
     {
@@ -163,7 +179,9 @@ class Feeds extends Controller
     public static function scrapeThumbFromFeedItem($iFeedItemId){
         $oFeedItem = FeedItem::find($iFeedItemId);
 
-        $page_content = file_get_contents($oFeedItem->url);
+        $sUrlToHit = $oFeedItem->url;
+        echo "scrape: ", $sUrlToHit, "<br/>";
+        $page_content = file_get_contents($sUrlToHit);
 
 
         $dom_obj = new DOMDocument();
@@ -180,7 +198,18 @@ class Feeds extends Controller
                 break;
             }
         }
-        $oFeedItem->thumb = $meta_val;
+        if(isset($meta_val)){
+            // download locally and make a small thumb, if it's a jpeg
+            if(Helper::endsWith(strtolower($meta_val), '.jpg')){
+                $oImage = Image::make($meta_val);
+                $oImage->fit(48,32);
+                $sRelPath = DIRECTORY_SEPARATOR.'thumbs'.DIRECTORY_SEPARATOR.$iFeedItemId.'.jpg';
+                $oImage->save(public_path().$sRelPath);
+
+                $meta_val = $sRelPath;
+            }
+        }
+        $oFeedItem->thumb = str_replace(DIRECTORY_SEPARATOR, '/',$meta_val);
         $oFeedItem->save();
 
         /*
