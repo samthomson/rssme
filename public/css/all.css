@@ -7401,7 +7401,7 @@ a.feed-item {
 
 a.feed-item span {
   padding: 4px;
-  line-height: 44px; }
+  line-height: 28px; }
 
 span.limit {
   max-width: 100%;
@@ -7448,9 +7448,13 @@ ul.pager li.disabled {
   background-color: black; }
 
 .feed-item img.feed-thumb {
-  max-width: 48px;
+  max-width: 42px;
   height: auto;
-  max-height: 36px; }
+  max-height: 28px; }
+
+.feed-item .feed-thumb-wrapper {
+  width: 42px;
+  display: inline-block; }
 
 .navbar-brand {
   font-size: 44px; }
@@ -7466,10 +7470,10 @@ ul.pager li.disabled {
 
 .circle {
   display: inline-block;
-  border-radius: 11px;
-  height: 22px;
-  width: 22px;
-  margin-top: 11px; }
+  border-radius: 7px;
+  height: 14px;
+  width: 14px;
+  margin-top: 7px; }
 
 /*# sourceMappingURL=app.css.map */
 /*# sourceMappingURL=all.css.map */

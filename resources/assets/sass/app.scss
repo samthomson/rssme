@@ -1,6 +1,7 @@
 /* app specific scss */
 $silver_background: #F5F5F5;
-$i_feed_item_height: 44px;
+$i_feed_item_height: 28px;
+
 
 body{
 	background-color: $silver_background;
@@ -55,9 +56,13 @@ ul.pager li.disabled{
 
 
 .feed-item img.feed-thumb{
-	max-width: 48px;
+	max-width: ($i_feed_item_height * 1.5);
 	height: auto;
-	max-height: 36px;
+	max-height: $i_feed_item_height;
+}
+.feed-item .feed-thumb-wrapper{
+	width: ($i_feed_item_height * 1.5);
+	display: inline-block;
 }
 
 .navbar-brand{

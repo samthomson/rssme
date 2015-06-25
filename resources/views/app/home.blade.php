@@ -29,7 +29,7 @@
 							<div class="col-xs-3">
 								<span class="circle" style="background-color:{{$oItem->feed_colour or ''}};"></span>
 
-								<span><img src="{{$sPic}}" class="feed-thumb"/></span>
+								<span class="feed-thumb-wrapper"><img src="{{$sPic}}" class="feed-thumb"/></span>
 
 								<span>{{$oItem->name}}</span>
 							</div>
