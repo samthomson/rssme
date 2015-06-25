@@ -30,7 +30,7 @@ class Auto extends Controller
         // while less than a minute (or part there of) has past, keep pulling a task to process
 
         while($cdStarted->diffInSeconds(Carbon::now()) < $iSecondsCutOff && $bJobsRemain){
-            echo $cdStarted->diffInSeconds(Carbon::now()), "<br/>";
+            //echo $cdStarted->diffInSeconds(Carbon::now()), "<br/>";
 
             $tJobToProcess = Task::next();
             // if no more jobs, escape loop
