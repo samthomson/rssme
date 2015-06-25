@@ -188,12 +188,21 @@ class Feeds extends Controller
         if(isset($sRemoteThumbUrl)){
             // download locally and make a small thumb, if it's a jpeg
             if(Helper::endsWith(strtolower($sRemoteThumbUrl), '.jpg')){
-                $oImage = Image::make($sRemoteThumbUrl);
-                $oImage->fit(48,32);
-                $sRelPath = DIRECTORY_SEPARATOR.'thumbs'.DIRECTORY_SEPARATOR.$iFeedItemId.'.jpg';
-                $oImage->save(public_path().$sRelPath);
+                try
+                {
+                    $oImage = @Image::make($sRemoteThumbUrl);
+                
+                    $oImage->fit(48,32);
+                    $sRelPath = DIRECTORY_SEPARATOR.'thumbs'.DIRECTORY_SEPARATOR.$iFeedItemId.'.jpg';
+                    $oImage->save(public_path().$sRelPath);
 
-                $sLocalThumbPath = $sRelPath;
+                    $sLocalThumbPath = $sRelPath;
+
+                }
+                catch(\Intervention\Image\Exception\NotReadableException $e)
+                {
+                    echo "<br/>not readable<br/>";
+                }
             }
         }
         $oFeedItem->thumb = str_replace(DIRECTORY_SEPARATOR, '/', $sLocalThumbPath);
