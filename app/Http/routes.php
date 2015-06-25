@@ -49,6 +49,9 @@ Route::controllers([
 Route::get('/pullallfeeds', ['uses' => 'Feeds@pullAll']);
 Route::get('/pullallfeeds/{id}', ['uses' => 'Feeds@pullFeed']);
 
+Route::get('/process', ['uses' => 'Auto@process']);
+
+
 
 Route::get('/test', function () {
 
