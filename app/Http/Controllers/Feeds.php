@@ -348,13 +348,7 @@ class Feeds extends Controller
                         }
 
                         // still no pic? look for og:image in downloaded webpage...!
-                        /*
-                        e.g.
-
-<meta property="og:image" content="http://assets.atlasobscura.com/media/W1siZiIsInVwbG9hZHMvYXNzZXRzLzI4OGFiOWE2N2FhYjkyNjgyYl8yNTgzNjU5NjEzXzUxNGM2YWUzYjhfYi5qcGciXSxbInAiLCJ0aHVtYiIsIjYwMHhcdTAwM2UiXSxbInAiLCJjb252ZXJ0IiwiLXF1YWxpdHkgOTEiXV0/image.jpg"/>
-
-                        */
-
+                        
                         $oFeedItem->thumb = '';
                         $oFeedItem->save();
 
