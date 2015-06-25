@@ -12,6 +12,8 @@ use Carbon\Carbon;
 use App\Auto\Task;
 use App\Http\Controllers\Feeds;
 
+use App\Feeds\FeedItem;
+
 class Auto extends Controller
 {
     /**
@@ -51,6 +53,11 @@ class Auto extends Controller
                         break;
                     case "scrape-feed-item-image":
                         Feeds::scrapeThumbFromFeedItem((int)$tJobToProcess->detail);
+                        $tJobToProcess->delete();
+                        break;
+                    case "crunch-feed-image":
+                        $oFeed = FeedItem::find((int)$tJobToProcess->detail);
+                        Feeds::storeThumbForFeedItem($oFeed, (string)$tJobToProcess->name);
                         $tJobToProcess->delete();
                         break;
                 }

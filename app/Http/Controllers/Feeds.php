@@ -43,6 +43,16 @@ class Feeds extends Controller
         $oTask->save();
     }
 
+    public static function scheduleThumbCrunch($sThumbUrl, $iFeedItemId)
+    {
+        $oTask = new Task;
+        $oTask->processFrom = Carbon::now();
+        $oTask->job = "crunch-feed-image";
+        $oTask->name = $sThumbUrl;
+        $oTask->detail = $iFeedItemId;
+        $oTask->save();
+    }
+
     public static function test()
     {
         //self::scrapeThumbFromFeedItem(9);
@@ -84,7 +94,7 @@ class Feeds extends Controller
             $oUserFeed->feed_id = $iFeedId;
             $oUserFeed->user_id = Auth::id();
             $oUserFeed->name = Request::has('feedname') ? Request::get('feedname') : '[feed]';
-            $oUserFeed->colour = Library\Helper::sRandomUserFeedColour();
+            $oUserFeed->colour = Helper::sRandomUserFeedColour();
             $oUserFeed->save();
             
             return redirect('/feeds/manage');
@@ -155,12 +165,7 @@ class Feeds extends Controller
                 ->join('feeds', "feeds.id", "=", "feed_user.feed_id")
                 ->orderBy('feeditems.pubDate', 'desc')
                 ->select(['feeditems.url as url', 'feeditems.title as title', 'feeds.url as feedurl', 'feeditems.pubDate as date', 'feed_user.name as name', 'feeditems.thumb as thumb', 'feeds.thumb as feedthumb', 'feed_user.colour as feed_colour']);
-/*
 
-                     ->select(DB::raw('count(*) as user_count, status'))
-                     ->where('status', '<>', 1)
-                     ->groupBy('status')
-*/
         if(Request::has('feed')){
             $oQuery->where("feeds.id", "=", Request::get('feed'));
         }
@@ -174,6 +179,25 @@ class Feeds extends Controller
 
 
         return view('app.home', ['oaFeedItems' => $oaFeedItems, 'oaFeeds' => $oaFeeds]);
+    }
+
+    public static function storeThumbForFeedItem($oFeedItem, $sRemoteThumbUrl){
+        $iFeedItemId = $oFeedItem->id;
+        $sLocalThumbPath = '';
+
+        if(isset($sRemoteThumbUrl)){
+            // download locally and make a small thumb, if it's a jpeg
+            if(Helper::endsWith(strtolower($sRemoteThumbUrl), '.jpg')){
+                $oImage = Image::make($sRemoteThumbUrl);
+                $oImage->fit(48,32);
+                $sRelPath = DIRECTORY_SEPARATOR.'thumbs'.DIRECTORY_SEPARATOR.$iFeedItemId.'.jpg';
+                $oImage->save(public_path().$sRelPath);
+
+                $sLocalThumbPath = $sRelPath;
+            }
+        }
+        $oFeedItem->thumb = str_replace(DIRECTORY_SEPARATOR, '/', $sLocalThumbPath);
+        $oFeedItem->save();
     }
 
     public static function scrapeThumbFromFeedItem($iFeedItemId){
@@ -198,20 +222,13 @@ class Feeds extends Controller
                 break;
             }
         }
-        if(isset($meta_val)){
-            // download locally and make a small thumb, if it's a jpeg
-            if(Helper::endsWith(strtolower($meta_val), '.jpg')){
-                $oImage = Image::make($meta_val);
-                $oImage->fit(48,32);
-                $sRelPath = DIRECTORY_SEPARATOR.'thumbs'.DIRECTORY_SEPARATOR.$iFeedItemId.'.jpg';
-                $oImage->save(public_path().$sRelPath);
-
-                $meta_val = $sRelPath;
-            }
+        if(isset($meta_val))
+            self::storeThumbForFeedItem($oFeedItem, $meta_val);
+        else
+        {
+            $oFeedItem->thumb = '';
+            $oFeedItem->save();
         }
-        $oFeedItem->thumb = str_replace(DIRECTORY_SEPARATOR, '/',$meta_val);
-        $oFeedItem->save();
-
         /*
         if(!$bPic){
             $sHtml = '';
@@ -292,12 +309,13 @@ class Feeds extends Controller
                         $oThumbItem = $oItem->{'media:thumbnail'};
 
                         $bPic = false;
+                        $sPicURL = '';
 
                         if(isset($oItem->children('media', true)->thumbnail)){
 
                             if(isset($oItem->children('media', true)->thumbnail->attributes()->url)){
-                                $oFeedItem->thumb = $oItem->children('media', true)->thumbnail->attributes()->url;
                                 $bPic = true;
+                                $sPicURL = $oItem->children('media', true)->thumbnail->attributes()->url;
                             }
                         }
 
@@ -314,7 +332,7 @@ class Feeds extends Controller
                         if(!$bPic){
                             preg_match_all('/<img [^>]*src=["|\']([^"|\']+)/i', $oItem->asXml(), $matches);
                             foreach ($matches[1] as $key=>$value) {
-                                $oFeedItem->thumb = $value;
+                                $sPicURL = $value;
                                 $bPic = true;
                                 break;
                             }
@@ -328,12 +346,16 @@ class Feeds extends Controller
 
                         */
 
+                        $oFeedItem->thumb = '';
                         $oFeedItem->save();
+
                         if(!$bPic){
 
                             //self::scrapeThumbFromFeedItem($oFeedItem->id);
                             self::scheduleFeedItemImageScrape($oFeedItem->id);
                             
+                        }else{
+                            self::scheduleThumbCrunch($sPicURL, $oFeedItem->id);                                                       
                         }
 
 
