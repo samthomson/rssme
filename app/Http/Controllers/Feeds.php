@@ -17,12 +17,29 @@ use Auth;
 use Carbon\Carbon;
 use DB;
 use App\Library;
+use App\Auto\Task;
 
 use DOMDocument;
 
 class Feeds extends Controller
 {    
 
+    public static function scheduleFeedPull($iFeedId, $iMinutes = 0)
+    {
+        $oTask = new Task;
+        $oTask->processFrom = Carbon::now()->addMinutes($iMinutes);
+        $oTask->job = "pull-feed";
+        $oTask->detail = $iFeedId;
+        $oTask->save();
+    }
+    public static function scheduleFeedItemImageScrape($iFeedItemId)
+    {
+        $oTask = new Task;
+        $oTask->processFrom = Carbon::now();
+        $oTask->job = "scrape-feed-item-image";
+        $oTask->detail = $iFeedItemId;
+        $oTask->save();
+    }
     public static function create()
     {
         // 
@@ -42,7 +59,7 @@ class Feeds extends Controller
                 $iFeedId = $oFeed->id;
 
                 // pull it
-                self::pullFeed($iFeedId);
+                self::scheduleFeedPull($iFeedId);
             }else{
                 $iFeedId = $oFeed->id;
             }
@@ -285,14 +302,11 @@ class Feeds extends Controller
                         $oFeedItem->save();
                         if(!$bPic){
 
-                            self::scrapeThumbFromFeedItem($oFeedItem->id);
+                            //self::scrapeThumbFromFeedItem($oFeedItem->id);
+                            self::scheduleFeedItemImageScrape($oFeedItem->id);
                             
-                            $bPic = true;
                         }
 
-                        if($bPic){
-                            // download it locally as a thumb
-                        }
 
                         //echo "save item: ", $oFeedItem->guid, "<br/>";
 

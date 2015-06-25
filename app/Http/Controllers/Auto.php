@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 
 use Carbon\Carbon;
 use App\Auto\Task;
+use App\Http\Controllers\Feeds;
 
 class Auto extends Controller
 {
@@ -24,7 +25,7 @@ class Auto extends Controller
         
         // start timer
         $cdStarted = Carbon::now();
-        $iSecondsCutOff = 20;
+        $iSecondsCutOff = 40;
         $bJobsRemain = true;
 
         // while less than a minute (or part there of) has past, keep pulling a task to process
@@ -38,6 +39,21 @@ class Auto extends Controller
                 $bJobsRemain = false;
             }else{
                 echo "process item: ", $tJobToProcess->id, "<br/>";
+
+                switch($tJobToProcess->job)
+                {   
+                    case "pull-feed":
+                        $iFeedId = (int)$tJobToProcess->detail;
+                        Feeds::pullFeed($iFeedId);
+                        $tJobToProcess->delete();
+                        // and reschedule for fifteen minbutes
+                        Feeds::scheduleFeedPull($iFeedId, 15);
+                        break;
+                    case "scrape-feed-item-image":
+                        Feeds::scrapeThumbFromFeedItem((int)$tJobToProcess->detail);
+                        $tJobToProcess->delete();
+                        break;
+                }
             }
         }
         echo "no more tasks available", "<br/>";
