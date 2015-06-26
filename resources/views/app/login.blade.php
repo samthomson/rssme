@@ -17,6 +17,7 @@
 					<input type="password" name="password" class="form-control" id="register_password" placeholder="password">
 				</div>
 				<div class="form-group">
+					<input type="checkbox" name="remember" checked>
 					<button type="submit" name="submit" class="btn btn-warning form-control" id="login_button">register</button>
 				</div>
 			</form>
@@ -35,6 +36,7 @@
 					<input type="password" name="password" class="form-control" id="login_password" placeholder="password">
 				</div>
 				<div class="form-group">
+					<input type="hidden" name="remember" checked>
 					<button type="submit" name="submit" class="btn btn-success form-control" id="login_button">login</button>
 				</div>
 			</form>
