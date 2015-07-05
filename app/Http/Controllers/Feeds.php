@@ -297,6 +297,13 @@ class Feeds extends Controller
                             $bStopImport = true;
                         }
                     }
+
+                    $oExistingItemAlready = FeedItem::where("guid", "=", (string)$oItem->guid)->first();
+
+                    if(isset($oExistingItemAlready)){
+                        $bStopImport = true;
+                    }
+
                     if(!$bStopImport){                    
 
                         $oFeedItem = new FeedItem;
