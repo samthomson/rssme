@@ -12,7 +12,7 @@ class CreateUserfeedTable extends Migration
      */
     public function up()
     {
-        Schema::create('feed_userfeed', function (Blueprint $table) {
+        Schema::create('feed_user', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('feed_id');
             $table->integer('user_id');
@@ -28,6 +28,6 @@ class CreateUserfeedTable extends Migration
      */
     public function down()
     {
-        Schema::drop('feed_userfeed');
+        Schema::drop('feed_user');
     }
 }

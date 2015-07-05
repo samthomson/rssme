@@ -210,49 +210,42 @@ class Feeds extends Controller
     }
 
     public static function scrapeThumbFromFeedItem($iFeedItemId){
-        $oFeedItem = FeedItem::find($iFeedItemId);
+        try{
+            $oFeedItem = FeedItem::find($iFeedItemId);
 
-        $sUrlToHit = $oFeedItem->url;
-        echo "scrape: ", $sUrlToHit, "<br/>";
-        $page_content = file_get_contents($sUrlToHit);
+            $sUrlToHit = $oFeedItem->url;
+            echo "scrape: ", $sUrlToHit, "<br/>";
+            $page_content = @file_get_contents($sUrlToHit);
 
 
-        $dom_obj = new DOMDocument();
-        libxml_use_internal_errors(true);
-        $dom_obj->loadHTML($page_content);
-        $meta_val = null;
+            if(!empty($page_content))
+            {
+                $dom_obj = new DOMDocument();
+                libxml_use_internal_errors(true);
+                $dom_obj->loadHTML($page_content);
+                $meta_val = null;
 
-        foreach($dom_obj->getElementsByTagName('meta') as $meta) {
+                foreach($dom_obj->getElementsByTagName('meta') as $meta) {
 
-            if($meta->getAttribute('property')=='og:image'){ 
+                    if($meta->getAttribute('property')=='og:image'){ 
 
-                $meta_val = $meta->getAttribute('content');
+                        $meta_val = $meta->getAttribute('content');
 
-                break;
+                        break;
+                    }
+                }
+                if(isset($meta_val))
+                    self::storeThumbForFeedItem($oFeedItem, $meta_val);
+                else
+                {
+                    $oFeedItem->thumb = '';
+                    $oFeedItem->save();
+                }   
             }
-        }
-        if(isset($meta_val))
-            self::storeThumbForFeedItem($oFeedItem, $meta_val);
-        else
-        {
-            $oFeedItem->thumb = '';
-            $oFeedItem->save();
-        }
-        /*
-        if(!$bPic){
-            $sHtml = '';
 
-            $sHtml = file_get_contents($oItem->link);
-
-            preg_match_all('/<img [^>]*src=["|\']([^"|\']+)/i', $sHtml, $matches);
-            foreach ($matches[1] as $key=>$value) {
-                $oFeedItem->thumb = $value;
-                $bPic = true;
-                echo $oFeedItem->thumb, "<br/>";
-                break;
-            }
+        }catch(Exception $e){
+            
         }
-        */
     }
 
     public static function pullFeed($id){
