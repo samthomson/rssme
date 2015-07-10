@@ -40,8 +40,7 @@ class Auto extends Controller
             if(!isset($tJobToProcess)){
                 $bJobsRemain = false;
             }else{
-                echo "process item: ", $tJobToProcess->id, "<br/>";
-
+                
                 switch($tJobToProcess->job)
                 {   
                     case "pull-feed":
