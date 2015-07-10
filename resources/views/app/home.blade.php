@@ -26,21 +26,27 @@
 						<div class="row feed-item">
 
 
-							<div class="col-xs-1 col-sm-3">
-								<span class="circle hidden-xs" style="background-color:{{$oItem->feed_colour or ''}};"></span>
-
+							<div class="col-xs-1">
+								<!--
+								<span class="circle" style="background-color:{{$oItem->feed_colour or ''}};"></span>
+								-->
 								<span class="feed-thumb-wrapper"><img src="{{$sPic}}" class="feed-thumb"/></span>
-
+							</div>
+							<div class="col-xs-1 col-sm-1">
+								
 								<span class="hidden-xs">{{$oItem->name}}</span>
 							</div>
-							<div class="col-xs-11 col-sm-8">
+							
+<!--
+								<span class="circle" style="background-color:{{$oItem->feed_colour or ''}};"></span>
+								-->
+								
+							<div class="col-xs-10 col-sm-9">
 								<span class="limit ellipsis">{{$oItem->title}}</span>
 							</div>
-						
-							<div class="hidden-xs col-sm-1" title="{{$oLastHit->toDayDateTimeString()}}">
+							<div class="col-xs-0 col-sm-1 hidden-xs" title="{{$oLastHit->toDayDateTimeString()}}">
 								<span class="limit ellipsis">{{$sSince}}</span>
 							</div>
-						
 						</div>
 					</a>
 				@endforeach
