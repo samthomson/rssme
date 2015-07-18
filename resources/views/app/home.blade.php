@@ -34,7 +34,7 @@
 							</div>
 							<div class="col-xs-1 col-sm-1">
 								
-								<span class="hidden-xs">{{$oItem->name}}</span>
+								<a href="/?feed={{$oItem->feed_id}}"><span class="hidden-xs">{{$oItem->name}}</span></a>
 							</div>
 							
 <!--
