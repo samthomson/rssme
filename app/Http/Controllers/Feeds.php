@@ -170,7 +170,7 @@ class Feeds extends Controller
             $oQuery->where("feeds.id", "=", Request::get('feed'));
         }
 
-        $oaFeedItems = $oQuery->simplePaginate(20);
+        $oaFeedItems = $oQuery->simplePaginate(30);
 
         ////$oaFeeds = Auth::user()->feeds;
 
