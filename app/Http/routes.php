@@ -36,6 +36,10 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/feeds/{id}', ['uses' => 'Feeds@edit']);
 	Route::post('/feeds/{id}', ['uses' => 'Feeds@update']);
 
+
+	/* new for angular */
+
+	Route::get('/app/user/feedsandcategories', ['uses' => 'Feeds@feedsAndCategories']);
 });
 
 
