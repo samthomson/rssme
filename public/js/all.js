@@ -295,12 +295,34 @@ e.$validators.maxlength=function(a,c){return 0>f||e.$isEmpty(c)||c.length<=f}}}}
 //# sourceMappingURL=angular.min.js.map
 var app = angular.module('rssme', []);
 
+
 app.controller('MainUI', function($scope, $http) {
-    $http.get("http://rssme.dev/app/user/feedsandcategories")
-    .success(function(response) {
-    	$scope.feeds = response.jsonFeeds;
-    	$scope.feeditems = response.jsonFeedItems;
+
+	$scope.iPage = 1;
+
+
+    var getItems = function(){
+
+    	// set loading
+
+	    $http({
+	    	method: "GET",
+	    	url: "http://rssme.dev/app/user/feedsandcategories",
+	    	params: {page: $scope.iPage}
+	    })
+	    .success(function(response) {
+	    	$scope.feeds = response.jsonFeeds;
+	    	$scope.feeditems = response.jsonFeedItems;
+
+	    	// end loading
+	    });
+    }
+
+    $scope.$watch('iPage', function(){
+    	getItems();
     });
+
+	getItems();
 });
 /*!
  * Bootstrap v3.3.5 (http://getbootstrap.com)

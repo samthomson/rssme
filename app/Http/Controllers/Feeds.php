@@ -168,7 +168,10 @@ class Feeds extends Controller
             $oQuery->where("feeds.id", "=", Request::get('feed'));
         }
 
-        $maFeedItems = $oQuery->take(20)->get();
+        $iPage = Request::input("page", 1);
+        $iPerPage = 20;
+        
+        $maFeedItems = $oQuery->skip($iPage * $iPerPage)->take($iPerPage)->get();
 
         $oaFeedItems = [];
 
@@ -182,7 +185,7 @@ class Feeds extends Controller
                 "feed_id" => $oFeedItem->feed_id,
                 "date" => (new Carbon($oFeedItem->date))->diffForHumans(),
                 "name" => $oFeedItem->name,
-                "thumb" => $oFeedItem->thumb !== '' ? $oFeedItem->thumb : $oFeedItem->feedthumb,
+                "thumb" => $oFeedItem->thumb !== '' ? 'http://rssme.samt.st'.$oFeedItem->thumb : $oFeedItem->feedthumb,
                 "feed_thumb" => $oFeedItem->feedthumb
                 ]
                 );

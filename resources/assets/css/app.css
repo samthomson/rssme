@@ -35,6 +35,9 @@ a.feed-item:visited {
   color: gray;
   background-color: #F5F5F5; }
 
+a.pagination {
+  cursor: pointer; }
+
 ul.pager li.disabled {
   display: none; }
 
