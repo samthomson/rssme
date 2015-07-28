@@ -170,7 +170,7 @@ class Feeds extends Controller
 
         $iPage = Request::input("page", 1);
         $iPerPage = 20;
-        
+
         $maFeedItems = $oQuery->skip($iPage * $iPerPage)->take($iPerPage)->get();
 
         $oaFeedItems = [];
@@ -191,10 +191,10 @@ class Feeds extends Controller
                 );
         }
 
-        //print_r($oaFeedItems);exit();
-
-        ////$oaFeeds = Auth::user()->feeds;
-
+        if(Request::has('feed')){
+            $oQuery->where("feeds.id", "=", Request::get('feed'));
+        }
+        
         $oaFeeds = Auth::user()->userFeeds;
         $oaFeeds->load('feed');
 

@@ -4,6 +4,7 @@ var app = angular.module('rssme', []);
 app.controller('MainUI', function($scope, $http) {
 
 	$scope.iPage = 1;
+	$scope.iFeedId = undefined;
 
 
     var getItems = function(){
@@ -13,7 +14,10 @@ app.controller('MainUI', function($scope, $http) {
 	    $http({
 	    	method: "GET",
 	    	url: "http://rssme.dev/app/user/feedsandcategories",
-	    	params: {page: $scope.iPage}
+	    	params: {
+	    		page: $scope.iPage,
+	    		feed: $scope.iFeedId
+	    	}
 	    })
 	    .success(function(response) {
 	    	$scope.feeds = response.jsonFeeds;
@@ -26,6 +30,13 @@ app.controller('MainUI', function($scope, $http) {
     $scope.$watch('iPage', function(){
     	getItems();
     });
+    $scope.$watch('iFeedId', function(){
+    	getItems();
+    });
+
+    $scope.browseFeed = function(iFeedId){
+    	$scope.iFeedId = iFeedId;
+    }
 
 	getItems();
 });

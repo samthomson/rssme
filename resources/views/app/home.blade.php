@@ -6,7 +6,7 @@
         
 		<div class="col-xs-2 hidden-xs">
 
-			<a ng-repeat="feed in feeds" href="/?feed=@{{feed.feed_id}}">
+			<a class="feed_link" ng-repeat="feed in feeds" ng-click="browseFeed(feed.feed_id)">
 				<span>@{{feed.name}}</span>
 				<br/>
 			</a>

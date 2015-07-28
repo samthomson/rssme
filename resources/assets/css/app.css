@@ -35,7 +35,7 @@ a.feed-item:visited {
   color: gray;
   background-color: #F5F5F5; }
 
-a.pagination {
+a.pagination, a.feed_link {
   cursor: pointer; }
 
 ul.pager li.disabled {
