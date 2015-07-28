@@ -8,29 +8,22 @@
 
 			<a ng-repeat="feed in feeds" href="/?feed=@{{feed.feed_id}}">
 				<span>@{{feed.name}}</span>
+				<br/>
 			</a>
-			<br/>
 		</div>
 		<div class="col-xs-12 col-sm-10">
 
 			<a ng-repeat="feeditem in feeditems" target="_blank" class="feed-item" href="@{{feeditem.url}}">
 				<div class="row feed-item">
-
-
 					<div class="col-xs-1">
-						<span class="feed-thumb-wrapper"><img src="{{--$sPic--}}" class="feed-thumb"/></span>
+						<img ng-src="@{{feeditem.thumb}}" />
 					</div>
-					<div class="col-xs-1 col-sm-1">
-						
-						<a href="/?feed=@{{feeditem.feed_id}}"><span class="hidden-xs">@{{feeditem.name}}</span></a>
-					</div>
-					
-					<div class="col-xs-10 col-sm-9">
-						<span class="limit ellipsis">@{{feeditem.title}}</span>
-					</div>
-					<div class="col-xs-0 col-sm-1 hidden-xs" title="{{--feeditem.toDayDateTimeString()--}}">
-						<span class="limit ellipsis">{{--$sSince--}}</span>
-					</div>
+
+					<div class="col-xs-1 col-sm-1">@{{feeditem.name}}</div>
+
+					<div class="col-xs-10 col-sm-9">@{{feeditem.title}}</div>
+
+					<div class="col-xs-0 col-sm-1 hidden-xs">@{{feeditem.date}}</div>
 				</div>
 			</a>
 

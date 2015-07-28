@@ -168,8 +168,25 @@ class Feeds extends Controller
             $oQuery->where("feeds.id", "=", Request::get('feed'));
         }
 
-        $oaFeedItems = $oQuery->simplePaginate(30)/*->toJson()*/;
-        $oaFeedItems = $oQuery->get(30)/*->toJson()*/;
+        $maFeedItems = $oQuery->take(20)->get();
+
+        $oaFeedItems = [];
+
+        foreach ($maFeedItems as $oFeedItem) {
+
+            array_push($oaFeedItems, 
+                [
+                "url" => $oFeedItem->url,
+                "title" => $oFeedItem->title,
+                "feedurl" => $oFeedItem->feedurl,
+                "feed_id" => $oFeedItem->feed_id,
+                "date" => (new Carbon($oFeedItem->date))->diffForHumans(),
+                "name" => $oFeedItem->name,
+                "thumb" => $oFeedItem->thumb !== '' ? $oFeedItem->thumb : $oFeedItem->feedthumb,
+                "feed_thumb" => $oFeedItem->feedthumb
+                ]
+                );
+        }
 
         //print_r($oaFeedItems);exit();
 
