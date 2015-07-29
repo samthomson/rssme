@@ -2,60 +2,35 @@
 
 
 @section('app_content')
-	<div class="row">
+	<div class="row" ng-app="rssme" ng-controller="MainUI">
+        
 		<div class="col-xs-2 hidden-xs">
-			@foreach($oaFeeds as $oFeed)
-				<a href="/?feed={{$oFeed->feed_id}}"><span class="circle" style="background-color:{{$oFeed->colour or ''}};"></span> <span>{{$oFeed->name}}</span></a><br/>
-			@endforeach
+
+			<a class="feed_link" ng-repeat="feed in feeds" ng-click="browseFeed(feed.feed_id)">
+				<span>@{{feed.name}}</span>
+				<br/>
+			</a>
 		</div>
 		<div class="col-xs-12 col-sm-10">
 
+			<a ng-repeat="feeditem in feeditems" target="_blank" class="feed-item" href="@{{feeditem.url}}">
+				<div class="row feed-item">
+					<div class="col-xs-1">
+						<img class="feed-thumb" ng-src="@{{feeditem.thumb}}" />
+					</div>
 
-			@if(count($oaFeedItems))
+					<div class="col-xs-1 col-sm-1">@{{feeditem.name}}</div>
 
-				@foreach($oaFeedItems as $oItem)
-					<?php
-						$sPic = $oItem->thumb !== '' ? $oItem->thumb : $oItem->feedthumb;
+					<div class="col-xs-10 col-sm-9">@{{feeditem.title}}</div>
 
-						$oLastHit = new Carbon\Carbon($oItem->date);
-						$sSince = $oLastHit->diffForHumans();
+					<div class="col-xs-0 col-sm-1 hidden-xs">@{{feeditem.date}}</div>
+				</div>
+			</a>
 
-					?>
-
-					<a target="_blank" class="feed-item" href="{{$oItem->url}}">
-						<div class="row feed-item">
-
-
-							<div class="col-xs-1">
-								<!--
-								<span class="circle" style="background-color:{{$oItem->feed_colour or ''}};"></span>
-								-->
-								<span class="feed-thumb-wrapper"><img src="{{$sPic}}" class="feed-thumb"/></span>
-							</div>
-							<div class="col-xs-1 col-sm-1">
-								
-								<a href="/?feed={{$oItem->feed_id}}"><span class="hidden-xs">{{$oItem->name}}</span></a>
-							</div>
-							
-<!--
-								<span class="circle" style="background-color:{{$oItem->feed_colour or ''}};"></span>
-								-->
-								
-							<div class="col-xs-10 col-sm-9">
-								<span class="limit ellipsis">{{$oItem->title}}</span>
-							</div>
-							<div class="col-xs-0 col-sm-1 hidden-xs" title="{{$oLastHit->toDayDateTimeString()}}">
-								<span class="limit ellipsis">{{$sSince}}</span>
-							</div>
-						</div>
-					</a>
-				@endforeach
-
-				<?php echo $oaFeedItems->render(); ?>
-
-			@else
-				no feed items yet.. :(
-			@endif
+			<div>
+				<a class="pagination btn btn-default" ng-show="iPage > 1" ng-click="iPage = iPage -1"><i class="fa fa-caret-left"></i> newer</a>
+				<a class="pagination btn btn-default" ng-click="iPage = iPage  +1">older <i class="fa fa-caret-right"></i></a>
+			</div>
 
 		</div>
 	</div>

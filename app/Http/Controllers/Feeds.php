@@ -152,6 +152,58 @@ class Feeds extends Controller
         return redirect('/feeds/manage');
     }
 
+    public static function feedsAndCategories()
+    {
+        $oQuery = DB::table('feed_user')
+                ->join('feeditems', function($join)
+                    {
+                        $join->on('feed_user.feed_id', '=', 'feeditems.feed_id')
+                        ->where('feed_user.user_id', '=', Auth::id());
+                    })
+                ->join('feeds', "feeds.id", "=", "feed_user.feed_id")
+                ->orderBy('feeditems.pubDate', 'desc')
+                ->select(['feeditems.url as url', 'feeditems.title as title', 'feeds.url as feedurl', 'feeds.id as feed_id', 'feeditems.pubDate as date', 'feed_user.name as name', 'feeditems.thumb as thumb', 'feeds.thumb as feedthumb', 'feed_user.colour as feed_colour']);
+
+        if(Request::has('feed')){
+            $oQuery->where("feeds.id", "=", Request::get('feed'));
+        }
+
+        $iPage = Request::input("page", 1);
+        $iPerPage = 20;
+
+        $maFeedItems = $oQuery->skip($iPage * $iPerPage)->take($iPerPage)->get();
+
+        $oaFeedItems = [];
+
+        foreach ($maFeedItems as $oFeedItem) {
+
+            array_push($oaFeedItems, 
+                [
+                "url" => $oFeedItem->url,
+                "title" => $oFeedItem->title,
+                "feedurl" => $oFeedItem->feedurl,
+                "feed_id" => $oFeedItem->feed_id,
+                "date" => (new Carbon($oFeedItem->date))->diffForHumans(),
+                "name" => $oFeedItem->name,
+                "thumb" => $oFeedItem->thumb !== '' ? /*'http://rssme.samt.st'.*/$oFeedItem->thumb : $oFeedItem->feedthumb,
+                "feed_thumb" => $oFeedItem->feedthumb
+                ]
+                );
+        }
+
+        if(Request::has('feed')){
+            $oQuery->where("feeds.id", "=", Request::get('feed'));
+        }
+
+        $oaFeeds = Auth::user()->userFeeds;
+        $oaFeeds->load('feed');
+
+
+        return response()->json(['jsonFeedItems' => $oaFeedItems, 'jsonFeeds' => $oaFeeds]);
+
+        //return response(['jsonFeedItems' => $oaFeedItems, 'jsonFeeds' => $oaFeeds], 200);
+    }
+
     public static function makeHome()
     {
         // get users feeds, send to view

@@ -293,6 +293,48 @@ l=NaN;a.$watch(function(){l!==f.$viewValue||ka(h,f.$viewValue)||(h=ia(f.$viewVal
 Gc=function(){return{restrict:"A",require:"?ngModel",link:function(a,c,d,e){if(e){var f,g=d.ngPattern||d.pattern;d.$observe("pattern",function(a){L(a)&&0<a.length&&(a=new RegExp("^"+a+"$"));if(a&&!a.test)throw J("ngPattern")("noregexp",g,a,ua(c));f=a||t;e.$validate()});e.$validators.pattern=function(a){return e.$isEmpty(a)||A(f)||f.test(a)}}}}},Jc=function(){return{restrict:"A",require:"?ngModel",link:function(a,c,d,e){if(e){var f=-1;d.$observe("maxlength",function(a){a=W(a);f=isNaN(a)?-1:a;e.$validate()});
 e.$validators.maxlength=function(a,c){return 0>f||e.$isEmpty(c)||c.length<=f}}}}},Ic=function(){return{restrict:"A",require:"?ngModel",link:function(a,c,d,e){if(e){var f=0;d.$observe("minlength",function(a){f=W(a)||0;e.$validate()});e.$validators.minlength=function(a,c){return e.$isEmpty(c)||c.length>=f}}}}};O.angular.bootstrap?console.log("WARNING: Tried to load angular more than once."):(ce(),ee(ca),y(U).ready(function(){Zd(U,Ac)}))})(window,document);!window.angular.$$csp()&&window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
 //# sourceMappingURL=angular.min.js.map
+var app = angular.module('rssme', []);
+
+
+app.controller('MainUI', function($scope, $http) {
+
+	$scope.iPage = 1;
+	$scope.iFeedId = undefined;
+
+
+    var getItems = function(){
+
+    	// set loading
+
+	    $http({
+	    	method: "GET",
+	    	url: "http://rssme.dev/app/user/feedsandcategories",
+	    	params: {
+	    		page: $scope.iPage,
+	    		feed: $scope.iFeedId
+	    	}
+	    })
+	    .success(function(response) {
+	    	$scope.feeds = response.jsonFeeds;
+	    	$scope.feeditems = response.jsonFeedItems;
+
+	    	// end loading
+	    });
+    }
+
+    $scope.$watch('iPage', function(){
+    	getItems();
+    });
+    $scope.$watch('iFeedId', function(){
+    	getItems();
+    });
+
+    $scope.browseFeed = function(iFeedId){
+    	$scope.iFeedId = iFeedId;
+    }
+
+	getItems();
+});
 /*!
  * Bootstrap v3.3.5 (http://getbootstrap.com)
  * Copyright 2011-2015 Twitter, Inc.

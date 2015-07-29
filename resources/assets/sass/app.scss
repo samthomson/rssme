@@ -43,6 +43,10 @@ a.feed-item:visited{
 	background-color: $silver_background;
 }
 
+a.pagination, a.feed_link{
+	cursor: pointer;
+}
+
 
 ul.pager li.disabled{
 	display: none;
