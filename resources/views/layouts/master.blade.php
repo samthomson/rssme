@@ -3,6 +3,7 @@
 <html>
     <head>
         <title>rss - @yield('title', 'news aggregator')</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
         <!--<link href="{{ asset("css/app.css") }}" rel="stylesheet"-->
         <link rel="stylesheet" href="{{ elixir('css/all.css') }}">
 
@@ -11,7 +12,7 @@
     </head>
     <body>
         @yield('content')
-
+<!--fd-->
         <script type="text/javascript" src="{{ elixir('js/all.js') }}"></script>
     </body>
 </html>

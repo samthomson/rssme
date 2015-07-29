@@ -10,10 +10,9 @@ app.controller('MainUI', function($scope, $http) {
     var getItems = function(){
 
     	// set loading
-
 	    $http({
 	    	method: "GET",
-	    	url: "http://rssme.dev/app/user/feedsandcategories",
+	    	url: "/app/user/feedsandcategories",
 	    	params: {
 	    		page: $scope.iPage,
 	    		feed: $scope.iFeedId
