@@ -27,8 +27,10 @@
 				</div>
 			</a>
 
-			<hr/>
-			Showing page @{{iPage}} <a class="pagination" ng-show="iPage > 1" ng-click="iPage = iPage -1">newer</a> <a class="pagination" ng-click="iPage = iPage  +1">older</a>
+			<div>
+				<a class="pagination btn btn-default" ng-show="iPage > 1" ng-click="iPage = iPage -1"><i class="fa fa-caret-left"></i> newer</a>
+				<a class="pagination btn btn-default" ng-click="iPage = iPage  +1">older <i class="fa fa-caret-right"></i></a>
+			</div>
 
 		</div>
 	</div>

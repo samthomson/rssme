@@ -18,14 +18,14 @@
       <ul class="nav navbar-nav">
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="/feeds/manage">feeds</a></li>
-        <li><a href="/feeds/add">Add</a></li>
+        <li><a href="/feeds/manage"><i class="fa fa-list"></i> feeds</a></li>
+        <li><a href="/feeds/add"><i class="fa fa-plus"></i> Add</a></li>
 
 
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" alt="{{Auth::user()->email}}">Account <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" alt="{{Auth::user()->email}}"><i class="fa fa-user"></i> Account <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="/auth/logout">logout</a></li>
+            <li><a href="/auth/logout"><i class="fa fa-sign-out"></i> logout</a></li>
           </ul>
         </li>
       </ul>
