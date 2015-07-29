@@ -185,7 +185,7 @@ class Feeds extends Controller
                 "feed_id" => $oFeedItem->feed_id,
                 "date" => (new Carbon($oFeedItem->date))->diffForHumans(),
                 "name" => $oFeedItem->name,
-                "thumb" => $oFeedItem->thumb !== '' ? 'http://rssme.samt.st'.$oFeedItem->thumb : $oFeedItem->feedthumb,
+                "thumb" => $oFeedItem->thumb !== '' ? /*'http://rssme.samt.st'.*/$oFeedItem->thumb : $oFeedItem->feedthumb,
                 "feed_thumb" => $oFeedItem->feedthumb
                 ]
                 );
@@ -194,7 +194,7 @@ class Feeds extends Controller
         if(Request::has('feed')){
             $oQuery->where("feeds.id", "=", Request::get('feed'));
         }
-        
+
         $oaFeeds = Auth::user()->userFeeds;
         $oaFeeds->load('feed');
 
