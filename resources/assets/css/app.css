@@ -73,8 +73,11 @@ ul.pager li.disabled {
 .navbar-brand {
   font-size: 44px; }
 
+#home_link {
+  font-family: 'PT Sans Caption', sans-serif; }
+
 .brand {
-  letter-spacing: 1.2; }
+  letter-spacing: 1.0; }
 
 .brand.rss {
   color: #f39c12; }
