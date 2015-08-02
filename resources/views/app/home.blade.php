@@ -2,12 +2,12 @@
 
 
 @section('app_content')
-	<div ng-app="rssme">
-		<div class="row" ng-controller="MainUI">
+	<div>
+		<div class="row">
 	        
 			<div class="col-xs-2 hidden-xs">
 
-				<a class="feed_link" ng-repeat="feed in feeds" ng-click="browseFeed(feed.feed_id)">
+				<a class="feed_link" ng-repeat="feed in feeds" ng-click="changeFeed(feed.feed_id)">
 					<span>@{{feed.name}}</span>
 					<br/>
 				</a>
@@ -30,10 +30,10 @@
 
 				<div class="row">
 					<div class="col-xs-6">
-						<a class="pagination btn btn-default form-control" ng-show="iPage > 1" ng-click="iPage = iPage -1"><i class="fa fa-caret-left"></i> newer</a>
+						<a class="pagination btn btn-default form-control" ng-show="iPage > 1" ng-click="changePage(iPage - 1)"><i class="fa fa-caret-left"></i> newer</a>
 					</div>
 					<div class="col-xs-6">
-						<a class="pagination btn btn-default form-control" ng-click="iPage = iPage  +1">older <i class="fa fa-caret-right"></i></a>
+						<a class="pagination btn btn-default form-control" ng-click="changePage(iPage + 1)">older <i class="fa fa-caret-right"></i></a>
 					</div>
 				</div>
 

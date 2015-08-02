@@ -11,7 +11,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/"><span class="brand rss">RSS</span><span class="brand me">me</span></a>
+      <a class="navbar-brand" ng-click="home()" id="home_link"><span class="brand rss">RSS</span><span class="brand me">me</span></a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->

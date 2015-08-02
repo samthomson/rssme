@@ -26,15 +26,29 @@ app.controller('MainUI', function($scope, $http) {
 	    });
     }
 
+    /*
     $scope.$watch('iPage', function(){
     	getItems();
     });
     $scope.$watch('iFeedId', function(){
     	getItems();
     });
+*/
 
-    $scope.browseFeed = function(iFeedId){
-    	$scope.iFeedId = iFeedId;
+    $scope.changePage = function(iNewPage){
+    	$scope.iPage = iNewPage;
+    	getItems();
+    }
+    $scope.changeFeed = function(iNewFeed){
+    	$scope.iFeedId = iNewFeed;
+    	$scope.iPage = 1;
+    	getItems();
+    }
+
+    $scope.home = function(){
+    	$scope.iFeedId = undefined;
+    	$scope.iPage = 1;
+    	getItems();
     }
 
 	getItems();
