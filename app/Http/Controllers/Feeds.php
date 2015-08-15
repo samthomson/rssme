@@ -55,50 +55,58 @@ class Feeds extends Controller
 
     public static function test()
     {
-        //self::scrapeThumbFromFeedItem(9);
+        // list of rss feeds
+        $saFeedUrls = [
+            'nat geo' => 15
+        ];
 
-        // re-schedule feeds to be crawled
 
-        $iMinOffset = 0;
-        foreach(Feed::all() as $oFeed)
+        foreach($saFeedUrls as $sFeedName => $iFeedId)
         {
-            self::scheduleFeedPull($oFeed->id, $iMinOffset);
-            $iMinOffset++;
+            self::pullFeed($iFeedId);
         }
     }
     public static function create()
     {
-        // 
-        if (Request::has('feedurl')){
+        if (Request::has('feedurl') && Request::has('feedname')){
 
-            // get id of a feed (new or existing)
-            $oFeed = Feed::where("url", Request::get('feedurl'))->first();
+            self::createUniqueUserFeed(Request::get('feedurl'), Request::has('feedname'));
 
-            $iFeedId = -1;
-
-            if(!isset($oFeed)){
-                $oFeed = new Feed;
-
-                $oFeed->url = Request::get('feedurl');
-                
-                $oFeed->save();
-                $iFeedId = $oFeed->id;
-
-                // pull it
-                self::scheduleFeedPull($iFeedId);
-            }else{
-                $iFeedId = $oFeed->id;
-            }
-
-            $oUserFeed = new UserFeed;
-            $oUserFeed->feed_id = $iFeedId;
-            $oUserFeed->user_id = Auth::id();
-            $oUserFeed->name = Request::has('feedname') ? Request::get('feedname') : '[feed]';
-            $oUserFeed->colour = Helper::sRandomUserFeedColour();
-            $oUserFeed->save();
-            
             return redirect('/feeds/manage');
         }
+    }
+    private static function createUniqueUserFeed($sFeedUrl, $sFeedName, $bScheduleImmediatePull = true)
+    {
+        // creates a feed url, if there's no feed for current user for url, create it
+
+        // get id of a feed (new or existing)
+        $oFeed = Feed::where("url", $sFeedUrl)->first();
+
+        $iFeedId = -1;
+
+        if(!isset($oFeed)){
+            $oFeed = new Feed;
+
+            $oFeed->url = $sFeedUrl;
+
+            $oFeed->save();
+            $iFeedId = $oFeed->id;
+
+            // pull it
+            if($bScheduleImmediatePull){
+                // make sure it's in line to be crawled, unless we're calling this from a test stub
+                self::scheduleFeedPull($iFeedId);
+            }
+        }else{
+            $iFeedId = $oFeed->id;
+        }
+
+        $oUserFeed = new UserFeed;
+        $oUserFeed->feed_id = $iFeedId;
+        $oUserFeed->user_id = Auth::id();
+        $oUserFeed->name = $sFeedName;;
+        $oUserFeed->colour = Helper::sRandomUserFeedColour();
+        $oUserFeed->save();
     }
 
     public static function update($iUserFeedId)
@@ -319,7 +327,6 @@ class Feeds extends Controller
                     // there are already items from this feed
                     $sStopAt = $oFeedItem->guid;
                 }
-
 
                 $context  = stream_context_create(array('http' => array('header' => 'Accept: application/xml')));
 
