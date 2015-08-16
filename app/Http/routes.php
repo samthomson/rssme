@@ -17,13 +17,13 @@
 Route::get('/', ['uses' => 'Feeds@serveAngularApp']);
 
 
-Route::get('/auth/login', function () {
-	//  login/register
-    return view('app/login');
-});
 
-Route::controllers([
-	'auth' => 'Auth\AuthController',
+Route::post('/app/auth/login',  ['uses' => 'CustomAuthController@login']);
+Route::post('/app/auth/logout',  ['uses' => 'CustomAuthController@logout']);
+
+
+Route::controllers([/*
+	'app/auth' => 'Auth\CustomAuthController',*/
 	'password' => 'Auth\PasswordController',
 ]);
 

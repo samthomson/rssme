@@ -1,43 +1,127 @@
-@extends('layouts.app')
 
 
-@section('app_content')
-	<div>
-		<div class="row">
-	        
-			<div class="col-xs-2 hidden-xs">
+<!-- Stored in resources/views/layouts/master.blade.php -->
 
-				<a class="feed_link" ng-repeat="feed in feeds" ng-click="changeFeed(feed.feed_id)">
-					<span>@{{feed.name}}</span>
-					<br/>
-				</a>
-			</div>
-			<div class="col-xs-12 col-sm-10">
+<html>
+    <head>
+        <title>rss - @yield('title', 'news aggregator')</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+        <!--<link href="{{ asset("css/app.css") }}" rel="stylesheet"-->
+        <link rel="stylesheet" href="{{ elixir('css/all.css') }}">
 
-				<a ng-repeat="feeditem in feeditems" target="_blank" class="feed-item" href="@{{feeditem.url}}">
-					<div class="row feed-item">
-						<div class="col-xs-2 col-sm-1">
-							<img class="feed-thumb" ng-src="@{{feeditem.thumb}}" />
-						</div>
+        <link rel='stylesheet' id='g_font-css'  href='http://fonts.googleapis.com/css?family=Noto+Sans%3A400%2C700%2C400italic%2C700italic&#038;ver=3.5.1' type='text/css' media='all' />
 
-						<div class="col-xs-0 col-sm-1 hidden-xs">@{{feeditem.name}}</div>
+        <link href='http://fonts.googleapis.com/css?family=PT+Sans+Caption:700' rel='stylesheet' type='text/css'>
 
-						<div class="col-xs-10 col-sm-9">@{{feeditem.title}}</div>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    </head>
+    <body ng-app="rssme">
+        <div ng-controller="MainUI">
 
-						<div class="col-xs-0 col-sm-1 hidden-xs">@{{feeditem.date}}</div>
-					</div>
-				</a>
 
-				<div class="row">
-					<div class="col-xs-6">
-						<a class="pagination btn btn-default form-control" ng-show="iPage > 1" ng-click="changePage(iPage - 1)"><i class="fa fa-caret-left"></i> newer</a>
-					</div>
-					<div class="col-xs-6">
-						<a class="pagination btn btn-default form-control" ng-click="changePage(iPage + 1)">older <i class="fa fa-caret-right"></i></a>
-					</div>
-				</div>
 
-			</div>
-		</div>
-	</div>
-@endsection
+            <nav class="navbar navbar-default">
+              <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </button>
+                  <a class="navbar-brand" ng-click="home()" id="home_link"><span class="brand rss">RSS</span><span class="brand me">me</span></a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                  <ul class="nav navbar-nav">
+                  </ul>
+
+					logged in: bLoggedIn @{{bLoggedIn }}
+
+                    <ul class="nav navbar-nav navbar-right" ng-show="bLoggedIn">
+                      <li><a href="/feeds/manage"><i class="fa fa-list"></i> feeds</a></li>
+                      <li><a href="/feeds/add"><i class="fa fa-plus"></i> Add</a></li>
+
+
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" alt="account menu"}"><i class="fa fa-user"></i> Account <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                          <li><a ng-click="logout()"><i class="fa fa-sign-out"></i> logout</a></li>
+                        </ul>
+                      </li>
+                    </ul>
+
+                </div><!-- /.navbar-collapse -->
+              </div><!-- /.container-fluid -->
+            </nav>
+            <div class="container-fluid">
+
+
+
+              <div ng-show="bLoggedIn">
+				  feeds ui:
+                <div class="row">
+
+                  <div class="col-xs-2 hidden-xs">
+
+                    <a class="feed_link" ng-repeat="feed in feeds" ng-click="changeFeed(feed.feed_id)">
+                      <span>@{{feed.name}}</span>
+                      <br/>
+                    </a>
+                  </div>
+                  <div class="col-xs-12 col-sm-10">
+
+                    <a ng-repeat="feeditem in feeditems" target="_blank" class="feed-item" href="@{{feeditem.url}}">
+                      <div class="row feed-item">
+                        <div class="col-xs-2 col-sm-1">
+                          <img class="feed-thumb" ng-src="@{{feeditem.thumb}}" />
+                        </div>
+
+                        <div class="col-xs-0 col-sm-1 hidden-xs">@{{feeditem.name}}</div>
+
+                        <div class="col-xs-10 col-sm-9">@{{feeditem.title}}</div>
+
+                        <div class="col-xs-0 col-sm-1 hidden-xs">@{{feeditem.date}}</div>
+                      </div>
+                    </a>
+
+                    <div class="row">
+                      <div class="col-xs-6">
+                        <a class="pagination btn btn-default form-control" ng-show="iPage > 1" ng-click="changePage(iPage - 1)"><i class="fa fa-caret-left"></i> newer</a>
+                      </div>
+                      <div class="col-xs-6">
+                        <a class="pagination btn btn-default form-control" ng-click="changePage(iPage + 1)">older <i class="fa fa-caret-right"></i></a>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+
+
+
+              <div ng-show="!bLoggedIn">
+                <div class="row">
+
+                  @include('app.login')
+                </div>
+              </div>
+              
+              
+              
+              
+              
+            </div>
+          
+          
+          
+        </div>
+        <script type="text/javascript" src="{{ elixir('js/all.js') }}"></script>
+    </body>
+</html>
+
+
+

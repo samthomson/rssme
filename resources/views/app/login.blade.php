@@ -1,46 +1,108 @@
-@extends('layouts.center')
+<div class="modal-body ng-scope" id="siteLoginRegister">
+
+	<div id="loginRegisterDialog" class="ng-scope">
+		<!--
+		<form role="form" method="post" ng-submit="auth('facebook')" class="ng-pristine ng-valid">
+			<div class="form-group hide">
+				<button type="submit" class="btn btn-block btn-facebook form-control" id="facebook_auth"><i class="fa fa-facebook"></i> login with facebook</button>
+			</div>
+		</form>
+		-->
+
+		<!-- Nav tabs -->
+		<ul class="nav nav-tabs" role="tablist" id="login_register_tablist">
+			<li role="presentation" ng-class="{active: tab == 'login'}" class="active" style=""><a role="tab" data-toggle="tab" ng-click="setActiveTab('login')">login</a></li>
+			<li role="presentation" ng-class="{active: tab == 'register'}"><a role="tab" data-toggle="tab" ng-click="setActiveTab('register')">register</a></li>
+			<li role="presentation" class=""></li>
+		</ul>
 
 
-@section('centered_content')
-    <div id="" class="row">
+		<!-- Tab panes -->
+		<div class="tab-content">
+			<!---- login tab ---->
+			<div role="tabpanel" class="tab-pane active" ng-class="{active: tab == 'login'}" id="login">
 
-    	<div class="col-xs-6">
-			<form role="form" method="post" name="register" action="/auth/register">
-				{!! csrf_field() !!}
-				<div class="form-group">
-					<h2>register</h2>
-				</div>
-				<div class="form-group">
-					<input type="email" name="email" class="form-control" id="register_email" placeholder="email">
-				</div>
-				<div class="form-group">
-					<input type="password" name="password" class="form-control" id="register_password" placeholder="password">
-				</div>
-				<div class="form-group">
-					<input type="checkbox" name="remember" checked>
-					<button type="submit" name="submit" class="btn btn-warning form-control" id="login_button">register</button>
-				</div>
-			</form>
-		</div>
 
-		<div class="col-xs-6">
-			<form role="form" method="post" name="login" action="/auth/login">
-				{!! csrf_field() !!}
-				<div class="form-group">
-					<h2>login</h2>
-				</div>
-				<div class="form-group">
-					<input type="email" name="email" class="form-control" id="login_email" placeholder="email">
-				</div>
-				<div class="form-group">
-					<input type="password" name="password" class="form-control" id="login_password" placeholder="password">
-				</div>
-				<div class="form-group">
-					<input type="hidden" name="remember" checked>
-					<button type="submit" name="submit" class="btn btn-success form-control" id="login_button">login</button>
-				</div>
-			</form>
+
+
+
+
+
+
+
+
+				<!-- ngIf: alert.login -->
+				<form>
+					<div class="feedback"></div>
+					<div class="loading alert app"><i class="fa fa-spinner fa-spin"></i> loading</div>
+					<div class="form-group">
+						<label for="exampleInputEmail1">Email address</label>
+						<input ng-model="email" name="email" type="email" class="form-control ng-pristine ng-untouched ng-valid ng-valid-email" id="login_email" placeholder="Email">
+					</div>
+					<div class="form-group">
+						<label for="exampleInputPassword1">Password</label>
+						<input ng-model="password" name="password" type="password" class="form-control ng-pristine ng-untouched ng-valid" id="login_password" placeholder="Password">
+					</div>
+					<button type="button" class="btn btn-default main-color flat btn-lg btn-block" ng-click="login()">login</button>
+				</form>
+
+
+
+
+
+
+				<p>
+					<a href="#reset_password_tab" role="tab" data-toggle="tab" id="reset_password_button" class="btn btn-inverse form-control" ng-click="setActiveTab('reset_password')">forgot password</a>
+				</p>
+			</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			<!---- register tab ---->
+			<div role="tabpanel" class="tab-pane" ng-class="{active: tab == 'register'}" id="register">
+				<!-- ngIf: alert.register -->
+				<form role="form" id="register_form" method="post" ng-submit="register()" class="ng-pristine ng-valid ng-valid-email">
+					<div class="feedback"></div>
+					<div class="loading alert app"><i class="fa fa-spinner fa-spin"></i> loading</div>
+					<div class="form-group">
+						<label for="exampleInputEmail1">Email address</label>
+						<input ng-model="email" name="email" type="email" class="form-control ng-pristine ng-untouched ng-valid ng-valid-email" id="register_email" placeholder="Enter email">
+					</div>
+					<div class="form-group">
+						<label for="exampleInputPassword1">Password</label>
+						<input ng-model="password" name="password" type="password" class="form-control ng-pristine ng-untouched ng-valid" id="register_password" placeholder="Password">
+					</div>
+					<button type="submit" class="btn btn-default main-color flat btn-lg btn-block">register</button>
+				</form>
+
+			</div>
+
+			<!---- reset password tab ---->
+			<div role="tabpanel" class="tab-pane" id="reset_password_tab" ng-class="{active: tab == 'reset_password'}">
+
+				<form role="form" id="password_reset_form" method="post" ng-submit="resetPassword()" class="ng-pristine ng-valid ng-valid-email">
+					<div class="feedback"></div>
+					<div class="loading alert app"><i class="fa fa-spinner fa-spin"></i> loading</div>
+					<div class="form-group">
+						<label for="exampleInputEmail1">Email address</label>
+						<input ng-model="email" name="email" type="email" class="form-control ng-pristine ng-untouched ng-valid ng-valid-email" id="reset_email" placeholder="Enter email">
+					</div>
+					<button type="submit" class="btn btn-default main-color flat btn-lg btn-block">reset password</button>
+				</form>
+
+			</div>
 		</div>
 	</div>
 
-@endsection
+</div>
