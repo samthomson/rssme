@@ -7,10 +7,14 @@ var app = angular
 
 app.controller('MainUI', function($scope, $http) {
 
+
+	$scope.feeds = [];
+	$scope.feeditems = [];
+
 	$scope.iPage = 1;
 	$scope.iFeedId = undefined;
 	$scope.bLoggedIn = false;
-	$scope.bSomethingLoading = false;
+	$scope.bSomethingLoading = true;
 
 	// login / register forms
 	$scope.email = '';
@@ -30,15 +34,14 @@ app.controller('MainUI', function($scope, $http) {
 	    	}
 	    })
 	    .then(function(response) {
-	    	$scope.feeds = response.jsonFeeds;
-	    	$scope.feeditems = response.jsonFeedItems;
+				$scope.feeds = response.data.jsonFeeds;
+	    		$scope.feeditems = response.data.jsonFeedItems;
 
-	    	// end loading
-			$scope.bSomethingLoading = false;
-			// user may be logged in or out now
-			$scope.bLoggedIn = response.status == 200 ? true : false;
+				// end loading
+				$scope.bSomethingLoading = false;
+				// user may be logged in or out now
+				$scope.bLoggedIn = response.status == 200 ? true : false;
 	    },(function(){
-				console.log("error");
 				$scope.bSomethingLoading = false;
 		}));
     };

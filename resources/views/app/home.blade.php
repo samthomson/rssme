@@ -38,8 +38,6 @@
                   <ul class="nav navbar-nav">
                   </ul>
 
-					logged in: @{{bLoggedIn }}
-
                     <ul class="nav navbar-nav navbar-right" ng-show="bLoggedIn">
                       <li><a href="/feeds/manage"><i class="fa fa-list"></i> feeds</a></li>
                       <li><a href="/feeds/add"><i class="fa fa-plus"></i> Add</a></li>
@@ -60,8 +58,8 @@
 
 
 
-              <div ng-show="bLoggedIn">
-				  feeds ui:
+              <div ng-show="bLoggedIn && !bSomethingLoading">
+
                 <div class="row">
 
                   <div class="col-xs-2 hidden-xs">
@@ -103,12 +101,14 @@
 
 
 
-              <div ng-show="bLoggedIn == false">
+              <div ng-show="bLoggedIn == false && !bSomethingLoading">
                 <div class="row">
 
                   @include('app.login')
                 </div>
               </div>
+
+                <div id="loading" ng-show="bSomethingLoading"><i class="fa fa-spinner fa-spin"></i> loading</div>
               
               
               
