@@ -38,7 +38,7 @@
                   <ul class="nav navbar-nav">
                   </ul>
 
-					logged in: bLoggedIn @{{bLoggedIn }}
+					logged in: @{{bLoggedIn }}
 
                     <ul class="nav navbar-nav navbar-right" ng-show="bLoggedIn">
                       <li><a href="/feeds/manage"><i class="fa fa-list"></i> feeds</a></li>
@@ -103,7 +103,7 @@
 
 
 
-              <div ng-show="!bLoggedIn">
+              <div ng-show="bLoggedIn == false">
                 <div class="row">
 
                   @include('app.login')
