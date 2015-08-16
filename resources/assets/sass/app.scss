@@ -1,5 +1,7 @@
 /* app specific scss */
 $silver_background: #F5F5F5;
+$colour_orange:#f39c12;
+$colour_grey:#bdc3c7;
 $i_feed_item_height: 28px;
 
 
@@ -75,8 +77,8 @@ ul.pager li.disabled{
 
 #home_link{font-family: 'PT Sans Caption', sans-serif;}
 .brand{ letter-spacing: 1.0;}
-.brand.rss{color:#f39c12;}
-.brand.me{color:#bdc3c7;}
+.brand.rss{color:$colour_orange;}
+.brand.me{color:$colour_grey;}
 
 .circle{
 	display:inline-block;
@@ -85,7 +87,23 @@ ul.pager li.disabled{
 	width:$i_feed_item_height/2;
 	margin-top:$i_feed_item_height/4;
 
-  #loading{
-	font-size:32px;
-  }
+}
+
+#loading{
+  font-size:18px;
+
+  margin:auto;
+  margin-top:30px;
+  padding:8px;
+  border-radius: 8px;
+  max-width:200px;
+  /*
+  margin-left:-100px;
+  padding-left:50%;
+  */
+  text-align: center;
+  border: 1px solid $colour_grey;
+}
+#loading .fa{
+  color:$colour_grey;
 }

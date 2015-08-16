@@ -7480,8 +7480,23 @@ ul.pager li.disabled {
   height: 14px;
   width: 14px;
   margin-top: 7px; }
-  .circle #loading {
-    font-size: 32px; }
+
+#loading {
+  font-size: 18px;
+  margin: auto;
+  margin-top: 30px;
+  padding: 8px;
+  border-radius: 8px;
+  max-width: 200px;
+  /*
+  margin-left:-100px;
+  padding-left:50%;
+  */
+  text-align: center;
+  border: 1px solid #bdc3c7; }
+
+#loading .fa {
+  color: #bdc3c7; }
 
 /*# sourceMappingURL=app.css.map */
 /*# sourceMappingURL=all.css.map */

@@ -1,13 +1,6 @@
 <div class="modal-body ng-scope" id="siteLoginRegister">
 
 	<div id="loginRegisterDialog" class="ng-scope">
-		<!--
-		<form role="form" method="post" ng-submit="auth('facebook')" class="ng-pristine ng-valid">
-			<div class="form-group hide">
-				<button type="submit" class="btn btn-block btn-facebook form-control" id="facebook_auth"><i class="fa fa-facebook"></i> login with facebook</button>
-			</div>
-		</form>
-		-->
 
 		<!-- Nav tabs -->
 		<ul class="nav nav-tabs" role="tablist" id="login_register_tablist">
@@ -31,7 +24,7 @@
 
 
 
-				<!-- ngIf: alert.login -->
+
 				<form>
 					<div class="feedback"></div>
 					<div class="loading alert app"><i class="fa fa-spinner fa-spin"></i> loading</div>
