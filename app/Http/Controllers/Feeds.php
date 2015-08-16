@@ -211,7 +211,7 @@ class Feeds extends Controller
 
         //return response(['jsonFeedItems' => $oaFeedItems, 'jsonFeeds' => $oaFeeds], 200);
     }
-
+    /*
     public static function makeHome()
     {
         // get users feeds, send to view
@@ -239,6 +239,11 @@ class Feeds extends Controller
 
 
         return view('app.home', ['oaFeedItems' => $oaFeedItems, 'oaFeeds' => $oaFeeds]);
+    }
+    */
+    public  static function serveAngularApp()
+    {
+        return view('app.home');
     }
 
     public static function storeThumbForFeedItem($oFeedItem, $sRemoteThumbUrl){

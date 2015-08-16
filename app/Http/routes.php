@@ -11,6 +11,10 @@
 |
 */
 
+//
+// serve the angular app
+//
+Route::get('/', ['uses' => 'Feeds@serveAngularApp']);
 
 
 Route::get('/auth/login', function () {
@@ -18,41 +22,29 @@ Route::get('/auth/login', function () {
     return view('app/login');
 });
 
+Route::controllers([
+	'auth' => 'Auth\AuthController',
+	'password' => 'Auth\PasswordController',
+]);
 
 Route::group(['middleware' => 'auth'], function () {
-	Route::get('/', ['uses' => 'Feeds@makeHome']);
 
-	Route::get('/feeds/manage', function () {
+	Route::get('/app/feeds/manage', function () {
 		// list all feeds
 	    return view('app/feeds/manage');
 	});
-	Route::get('/feeds/add', function () {
+	Route::get('/app/feeds/add', function () {
 		// make feed add form
 	    return view('app/feeds/add');
 	});
-	Route::post('/feeds/add', ['uses' => 'Feeds@create']);
+	Route::post('/app/feeds/add', ['uses' => 'Feeds@create']);
 
-	Route::delete('/feeds/{id}', ['uses' => 'Feeds@delete']);
-	Route::get('/feeds/{id}', ['uses' => 'Feeds@edit']);
-	Route::post('/feeds/{id}', ['uses' => 'Feeds@update']);
-
-
-	/* new for angular */
+	Route::delete('/app/feeds/{id}', ['uses' => 'Feeds@delete']);
+	Route::get('/app/feeds/{id}', ['uses' => 'Feeds@edit']);
+	Route::post('/app/feeds/{id}', ['uses' => 'Feeds@update']);
 
 	Route::get('/app/user/feedsandcategories', ['uses' => 'Feeds@feedsAndCategories']);
 });
 
 
-Route::controllers([
-    'auth' => 'Auth\AuthController',
-    'password' => 'Auth\PasswordController',
-]);
-
-
-/* spoof */
-Route::get('/pullallfeeds', ['uses' => 'Feeds@pullAll']);
-Route::get('/pullallfeeds/{id}', ['uses' => 'Feeds@pullFeed']);
-
-Route::get('/process', ['uses' => 'Auto@process']);
-Route::get('/test', ['uses' => 'Feeds@test']);
 

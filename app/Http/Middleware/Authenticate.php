@@ -20,6 +20,8 @@ class Authenticate
      * @param  Guard  $auth
      * @return void
      */
+    protected $redirectTo = '/';
+
     public function __construct(Guard $auth)
     {
         $this->auth = $auth;

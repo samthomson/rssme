@@ -1,4 +1,8 @@
-var app = angular.module('rssme', []);
+var app = angular
+	.module('rssme', [])
+	.config(['$httpProvider', function($httpProvider) {
+		$httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
+	}]);
 
 
 app.controller('MainUI', function($scope, $http) {
@@ -26,14 +30,6 @@ app.controller('MainUI', function($scope, $http) {
 	    });
     }
 
-    /*
-    $scope.$watch('iPage', function(){
-    	getItems();
-    });
-    $scope.$watch('iFeedId', function(){
-    	getItems();
-    });
-*/
 
     $scope.changePage = function(iNewPage){
     	$scope.iPage = iNewPage;

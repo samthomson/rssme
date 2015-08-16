@@ -18,6 +18,7 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
       </ul>
+      @if(Auth::check())
       <ul class="nav navbar-nav navbar-right">
         <li><a href="/feeds/manage"><i class="fa fa-list"></i> feeds</a></li>
         <li><a href="/feeds/add"><i class="fa fa-plus"></i> Add</a></li>
@@ -30,6 +31,7 @@
           </ul>
         </li>
       </ul>
+      @endif
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
