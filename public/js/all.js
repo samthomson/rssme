@@ -356,6 +356,8 @@ app.controller('MainUI', function($scope, $http) {
 			if(response.status == 200)
 			{
 				$scope.bLoggedIn = true;
+                // now fetch items
+                getItems();
 			}
 			// end loading
 			$scope.bSomethingLoading = false;

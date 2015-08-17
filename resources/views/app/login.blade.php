@@ -27,7 +27,6 @@
 
 				<form>
 					<div class="feedback"></div>
-					<div class="loading alert app"><i class="fa fa-spinner fa-spin"></i> loading</div>
 					<div class="form-group">
 						<label for="exampleInputEmail1">Email address</label>
 						<input ng-model="email" name="email" type="email" class="form-control ng-pristine ng-untouched ng-valid ng-valid-email" id="login_email" placeholder="Email">
@@ -36,17 +35,14 @@
 						<label for="exampleInputPassword1">Password</label>
 						<input ng-model="password" name="password" type="password" class="form-control ng-pristine ng-untouched ng-valid" id="login_password" placeholder="Password">
 					</div>
-					<button type="button" class="btn btn-default main-color flat btn-lg btn-block" ng-click="login()">login</button>
+					<button type="button" class="btn main-color flat btn-lg btn-block" ng-click="login()">login</button>
 				</form>
 
 
 
+                    <!--
+					<a href="#reset_password_tab" role="tab" data-toggle="tab" id="reset_password_button" class="pull-right" ng-click="setActiveTab('reset_password')">forgot password</a>-->
 
-
-
-				<p>
-					<a href="#reset_password_tab" role="tab" data-toggle="tab" id="reset_password_button" class="btn btn-inverse form-control" ng-click="setActiveTab('reset_password')">forgot password</a>
-				</p>
 			</div>
 
 

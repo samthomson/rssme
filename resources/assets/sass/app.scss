@@ -1,8 +1,11 @@
 /* app specific scss */
+$colour_white:#fff;
 $silver_background: #F5F5F5;
 $colour_orange:#f39c12;
 $colour_grey:#bdc3c7;
 $i_feed_item_height: 28px;
+
+$i_border_radius: 8px;
 
 
 body{
@@ -13,7 +16,7 @@ body{
 a.feed-item{
 	font-weight:bold;
 	color: black;
-	background-color:white;
+	background-color:$colour_white;
 	font-size: smaller;
 	display: block;
 }
@@ -86,7 +89,6 @@ ul.pager li.disabled{
 	height:$i_feed_item_height/2;
 	width:$i_feed_item_height/2;
 	margin-top:$i_feed_item_height/4;
-
 }
 
 #loading{
@@ -95,15 +97,29 @@ ul.pager li.disabled{
   margin:auto;
   margin-top:30px;
   padding:8px;
-  border-radius: 8px;
+  border-radius: $i_border_radius;
   max-width:200px;
-  /*
-  margin-left:-100px;
-  padding-left:50%;
-  */
+
   text-align: center;
   border: 1px solid $colour_grey;
 }
 #loading .fa{
   color:$colour_grey;
+}
+
+#siteLoginRegister{
+
+  margin:auto;
+  margin-top:30px;
+  max-width:350px;
+
+  border: 1px solid $colour_orange;
+  background-color:$colour_white;
+  border-radius: $i_border_radius;
+}
+
+.btn.main-color{
+  background: $colour_orange;
+  color:$colour_white;
+  font-weight:400;
 }

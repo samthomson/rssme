@@ -7395,7 +7395,7 @@ body {
 a.feed-item {
   font-weight: bold;
   color: black;
-  background-color: white;
+  background-color: #fff;
   font-size: smaller;
   display: block; }
 
@@ -7488,15 +7488,24 @@ ul.pager li.disabled {
   padding: 8px;
   border-radius: 8px;
   max-width: 200px;
-  /*
-  margin-left:-100px;
-  padding-left:50%;
-  */
   text-align: center;
   border: 1px solid #bdc3c7; }
 
 #loading .fa {
   color: #bdc3c7; }
+
+#siteLoginRegister {
+  margin: auto;
+  margin-top: 30px;
+  max-width: 350px;
+  border: 1px solid #f39c12;
+  background-color: #fff;
+  border-radius: 8px; }
+
+.btn.main-color {
+  background: #f39c12;
+  color: #fff;
+  font-weight: 400; }
 
 /*# sourceMappingURL=app.css.map */
 /*# sourceMappingURL=all.css.map */
