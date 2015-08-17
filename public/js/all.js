@@ -300,7 +300,7 @@ var app = angular
 	}]);
 
 
-app.controller('MainUI', function($scope, $http) {
+app.controller('MainUI', function($scope, $http, $interval) {
 
 
 	$scope.feeds = [];
@@ -430,6 +430,11 @@ app.controller('MainUI', function($scope, $http) {
         $scope.bFeedbackType = sType;
         $scope.bFeedbackShowing = true;
         $scope.sFeedbackMessage = sMessage;
+        // for ten secs
+        $interval(function(){
+            $scope.closeFeedback();
+        },10000);
+
     };
 
     $scope.resetAddFeedForm = function() {
@@ -438,7 +443,9 @@ app.controller('MainUI', function($scope, $http) {
         $scope.addfeed_url = '';
     };
     $scope.closeFeedback = function(){
-        $scope.bFeedbackType = true;
+        $scope.bFeedbackType = 'success';
+        $scope.bFeedbackShowing = false;
+        $scope.sFeedbackMessage = '';
     };
 
 
