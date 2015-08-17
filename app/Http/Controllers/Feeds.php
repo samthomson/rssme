@@ -71,7 +71,7 @@ class Feeds extends Controller
     {
         if (Request::has('feedurl') && Request::has('feedname')){
 
-            self::createUniqueUserFeed(Request::get('feedurl'), Request::has('feedname'));
+            self::createUniqueUserFeed(Request::get('feedurl'), Request::get('feedname'));
 
             return response("ok", 200);
         }else{
@@ -107,7 +107,7 @@ class Feeds extends Controller
         $oUserFeed = new UserFeed;
         $oUserFeed->feed_id = $iFeedId;
         $oUserFeed->user_id = Auth::id();
-        $oUserFeed->name = $sFeedName;;
+        $oUserFeed->name = $sFeedName;
         $oUserFeed->colour = Helper::sRandomUserFeedColour();
         $oUserFeed->save();
     }
