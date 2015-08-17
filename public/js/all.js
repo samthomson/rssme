@@ -389,6 +389,10 @@ app.controller('MainUI', function($scope, $http) {
 			});
 	};
 
+    $scope.addFeed = function() {
+
+    };
+
 
     $scope.changePage = function(iNewPage){
     	$scope.iPage = iNewPage;

@@ -119,7 +119,14 @@ ul.pager li.disabled{
 }
 
 .btn.main-color{
-  background: $colour_orange;
-  color:$colour_white;
+  background: $colour_white;
+  color:$colour_orange;
+  border-color:$colour_orange;
   font-weight:400;
 }
+.btn.main-color:hover{
+  background: $colour_orange;
+  color:$colour_white;
+}
+
+a{cursor: pointer;}

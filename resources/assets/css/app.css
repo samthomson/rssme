@@ -114,8 +114,16 @@ ul.pager li.disabled {
   border-radius: 8px; }
 
 .btn.main-color {
-  background: #f39c12;
-  color: #fff;
+  background: #fff;
+  color: #f39c12;
+  border-color: #f39c12;
   font-weight: 400; }
+
+.btn.main-color:hover {
+  background: #f39c12;
+  color: #fff; }
+
+a {
+  cursor: pointer; }
 
 /*# sourceMappingURL=app.css.map */

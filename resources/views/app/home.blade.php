@@ -40,7 +40,7 @@
 
                     <ul class="nav navbar-nav navbar-right" ng-show="bLoggedIn">
                       <!--<li><a href="/feeds/manage"><i class="fa fa-list"></i> feeds</a></li>-->
-                      <li><a href="/feeds/add"><i class="fa fa-plus"></i> Add</a></li>
+                      <li><a ng-click="addFeed()"><i class="fa fa-plus"></i> Add</a></li>
 
 
                       <li class="dropdown">
