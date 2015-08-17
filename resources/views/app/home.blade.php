@@ -18,7 +18,7 @@
     <body ng-app="rssme">
         <div ng-controller="MainUI">
 
-
+            @include('partials.modals')
 
             <nav class="navbar navbar-default">
               <div class="container-fluid">
@@ -36,6 +36,14 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                   <ul class="nav navbar-nav">
+                      <li>
+                          <div id="fixed_output">
+                              <div class="alert alert-@{{bFeedbackType}} alert-dismissible" role="alert" ng-show="bFeedbackShowing">
+                                  <button ng-click="bFeedbackShowing = false" type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                  @{{sFeedbackMessage}}
+                              </div>
+                          </div>
+                      </li>
                   </ul>
 
                     <ul class="nav navbar-nav navbar-right" ng-show="bLoggedIn">
@@ -70,6 +78,7 @@
                     </a>
                   </div>
                   <div class="col-xs-12 col-sm-10">
+
 
                     <a ng-repeat="feeditem in feeditems" target="_blank" class="feed-item" href="@{{feeditem.url}}">
                       <div class="row feed-item">

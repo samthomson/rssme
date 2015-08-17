@@ -113,17 +113,49 @@ ul.pager li.disabled {
   background-color: #fff;
   border-radius: 8px; }
 
-.btn.main-color {
-  background: #fff;
-  color: #f39c12;
-  border-color: #f39c12;
-  font-weight: 400; }
-
-.btn.main-color:hover {
-  background: #f39c12;
-  color: #fff; }
-
 a {
   cursor: pointer; }
+
+.btn-primary {
+  background: #fff;
+  color: #f39c12;
+  border-color: #f39c12; }
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background: #f39c12;
+  color: #fff;
+  border-color: #f39c12; }
+
+.btn-default {
+  background: #F5F5F5;
+  color: #f39c12;
+  border-color: #F5F5F5; }
+
+.btn-default:hover,
+.btn-default:focus {
+  background: #f39c12;
+  color: #fff;
+  border-color: #f39c12; }
+
+#fixed_output .alert {
+  padding: 4px;
+  padding-left: 8px;
+  margin-bottom: 0px;
+  margin-top: 10px;
+  padding-right: 20px; }
+
+#fixed_output .alert-dismissable .close, #fixed_output .alert-dismissible .close {
+  right: -8px !important; }
+
+.alert {
+  background-image: none;
+  font-family: inherit;
+  text-shadow: none; }
+
+.alert.alert-success {
+  background-color: green;
+  border-color: green;
+  color: #fff; }
 
 /*# sourceMappingURL=app.css.map */

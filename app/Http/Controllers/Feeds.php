@@ -73,7 +73,9 @@ class Feeds extends Controller
 
             self::createUniqueUserFeed(Request::get('feedurl'), Request::has('feedname'));
 
-            return redirect('/feeds/manage');
+            return response("ok", 200);
+        }else{
+            return response("bad credentials", 200);
         }
     }
     private static function createUniqueUserFeed($sFeedUrl, $sFeedName, $bScheduleImmediatePull = true)

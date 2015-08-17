@@ -35,7 +35,7 @@
 						<label for="exampleInputPassword1">Password</label>
 						<input ng-model="password" name="password" type="password" class="form-control ng-pristine ng-untouched ng-valid" id="login_password" placeholder="Password">
 					</div>
-					<button type="button" class="btn main-color flat btn-lg btn-block" ng-click="login()">login</button>
+					<button type="button" class="btn btn-primary btn-lg btn-block" ng-click="login()">login</button>
 				</form>
 
 

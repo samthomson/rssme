@@ -20,8 +20,16 @@ app.controller('MainUI', function($scope, $http) {
 	$scope.email = '';
 	$scope.password = '';
 
+    // add feed
+    $scope.addfeed_name = '';
+    $scope.addfeed_url = '';
 
-    var getItems = function(){
+    $scope.bFeedbackShowing = false;
+    $scope.bFeedbackType = 'success';
+    $scope.sFeedbackMessage = '';
+
+
+    $scope.getItems = function(){
 
     	// set loading
 		$scope.bSomethingLoading = true;
@@ -62,7 +70,7 @@ app.controller('MainUI', function($scope, $http) {
 			{
 				$scope.bLoggedIn = true;
                 // now fetch items
-                getItems();
+                $scope.getItems();
 			}
 			// end loading
 			$scope.bSomethingLoading = false;
@@ -95,25 +103,65 @@ app.controller('MainUI', function($scope, $http) {
 	};
 
     $scope.addFeed = function() {
+        $('#modalAddFeed').modal('show');
+    };
+    $scope.addFeedSubmit = function() {
+        $http({
+            method: "POST",
+            url: "/app/feeds/add",
+            params: {
+                'feedname': $scope.addfeed_name,
+                'feedurl': $scope.addfeed_url
+            }
+        }).then(function(response) {
 
+            if(response.status == 200)
+            {
+                // reset and close modal
+                $scope.resetAddFeedForm();
+                // successfully added feed, tell user
+                $scope.flashFeedback("success", "added feed, it will appear in your feed shortly");
+                // fetch items again so we can see new feed in left
+                $scope.getItems();
+            }
+            // end loading
+            $scope.bSomethingLoading = false;
+        }, (function(response){
+            $scope.bSomethingLoading = false;
+        }));
+    };
+
+    $scope.flashFeedback = function (sType, sMessage){
+        $scope.bFeedbackType = sType;
+        $scope.bFeedbackShowing = true;
+        $scope.sFeedbackMessage = sMessage;
+    };
+
+    $scope.resetAddFeedForm = function() {
+        $('#modalAddFeed').modal('hide');
+        $scope.addfeed_name = '';
+        $scope.addfeed_url = '';
+    };
+    $scope.closeFeedback = function(){
+        $scope.bFeedbackType = true;
     };
 
 
     $scope.changePage = function(iNewPage){
     	$scope.iPage = iNewPage;
-    	getItems();
+    	$scope.getItems();
     }
     $scope.changeFeed = function(iNewFeed){
     	$scope.iFeedId = iNewFeed;
     	$scope.iPage = 1;
-    	getItems();
+    	$scope.getItems();
     }
 
     $scope.home = function(){
     	$scope.iFeedId = undefined;
     	$scope.iPage = 1;
-    	getItems();
+    	$scope.getItems();
     }
 
-	getItems();
+	$scope.getItems();
 });
