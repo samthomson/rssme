@@ -146,6 +146,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         Intervention\Image\ImageServiceProvider::class,
+        GrahamCampbell\HTMLMin\HTMLMinServiceProvider::class,
 
     ],
 
@@ -196,6 +197,9 @@ return [
         'View'      => Illuminate\Support\Facades\View::class,
 
         'Image'     => Intervention\Image\Facades\Image::class,
+
+        'HTMLMin' => GrahamCampbell\HTMLMin\Facades\HTMLMin::class,
+
 
     ],
 

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6f5a1cdcb41fea4e6fb2cc1278297bc1",
+    "hash": "ceabad09e99b6b360d35cfb702be0b90",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -217,6 +217,71 @@
             "time": "2014-12-20 21:24:13"
         },
         {
+            "name": "graham-campbell/htmlmin",
+            "version": "v4.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/GrahamCampbell/Laravel-HTMLMin.git",
+                "reference": "f6d67c77f2380c9de428b501f75da8233b4bee25"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/GrahamCampbell/Laravel-HTMLMin/zipball/f6d67c77f2380c9de428b501f75da8233b4bee25",
+                "reference": "f6d67c77f2380c9de428b501f75da8233b4bee25",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "5.0.*|5.1.*",
+                "illuminate/filesystem": "5.0.*|5.1.*",
+                "illuminate/http": "5.0.*|5.1.*",
+                "illuminate/routing": "5.0.*|5.1.*",
+                "illuminate/support": "5.0.*|5.1.*",
+                "illuminate/view": "5.0.*|5.1.*",
+                "mrclay/minify": "~2.2",
+                "php": ">=5.5.9"
+            },
+            "require-dev": {
+                "graham-campbell/testbench": "~3.0",
+                "mockery/mockery": "^0.9.4",
+                "phpunit/phpunit": "^4.7.6"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "GrahamCampbell\\HTMLMin\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Graham Campbell",
+                    "email": "graham@alt-three.com"
+                }
+            ],
+            "description": "HTMLMin Is A Simple HTML Minifier For Laravel 5",
+            "keywords": [
+                "Graham Campbell",
+                "GrahamCampbell",
+                "Laravel HTMLMin",
+                "Laravel-HTMLMin",
+                "framework",
+                "html",
+                "html minifier",
+                "htmlmin",
+                "laravel",
+                "minifier"
+            ],
+            "time": "2015-08-03 13:40:32"
+        },
+        {
             "name": "guzzlehttp/psr7",
             "version": "1.2.0",
             "source": {
@@ -276,16 +341,16 @@
         },
         {
             "name": "intervention/image",
-            "version": "2.3.1",
+            "version": "2.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Intervention/image.git",
-                "reference": "156f9d6f8a186c68b92f0c50084718f02dae1b5f"
+                "reference": "1124ff3c6298f0dcf9edf9156623904d7a5c3428"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Intervention/image/zipball/156f9d6f8a186c68b92f0c50084718f02dae1b5f",
-                "reference": "156f9d6f8a186c68b92f0c50084718f02dae1b5f",
+                "url": "https://api.github.com/repos/Intervention/image/zipball/1124ff3c6298f0dcf9edf9156623904d7a5c3428",
+                "reference": "1124ff3c6298f0dcf9edf9156623904d7a5c3428",
                 "shasum": ""
             },
             "require": {
@@ -334,7 +399,7 @@
                 "thumbnail",
                 "watermark"
             ],
-            "time": "2015-07-10 15:03:58"
+            "time": "2015-08-16 15:31:59"
         },
         {
             "name": "jakub-onderka/php-console-color",
@@ -765,6 +830,51 @@
                 "psr-3"
             ],
             "time": "2015-08-09 17:44:44"
+        },
+        {
+            "name": "mrclay/minify",
+            "version": "2.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mrclay/minify.git",
+                "reference": "3c11ba8232a2155a1a29552aafc528be5fb0a662"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mrclay/minify/zipball/3c11ba8232a2155a1a29552aafc528be5fb0a662",
+                "reference": "3c11ba8232a2155a1a29552aafc528be5fb0a662",
+                "shasum": ""
+            },
+            "require": {
+                "ext-pcre": "*",
+                "php": ">=5.2.1"
+            },
+            "require-dev": {
+                "tubalmartin/cssmin": "~2.4.8"
+            },
+            "suggest": {
+                "tubalmartin/cssmin": "Support minify with CSSMin (YUI PHP port)"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "min/lib/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Stephen Clay",
+                    "email": "steve@mrclay.org",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Minify is a PHP5 app that helps you follow several rules for client-side performance. It combines multiple CSS or Javascript files, removes unnecessary whitespace and comments, and serves them with gzip encoding and optimal client-side cache headers",
+            "homepage": "http://code.google.com/p/minify/",
+            "time": "2014-10-30 22:58:02"
         },
         {
             "name": "mtdowling/cron-expression",
@@ -2544,16 +2654,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "4.8.4",
+            "version": "4.8.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "55bf1d6092b0e13a1f26bd5eaffeef3d8ad85ea7"
+                "reference": "9b7417edaf28059ea63d86be941e6004dbfcc0cc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/55bf1d6092b0e13a1f26bd5eaffeef3d8ad85ea7",
-                "reference": "55bf1d6092b0e13a1f26bd5eaffeef3d8ad85ea7",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/9b7417edaf28059ea63d86be941e6004dbfcc0cc",
+                "reference": "9b7417edaf28059ea63d86be941e6004dbfcc0cc",
                 "shasum": ""
             },
             "require": {
@@ -2612,24 +2722,24 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2015-08-15 04:21:23"
+            "time": "2015-08-19 09:20:57"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
-            "version": "2.3.6",
+            "version": "2.3.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit-mock-objects.git",
-                "reference": "18dfbcb81d05e2296c0bcddd4db96cade75e6f42"
+                "reference": "5e2645ad49d196e020b85598d7c97e482725786a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/18dfbcb81d05e2296c0bcddd4db96cade75e6f42",
-                "reference": "18dfbcb81d05e2296c0bcddd4db96cade75e6f42",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/5e2645ad49d196e020b85598d7c97e482725786a",
+                "reference": "5e2645ad49d196e020b85598d7c97e482725786a",
                 "shasum": ""
             },
             "require": {
-                "doctrine/instantiator": "~1.0,>=1.0.2",
+                "doctrine/instantiator": "^1.0.2",
                 "php": ">=5.3.3",
                 "phpunit/php-text-template": "~1.2",
                 "sebastian/exporter": "~1.2"
@@ -2668,7 +2778,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2015-07-10 06:54:24"
+            "time": "2015-08-19 09:14:08"
         },
         {
             "name": "sebastian/comparator",
