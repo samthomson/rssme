@@ -438,6 +438,25 @@ app.controller('MainUI', function($scope, $http, $interval) {
 	$scope.cancelEdit = function(iFeedId) {
 		$scope.iFeedEditing = -1;
 	};
+	$scope.deleteFeed = function(iFeedKey) {
+		if(confirm('are you sure?'))
+		{
+			$scope.iFeedUpdating = iFeedKey;
+			$http({
+				method: "DELETE",
+				url: "/app/feeds/" + $scope.feeds[iFeedKey].id
+			}).then(function(response) {
+
+				if(response.status == 200)
+				{
+					// fetch items again so we can see new feed in left
+					$scope.getItems();
+				}
+			}, (function(response){
+				$scope.iFeedUpdating = -1;
+			}));
+		}
+	};
 
     $scope.addFeedSubmit = function() {
         $http({

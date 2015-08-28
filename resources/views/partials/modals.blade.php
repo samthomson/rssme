@@ -42,10 +42,15 @@ manage feeds
                             <span>@{{ feed.feed.url  }}</span>
                         </div>
                         <div class="col-xs-2" ng-show="iFeedUpdating != key">
+                            <!-- edit feed -->
                             <a ng-click="editFeed(key)" ng-show="iFeedEditing != key" class="btn btn-default">edit</a>
+                            <!-- update/save [changes] -->
                             <a ng-show="iFeedEditing == key" ng-click="updateFeed(key)" class="btn btn-primary">save</a>
                         </div>
                         <div class="col-xs-2" ng-show="iFeedUpdating != key">
+                            <!-- delete -->
+                            <a ng-click="deleteFeed(key)" ng-show="iFeedEditing != key" class="btn btn-danger">delete</a>
+                            <!-- cancel edit -->
                             <a ng-show="iFeedEditing == key" ng-click="cancelEdit()" class="btn btn-default">cancel</a>
                         </div>
 

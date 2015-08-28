@@ -128,7 +128,6 @@ class Feeds extends Controller
             }
         }
         return response("ok", 200);
-        ////return redirect('/feeds/manage');
     }
 
     public static function edit($iUserFeedId)
@@ -161,7 +160,7 @@ class Feeds extends Controller
         if(count($oaFeed) == 1){
             $oaFeed[0]->delete();
         }
-        return redirect('/feeds/manage');
+        return response("ok", 200);
     }
 
     public static function feedsAndCategories()
