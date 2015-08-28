@@ -7406,10 +7406,9 @@ a.feed-item span {
   padding: 4px;
   line-height: 28px; }
 
-span.limit {
+.limit {
   max-width: 100%;
   white-space: nowrap;
-  position: absolute;
   overflow: hidden; }
 
 .limit.ellipsis {

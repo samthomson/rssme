@@ -127,7 +127,8 @@ class Feeds extends Controller
                 $oUserFeed->save();
             }
         }
-        return redirect('/feeds/manage');
+        return response("ok", 200);
+        ////return redirect('/feeds/manage');
     }
 
     public static function edit($iUserFeedId)

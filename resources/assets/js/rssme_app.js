@@ -28,6 +28,9 @@ app.controller('MainUI', function($scope, $http, $interval) {
     $scope.bFeedbackType = 'success';
     $scope.sFeedbackMessage = '';
 
+	// edit feeds
+	$scope.iFeedEditing = -1;
+
 
     $scope.getItems = function(){
 
@@ -102,9 +105,44 @@ app.controller('MainUI', function($scope, $http, $interval) {
 			});
 	};
 
-    $scope.addFeed = function() {
-        $('#modalAddFeed').modal('show');
-    };
+	$scope.addFeed = function() {
+		$('#modalAddFeed').modal('show');
+	};
+
+	$scope.manageFeeds = function() {
+		$('#modalManageFeeds').modal('show');
+	};
+	$scope.editFeed = function(iFeedKey) {
+		$scope.iFeedEditing = iFeedKey;
+	};
+	$scope.updateFeed = function(iFeedKey) {
+
+		$http({
+			method: "POST",
+			url: "/app/feeds/" + $scope.feeds[iFeedKey].id,
+			params: {
+				'feedname': $scope.feeds[iFeedKey].name
+			}
+		}).then(function(response) {
+
+			if(response.status == 200)
+			{
+				$scope.iFeedEditing = -1;
+				// success, display into modal
+				////$scope.flashManageFeedback("success", "added feed, it will appear in your feed shortly");
+				// fetch items again so we can see new feed in left
+				$scope.getItems();
+			}
+			// end loading
+			$scope.bSomethingLoading = false;
+		}, (function(response){
+			$scope.bSomethingLoading = false;
+		}));
+	};
+	$scope.cancelEdit = function(iFeedId) {
+		$scope.iFeedEditing = -1;
+	};
+
     $scope.addFeedSubmit = function() {
         $http({
             method: "POST",

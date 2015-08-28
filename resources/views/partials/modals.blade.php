@@ -31,11 +31,25 @@ manage feeds
                 <h4 class="modal-title">Modal title</h4>
             </div>
             <div class="modal-body">
-                <p>One fine body&hellip;</p>
+                <div ng-repeat="(key, feed) in feeds" class="row">
+                    <div class="col-xs-4">
+                        <span ng-show="iFeedEditing != key">@{{ feeds[key].name  }}</span>
+                        <input type="text" ng-show="iFeedEditing == key" ng-model="feeds[key].name  "/>
+                    </div>
+                    <div class="col-xs-4 limit ellipsis">
+                        <span>@{{ feed.feed.url  }}</span>
+                    </div>
+                    <div class="col-xs-2">
+                        <a ng-click="editFeed(key)" ng-show="iFeedEditing != key" class="btn btn-default">edit</a>
+                        <a ng-show="iFeedEditing == key" ng-click="updateFeed(key)" class="btn btn-default">save</a>
+                    </div>
+                    <div class="col-xs-2">
+                        <a ng-show="iFeedEditing == key" ng-click="cancelEdit()" class="btn btn-default">cancel</a>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

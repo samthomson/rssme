@@ -47,12 +47,12 @@
                   </ul>
 
                     <ul class="nav navbar-nav navbar-right" ng-show="bLoggedIn">
-                      <!--<li><a href="/feeds/manage"><i class="fa fa-list"></i> feeds</a></li>-->
+                      <li><a ng-click="manageFeeds()"><i class="fa fa-list"></i> feeds</a></li>
                       <li><a ng-click="addFeed()"><i class="fa fa-plus"></i> Add</a></li>
 
 
                       <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" alt="account menu"}"><i class="fa fa-user"></i> Account <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" alt="account menu"><i class="fa fa-user"></i> Account <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                           <li><a ng-click="logout()"><i class="fa fa-sign-out"></i> logout</a></li>
                         </ul>
@@ -118,15 +118,9 @@
               </div>
 
                 <div id="loading" ng-show="bSomethingLoading"><i class="fa fa-spinner fa-spin"></i> loading</div>
-              
-              
-              
-              
-              
+
             </div>
-          
-          
-          
+
         </div>
         <script type="text/javascript" src="{{ elixir('js/all.js') }}"></script>
     </body>
