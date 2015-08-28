@@ -28,23 +28,30 @@ manage feeds
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Modal title</h4>
+                <span class="modal-title">Rename feeds</span>
             </div>
             <div class="modal-body">
-                <div ng-repeat="(key, feed) in feeds" class="row">
-                    <div class="col-xs-4">
-                        <span ng-show="iFeedEditing != key">@{{ feeds[key].name  }}</span>
-                        <input type="text" ng-show="iFeedEditing == key" ng-model="feeds[key].name  "/>
-                    </div>
-                    <div class="col-xs-4 limit ellipsis">
-                        <span>@{{ feed.feed.url  }}</span>
-                    </div>
-                    <div class="col-xs-2">
-                        <a ng-click="editFeed(key)" ng-show="iFeedEditing != key" class="btn btn-default">edit</a>
-                        <a ng-show="iFeedEditing == key" ng-click="updateFeed(key)" class="btn btn-default">save</a>
-                    </div>
-                    <div class="col-xs-2">
-                        <a ng-show="iFeedEditing == key" ng-click="cancelEdit()" class="btn btn-default">cancel</a>
+                <div id="manageFeeds">
+
+                    <div ng-repeat="(key, feed) in feeds" class="row form-group">
+                        <div class="col-xs-4">
+                            <span ng-show="iFeedEditing != key">@{{ feeds[key].name  }}</span>
+                            <input type="text" ng-show="iFeedEditing == key" ng-model="feeds[key].name  "/>
+                        </div>
+                        <div class="col-xs-4 limit ellipsis">
+                            <span>@{{ feed.feed.url  }}</span>
+                        </div>
+                        <div class="col-xs-2" ng-show="iFeedUpdating != key">
+                            <a ng-click="editFeed(key)" ng-show="iFeedEditing != key" class="btn btn-default">edit</a>
+                            <a ng-show="iFeedEditing == key" ng-click="updateFeed(key)" class="btn btn-primary">save</a>
+                        </div>
+                        <div class="col-xs-2" ng-show="iFeedUpdating != key">
+                            <a ng-show="iFeedEditing == key" ng-click="cancelEdit()" class="btn btn-default">cancel</a>
+                        </div>
+
+                        <div class="col-xs-4" ng-show="iFeedUpdating == key">
+                            <i class="fa fa-spinner fa-spin"></i> updating
+                        </div>
                     </div>
                 </div>
             </div>

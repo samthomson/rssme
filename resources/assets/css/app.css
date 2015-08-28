@@ -115,6 +115,11 @@ ul.pager li.disabled {
   background-color: #fff;
   border-radius: 8px; }
 
+#manageFeeds {
+  max-height: 70%;
+  overflow-y: auto;
+  overflow-x: hidden; }
+
 a {
   cursor: pointer; }
 

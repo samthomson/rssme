@@ -325,6 +325,7 @@ app.controller('MainUI', function($scope, $http, $interval) {
 
 	// edit feeds
 	$scope.iFeedEditing = -1;
+	$scope.iFeedUpdating = -1;
 
 
     $scope.getItems = function(){
@@ -412,6 +413,8 @@ app.controller('MainUI', function($scope, $http, $interval) {
 	};
 	$scope.updateFeed = function(iFeedKey) {
 
+		$scope.iFeedUpdating = iFeedKey;
+
 		$http({
 			method: "POST",
 			url: "/app/feeds/" + $scope.feeds[iFeedKey].id,
@@ -423,15 +426,13 @@ app.controller('MainUI', function($scope, $http, $interval) {
 			if(response.status == 200)
 			{
 				$scope.iFeedEditing = -1;
-				// success, display into modal
-				////$scope.flashManageFeedback("success", "added feed, it will appear in your feed shortly");
+				// success, hide loading
+				$scope.iFeedUpdating = -1;
 				// fetch items again so we can see new feed in left
 				$scope.getItems();
 			}
-			// end loading
-			$scope.bSomethingLoading = false;
 		}, (function(response){
-			$scope.bSomethingLoading = false;
+			$scope.iFeedUpdating = -1;
 		}));
 	};
 	$scope.cancelEdit = function(iFeedId) {
@@ -464,27 +465,28 @@ app.controller('MainUI', function($scope, $http, $interval) {
         }));
     };
 
-    $scope.flashFeedback = function (sType, sMessage){
-        $scope.bFeedbackType = sType;
-        $scope.bFeedbackShowing = true;
-        $scope.sFeedbackMessage = sMessage;
-        // for ten secs
-        $interval(function(){
-            $scope.closeFeedback();
-        },10000);
+	$scope.flashFeedback = function (sType, sMessage){
+		$scope.bFeedbackType = sType;
+		$scope.bFeedbackShowing = true;
+		$scope.sFeedbackMessage = sMessage;
+		// for ten secs
+		$interval(function(){
+			$scope.closeFeedback();
+		},10000);
+	};
 
-    };
+
 
     $scope.resetAddFeedForm = function() {
         $('#modalAddFeed').modal('hide');
         $scope.addfeed_name = '';
         $scope.addfeed_url = '';
     };
-    $scope.closeFeedback = function(){
-        $scope.bFeedbackType = 'success';
-        $scope.bFeedbackShowing = false;
-        $scope.sFeedbackMessage = '';
-    };
+	$scope.closeFeedback = function(){
+		$scope.bFeedbackType = 'success';
+		$scope.bFeedbackShowing = false;
+		$scope.sFeedbackMessage = '';
+	};
 
 
     $scope.changePage = function(iNewPage){

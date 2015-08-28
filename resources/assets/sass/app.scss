@@ -121,6 +121,12 @@ ul.pager li.disabled{
   border-radius: $i_border_radius;
 }
 
+#manageFeeds{
+  max-height:70%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
 a{cursor: pointer;}
 
 .btn{
