@@ -20,6 +20,9 @@ a.feed-item{
 	background-color:$colour_white;
 	font-size: smaller;
 	display: block;
+  padding-bottom: 8px;
+  padding-top: 8px;
+  border-bottom:1px solid $silver_background;
 }
 
 a.feed-item span{

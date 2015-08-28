@@ -7397,7 +7397,10 @@ a.feed-item {
   color: black;
   background-color: #fff;
   font-size: smaller;
-  display: block; }
+  display: block;
+  padding-bottom: 8px;
+  padding-top: 8px;
+  border-bottom: 1px solid #F5F5F5; }
 
 a.feed-item span {
   padding: 4px;
