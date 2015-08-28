@@ -1,6 +1,12 @@
 /* app specific scss */
+$colour_white:#fff;
 $silver_background: #F5F5F5;
+$colour_orange:#f39c12;
+$colour_grey:#bdc3c7;
+$colour_success:green;
 $i_feed_item_height: 28px;
+
+$i_border_radius: 8px;
 
 
 body{
@@ -11,7 +17,7 @@ body{
 a.feed-item{
 	font-weight:bold;
 	color: black;
-	background-color:white;
+	background-color:$colour_white;
 	font-size: smaller;
 	display: block;
 }
@@ -75,8 +81,8 @@ ul.pager li.disabled{
 
 #home_link{font-family: 'PT Sans Caption', sans-serif;}
 .brand{ letter-spacing: 1.0;}
-.brand.rss{color:#f39c12;}
-.brand.me{color:#bdc3c7;}
+.brand.rss{color:$colour_orange;}
+.brand.me{color:$colour_grey;}
 
 .circle{
 	display:inline-block;
@@ -84,4 +90,83 @@ ul.pager li.disabled{
 	height:$i_feed_item_height/2;
 	width:$i_feed_item_height/2;
 	margin-top:$i_feed_item_height/4;
+}
+
+#loading{
+  font-size:18px;
+
+  margin:auto;
+  margin-top:30px;
+  padding:8px;
+  border-radius: $i_border_radius;
+  max-width:200px;
+
+  text-align: center;
+  border: 1px solid $colour_grey;
+}
+#loading .fa{
+  color:$colour_grey;
+}
+
+#siteLoginRegister{
+
+  margin:auto;
+  margin-top:30px;
+  max-width:350px;
+
+  border: 1px solid $colour_orange;
+  background-color:$colour_white;
+  border-radius: $i_border_radius;
+}
+
+a{cursor: pointer;}
+
+.btn{
+
+}
+.btn-primary{
+  background: $colour_white;
+  color:$colour_orange;
+  border-color:$colour_orange;
+}
+.btn-primary:hover,
+.btn-primary:focus{
+  background: $colour_orange;
+  color:$colour_white;
+  border-color:$colour_orange;
+}
+
+.btn-default{
+  background: $silver_background;
+  color:$colour_orange;
+  border-color:$silver_background;
+}
+.btn-default:hover,
+.btn-default:focus{
+  background: $colour_orange;
+  color:$colour_white;
+  border-color:$colour_orange;
+}
+
+#fixed_output{
+}
+#fixed_output .alert{
+  padding:4px;
+  padding-left:8px;
+  margin-bottom:0px;
+  margin-top:10px;
+  padding-right:20px;
+}
+#fixed_output .alert-dismissable .close, #fixed_output .alert-dismissible .close{
+  right:-8px !important;
+}
+.alert{
+  background-image: none;
+  font-family:inherit;
+  text-shadow: none;
+}
+.alert.alert-success{
+  background-color:$colour_success;
+  border-color:$colour_success;
+  color:$colour_white;
 }

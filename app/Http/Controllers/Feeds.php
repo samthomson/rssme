@@ -71,9 +71,11 @@ class Feeds extends Controller
     {
         if (Request::has('feedurl') && Request::has('feedname')){
 
-            self::createUniqueUserFeed(Request::get('feedurl'), Request::has('feedname'));
+            self::createUniqueUserFeed(Request::get('feedurl'), Request::get('feedname'));
 
-            return redirect('/feeds/manage');
+            return response("ok", 200);
+        }else{
+            return response("bad credentials", 200);
         }
     }
     private static function createUniqueUserFeed($sFeedUrl, $sFeedName, $bScheduleImmediatePull = true)
@@ -105,7 +107,7 @@ class Feeds extends Controller
         $oUserFeed = new UserFeed;
         $oUserFeed->feed_id = $iFeedId;
         $oUserFeed->user_id = Auth::id();
-        $oUserFeed->name = $sFeedName;;
+        $oUserFeed->name = $sFeedName;
         $oUserFeed->colour = Helper::sRandomUserFeedColour();
         $oUserFeed->save();
     }
@@ -186,13 +188,22 @@ class Feeds extends Controller
 
         foreach ($maFeedItems as $oFeedItem) {
 
+            $sDate = '';
+            $oDate = new Carbon($oFeedItem->date);
+            if($oDate->isToday())
+                // 10:41 pm
+                $sDate = $oDate->format('g:i a');
+            else
+                // Aug 12
+                $sDate = $oDate->format('M j');
+
             array_push($oaFeedItems, 
                 [
                 "url" => $oFeedItem->url,
                 "title" => $oFeedItem->title,
                 "feedurl" => $oFeedItem->feedurl,
                 "feed_id" => $oFeedItem->feed_id,
-                "date" => (new Carbon($oFeedItem->date))->diffForHumans(),
+                "date" => $sDate,
                 "name" => $oFeedItem->name,
                 "thumb" => $oFeedItem->thumb !== '' ? /*'http://rssme.samt.st'.*/$oFeedItem->thumb : $oFeedItem->feedthumb,
                 "feed_thumb" => $oFeedItem->feedthumb

@@ -48,3 +48,6 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 
+
+Route::get('/pullallfeeds', ['uses' => 'Feeds@pullAll']);
+Route::get('/pullallfeeds/{id}', ['uses' => 'Feeds@pullFeed']);

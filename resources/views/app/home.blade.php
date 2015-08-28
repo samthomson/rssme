@@ -18,7 +18,7 @@
     <body ng-app="rssme">
         <div ng-controller="MainUI">
 
-
+            @include('partials.modals')
 
             <nav class="navbar navbar-default">
               <div class="container-fluid">
@@ -36,13 +36,19 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                   <ul class="nav navbar-nav">
+                      <li>
+                          <div id="fixed_output">
+                              <div class="alert alert-@{{bFeedbackType}} alert-dismissible" role="alert" ng-show="bFeedbackShowing">
+                                  <button ng-click="bFeedbackShowing = false" type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                  @{{sFeedbackMessage}}
+                              </div>
+                          </div>
+                      </li>
                   </ul>
 
-					logged in: @{{bLoggedIn }}
-
                     <ul class="nav navbar-nav navbar-right" ng-show="bLoggedIn">
-                      <li><a href="/feeds/manage"><i class="fa fa-list"></i> feeds</a></li>
-                      <li><a href="/feeds/add"><i class="fa fa-plus"></i> Add</a></li>
+                      <!--<li><a href="/feeds/manage"><i class="fa fa-list"></i> feeds</a></li>-->
+                      <li><a ng-click="addFeed()"><i class="fa fa-plus"></i> Add</a></li>
 
 
                       <li class="dropdown">
@@ -60,8 +66,8 @@
 
 
 
-              <div ng-show="bLoggedIn">
-				  feeds ui:
+              <div ng-show="bLoggedIn && !bSomethingLoading">
+
                 <div class="row">
 
                   <div class="col-xs-2 hidden-xs">
@@ -72,6 +78,7 @@
                     </a>
                   </div>
                   <div class="col-xs-12 col-sm-10">
+
 
                     <a ng-repeat="feeditem in feeditems" target="_blank" class="feed-item" href="@{{feeditem.url}}">
                       <div class="row feed-item">
@@ -103,12 +110,14 @@
 
 
 
-              <div ng-show="bLoggedIn == false">
+              <div ng-show="bLoggedIn == false && !bSomethingLoading">
                 <div class="row">
 
                   @include('app.login')
                 </div>
               </div>
+
+                <div id="loading" ng-show="bSomethingLoading"><i class="fa fa-spinner fa-spin"></i> loading</div>
               
               
               

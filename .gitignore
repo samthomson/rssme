@@ -1,7 +1,14 @@
 /vendor
 /node_modules
 .env
+<<<<<<< HEAD
 # php storm project files
 /.idea/*.iws
 /.idea/workspace.xml
 /.idea/tasks.xml
+=======
+/.idea/*.iws
+/.idea/workspace.xml
+/.idea/tasks.xml
+/public/build/*
+>>>>>>> c14d07ebfb6e053182af7c9a0546ed2f85998e06

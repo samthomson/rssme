@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/.idea/rss.iml" filepath="$PROJECT_DIR$/.idea/rss.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/.idea/rssme.iml" filepath="$PROJECT_DIR$/.idea/rssme.iml" />
+>>>>>>> c14d07ebfb6e053182af7c9a0546ed2f85998e06
     </modules>
   </component>
 </project>

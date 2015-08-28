@@ -6,7 +6,7 @@ body {
 a.feed-item {
   font-weight: bold;
   color: black;
-  background-color: white;
+  background-color: #fff;
   font-size: smaller;
   display: block; }
 
@@ -91,5 +91,71 @@ ul.pager li.disabled {
   height: 14px;
   width: 14px;
   margin-top: 7px; }
+
+#loading {
+  font-size: 18px;
+  margin: auto;
+  margin-top: 30px;
+  padding: 8px;
+  border-radius: 8px;
+  max-width: 200px;
+  text-align: center;
+  border: 1px solid #bdc3c7; }
+
+#loading .fa {
+  color: #bdc3c7; }
+
+#siteLoginRegister {
+  margin: auto;
+  margin-top: 30px;
+  max-width: 350px;
+  border: 1px solid #f39c12;
+  background-color: #fff;
+  border-radius: 8px; }
+
+a {
+  cursor: pointer; }
+
+.btn-primary {
+  background: #fff;
+  color: #f39c12;
+  border-color: #f39c12; }
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background: #f39c12;
+  color: #fff;
+  border-color: #f39c12; }
+
+.btn-default {
+  background: #F5F5F5;
+  color: #f39c12;
+  border-color: #F5F5F5; }
+
+.btn-default:hover,
+.btn-default:focus {
+  background: #f39c12;
+  color: #fff;
+  border-color: #f39c12; }
+
+#fixed_output .alert {
+  padding: 4px;
+  padding-left: 8px;
+  margin-bottom: 0px;
+  margin-top: 10px;
+  padding-right: 20px; }
+
+#fixed_output .alert-dismissable .close, #fixed_output .alert-dismissible .close {
+  right: -8px !important; }
+
+.alert {
+  background-image: none;
+  font-family: inherit;
+  text-shadow: none; }
+
+.alert.alert-success {
+  background-color: green;
+  border-color: green;
+  color: #fff; }
 
 /*# sourceMappingURL=app.css.map */
