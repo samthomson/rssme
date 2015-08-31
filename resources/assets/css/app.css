@@ -82,7 +82,7 @@ ul.pager li.disabled {
   letter-spacing: 1.0; }
 
 .brand.rss {
-  color: #f39c12; }
+  color: #F56423; }
 
 .brand.me {
   color: #bdc3c7; }
@@ -111,7 +111,7 @@ ul.pager li.disabled {
   margin: auto;
   margin-top: 30px;
   max-width: 350px;
-  border: 1px solid #f39c12;
+  border: 1px solid #F56423;
   background-color: #fff;
   border-radius: 8px; }
 
@@ -125,25 +125,25 @@ a {
 
 .btn-primary {
   background: #fff;
-  color: #f39c12;
-  border-color: #f39c12; }
+  color: #F56423;
+  border-color: #F56423; }
 
 .btn-primary:hover,
 .btn-primary:focus {
-  background: #f39c12;
+  background: #F56423;
   color: #fff;
-  border-color: #f39c12; }
+  border-color: #F56423; }
 
 .btn-default {
   background: #F5F5F5;
-  color: #f39c12;
+  color: #F56423;
   border-color: #F5F5F5; }
 
 .btn-default:hover,
 .btn-default:focus {
-  background: #f39c12;
+  background: #F56423;
   color: #fff;
-  border-color: #f39c12; }
+  border-color: #F56423; }
 
 #fixed_output .alert {
   padding: 4px;
