@@ -58,6 +58,7 @@ class Feeds extends Controller
     {
         // list of rss feeds
         $saFeedUrls = [
+            'github' => 44,
             'nat geo' => 15
         ];
 
@@ -361,87 +362,102 @@ class Feeds extends Controller
                     if(isset($xmlFeed->channel->image->url)){
                         $oFeed->thumb = $xmlFeed->channel->image->url;
                     }
-                        
-                    foreach($xmlFeed->channel->item as $oItem){
 
-                        if($sStopAt !== null){
-                            //echo "last: ", $sStopAt, "<br/>";
-                            if((string)$sStopAt === (string)$oItem->guid){
-                                // skip this itemoces
-                                echo "<strong>", "skip these items", $oItem->guid, "</strong>", "<br/>";
+                    $sChannel = 'channel';
+                    $sItem = 'item';
+
+                    if(!isset($xmlFeed->{$sChannel}->{$sItem}))
+                    {
+                        echo "not set", "<br/>";
+                        $sChannel = 'feed';
+                        $sItem = 'entry';
+                    }
+
+                    if(isset($xmlFeed->{$sChannel}->{$sItem}))
+                    {
+                        echo "2nd set", "<br/>";
+                        foreach ($xmlFeed->{$sChannel}->{$sItem} as $oItem) {
+
+                            echo "item", "<br/>";
+                            if ($sStopAt !== null) {
+                                //echo "last: ", $sStopAt, "<br/>";
+                                if ((string)$sStopAt === (string)$oItem->guid) {
+                                    // skip this itemoces
+                                    echo "<strong>", "skip these items", $oItem->guid, "</strong>", "<br/>";
+                                    $bStopImport = true;
+                                }
+                            }
+
+                            $oExistingItemAlready = FeedItem::where("guid", "=", (string)$oItem->guid)->first();
+
+                            if (isset($oExistingItemAlready)) {
                                 $bStopImport = true;
                             }
-                        }
 
-                        $oExistingItemAlready = FeedItem::where("guid", "=", (string)$oItem->guid)->first();
+                            if (!$bStopImport) {
 
-                        if(isset($oExistingItemAlready)){
-                            $bStopImport = true;
-                        }
+                                $oFeedItem = new FeedItem;
+                                $oFeedItem->feed_id = $oFeed->id;
+                                $oFeedItem->title = $oItem->title;
+                                $oFeedItem->url = $oItem->link;
+                                $oFeedItem->guid = $oItem->guid;
 
-                        if(!$bStopImport){                    
+                                $cdFeedPubDate = new Carbon($oItem->pubDate);
+                                $oFeedItem->pubDate = $cdFeedPubDate->toDateTimeString();
 
-                            $oFeedItem = new FeedItem;
-                            $oFeedItem->feed_id = $oFeed->id;
-                            $oFeedItem->title = $oItem->title;
-                            $oFeedItem->url = $oItem->link;
-                            $oFeedItem->guid = $oItem->guid;
+                                $oThumbItem = $oItem->{'media:thumbnail'};
 
-                            $cdFeedPubDate = new Carbon($oItem->pubDate);
-                            $oFeedItem->pubDate = $cdFeedPubDate->toDateTimeString();
+                                $bPic = false;
+                                $sPicURL = '';
 
-                            $oThumbItem = $oItem->{'media:thumbnail'};
+                                if (isset($oItem->children('media', true)->thumbnail)) {
 
-                            $bPic = false;
-                            $sPicURL = '';
-
-                            if(isset($oItem->children('media', true)->thumbnail)){
-
-                                if(isset($oItem->children('media', true)->thumbnail->attributes()->url)){
-                                    $bPic = true;
-                                    $sPicURL = $oItem->children('media', true)->thumbnail->attributes()->url;
-                                }
-                            }
-
-                            if(!$bPic){
-                                if(isset($oItem->enclosure)){
-                                    if(isset($oItem->enclosure['url'])){
-                                        $oFeedItem->thumb = $oItem->enclosure['url'];
+                                    if (isset($oItem->children('media', true)->thumbnail->attributes()->url)) {
                                         $bPic = true;
+                                        $sPicURL = $oItem->children('media', true)->thumbnail->attributes()->url;
                                     }
                                 }
-                            }
 
-                            // still no pic? resort to scanning for img in item
-                            if(!$bPic){
-                                preg_match_all('/<img [^>]*src=["|\']([^"|\']+)/i', $oItem->asXml(), $matches);
-                                foreach ($matches[1] as $key=>$value) {
-                                    $sPicURL = $value;
-                                    $bPic = true;
-                                    break;
+                                if (!$bPic) {
+                                    if (isset($oItem->enclosure)) {
+                                        if (isset($oItem->enclosure['url'])) {
+                                            $oFeedItem->thumb = $oItem->enclosure['url'];
+                                            $bPic = true;
+                                        }
+                                    }
                                 }
+
+                                // still no pic? resort to scanning for img in item
+                                if (!$bPic) {
+                                    preg_match_all('/<img [^>]*src=["|\']([^"|\']+)/i', $oItem->asXml(), $matches);
+                                    foreach ($matches[1] as $key => $value) {
+                                        $sPicURL = $value;
+                                        $bPic = true;
+                                        break;
+                                    }
+                                }
+
+                                // still no pic? look for og:image in downloaded webpage...!
+
+                                $oFeedItem->thumb = '';
+                                $oFeedItem->save();
+
+                                if (!$bPic) {
+
+                                    //self::scrapeThumbFromFeedItem($oFeedItem->id);
+                                    self::scheduleFeedItemImageScrape($oFeedItem->id);
+
+                                } else {
+                                    self::scheduleThumbCrunch($sPicURL, $oFeedItem->id);
+                                }
+
+
+                                //echo "save item: ", $oFeedItem->guid, "<br/>";
+
+                                $iItemsFetched++;
+                            } else {
+                                //echo "skipped an item?<br/>";
                             }
-
-                            // still no pic? look for og:image in downloaded webpage...!
-                            
-                            $oFeedItem->thumb = '';
-                            $oFeedItem->save();
-
-                            if(!$bPic){
-
-                                //self::scrapeThumbFromFeedItem($oFeedItem->id);
-                                self::scheduleFeedItemImageScrape($oFeedItem->id);
-                                
-                            }else{
-                                self::scheduleThumbCrunch($sPicURL, $oFeedItem->id);                                                       
-                            }
-
-
-                            //echo "save item: ", $oFeedItem->guid, "<br/>";
-
-                            $iItemsFetched++;
-                        }else{
-                            //echo "skipped an item?<br/>";
                         }
                     }
                 }else{

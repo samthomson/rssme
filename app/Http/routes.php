@@ -22,9 +22,8 @@ Route::post('/app/auth/login',  ['uses' => 'CustomAuthController@login']);
 Route::post('/app/auth/logout',  ['uses' => 'CustomAuthController@logout']);
 
 
-Route::controllers([/*
-	'app/auth' => 'Auth\CustomAuthController',*/
-	'password' => 'Auth\PasswordController',
+Route::controllers([
+	'password' => 'Auth\PasswordController'
 ]);
 
 Route::group(['middleware' => 'auth'], function () {
@@ -51,3 +50,4 @@ Route::get('/process', ['uses' => 'Auto@process']);
 
 Route::get('/pullallfeeds', ['uses' => 'Feeds@pullAll']);
 Route::get('/pullallfeeds/{id}', ['uses' => 'Feeds@pullFeed']);
+Route::get('/test', ['uses' => 'Feeds@test']);
