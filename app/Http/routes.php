@@ -47,7 +47,7 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 
-
+Route::get('/process', ['uses' => 'Auto@process']);
 
 Route::get('/pullallfeeds', ['uses' => 'Feeds@pullAll']);
 Route::get('/pullallfeeds/{id}', ['uses' => 'Feeds@pullFeed']);
