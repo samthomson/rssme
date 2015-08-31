@@ -154,7 +154,7 @@ app.controller('MainUI', function($scope, $http, $interval) {
 
 				if(response.status == 200)
 				{
-					// fetch items again so we can see new feed in left
+                    $scope.iFeedUpdating = -1;
 					$scope.getItems();
 				}
 			}, (function(response){

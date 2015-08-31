@@ -148,9 +148,9 @@ class Feeds extends Controller
     public static function delete($iUserFeedId)
     {
         // delete the pivot relation  
-        $oFeedUser = UserFeed::where("feed_id", $iUserFeedId)->where("user_id", Auth::id())->first();
+        $oFeedUser = UserFeed::where("id", $iUserFeedId)->where("user_id", Auth::id())->first();
 
-        $iFeedId = $oFeedUser->id;
+        $iFeedId = $oFeedUser->feed_id;
 
         $oFeedUser->delete();
 
