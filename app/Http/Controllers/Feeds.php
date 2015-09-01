@@ -23,6 +23,7 @@ use App\Auto\Task;
 use Intervention\Image\Facades\Image;
 
 use DOMDocument;
+use FastFeed\Factory;
 
 class Feeds extends Controller
 {    
@@ -224,36 +225,6 @@ class Feeds extends Controller
 
         //return response(['jsonFeedItems' => $oaFeedItems, 'jsonFeeds' => $oaFeeds], 200);
     }
-    /*
-    public static function makeHome()
-    {
-        // get users feeds, send to view
-
-        $oQuery = DB::table('feed_user')
-                ->join('feeditems', function($join)
-                    {
-                        $join->on('feed_user.feed_id', '=', 'feeditems.feed_id')
-                        ->where('feed_user.user_id', '=', Auth::id());
-                    })
-                ->join('feeds', "feeds.id", "=", "feed_user.feed_id")
-                ->orderBy('feeditems.pubDate', 'desc')
-                ->select(['feeditems.url as url', 'feeditems.title as title', 'feeds.url as feedurl', 'feeds.id as feed_id', 'feeditems.pubDate as date', 'feed_user.name as name', 'feeditems.thumb as thumb', 'feeds.thumb as feedthumb', 'feed_user.colour as feed_colour']);
-
-        if(Request::has('feed')){
-            $oQuery->where("feeds.id", "=", Request::get('feed'));
-        }
-
-        $oaFeedItems = $oQuery->simplePaginate(30);
-
-        ////$oaFeeds = Auth::user()->feeds;
-
-        $oaFeeds = Auth::user()->userFeeds;
-        $oaFeeds->load('feed');
-
-
-        return view('app.home', ['oaFeedItems' => $oaFeedItems, 'oaFeeds' => $oaFeeds]);
-    }
-    */
     public  static function serveAngularApp()
     {
         return view('app.home');
@@ -355,111 +326,12 @@ class Feeds extends Controller
 
                 if(!empty($xmlFeed))
                 {
-                    $xmlFeed = simplexml_load_string($xmlFeed);
+                    $oScrapedFeed = Helper::getFeedStructureFromXML($oFeed, $xmlFeed, $sStopAt);
 
-                    $bStopImport = false;
-
-                    if(isset($xmlFeed->channel->image->url)){
-                        $oFeed->thumb = $xmlFeed->channel->image->url;
-                    }
-
-                    $sChannel = 'channel';
-                    $sItem = 'item';
-
-                    if(!isset($xmlFeed->{$sChannel}->{$sItem}))
-                    {
-                        echo "not set", "<br/>";
-                        $sChannel = 'feed';
-                        $sItem = 'entry';
-                    }
-
-                    if(isset($xmlFeed->{$sChannel}->{$sItem}))
-                    {
-                        echo "2nd set", "<br/>";
-                        foreach ($xmlFeed->{$sChannel}->{$sItem} as $oItem) {
-
-                            echo "item", "<br/>";
-                            if ($sStopAt !== null) {
-                                //echo "last: ", $sStopAt, "<br/>";
-                                if ((string)$sStopAt === (string)$oItem->guid) {
-                                    // skip this itemoces
-                                    echo "<strong>", "skip these items", $oItem->guid, "</strong>", "<br/>";
-                                    $bStopImport = true;
-                                }
-                            }
-
-                            $oExistingItemAlready = FeedItem::where("guid", "=", (string)$oItem->guid)->first();
-
-                            if (isset($oExistingItemAlready)) {
-                                $bStopImport = true;
-                            }
-
-                            if (!$bStopImport) {
-
-                                $oFeedItem = new FeedItem;
-                                $oFeedItem->feed_id = $oFeed->id;
-                                $oFeedItem->title = $oItem->title;
-                                $oFeedItem->url = $oItem->link;
-                                $oFeedItem->guid = $oItem->guid;
-
-                                $cdFeedPubDate = new Carbon($oItem->pubDate);
-                                $oFeedItem->pubDate = $cdFeedPubDate->toDateTimeString();
-
-                                $oThumbItem = $oItem->{'media:thumbnail'};
-
-                                $bPic = false;
-                                $sPicURL = '';
-
-                                if (isset($oItem->children('media', true)->thumbnail)) {
-
-                                    if (isset($oItem->children('media', true)->thumbnail->attributes()->url)) {
-                                        $bPic = true;
-                                        $sPicURL = $oItem->children('media', true)->thumbnail->attributes()->url;
-                                    }
-                                }
-
-                                if (!$bPic) {
-                                    if (isset($oItem->enclosure)) {
-                                        if (isset($oItem->enclosure['url'])) {
-                                            $oFeedItem->thumb = $oItem->enclosure['url'];
-                                            $bPic = true;
-                                        }
-                                    }
-                                }
-
-                                // still no pic? resort to scanning for img in item
-                                if (!$bPic) {
-                                    preg_match_all('/<img [^>]*src=["|\']([^"|\']+)/i', $oItem->asXml(), $matches);
-                                    foreach ($matches[1] as $key => $value) {
-                                        $sPicURL = $value;
-                                        $bPic = true;
-                                        break;
-                                    }
-                                }
-
-                                // still no pic? look for og:image in downloaded webpage...!
-
-                                $oFeedItem->thumb = '';
-                                $oFeedItem->save();
-
-                                if (!$bPic) {
-
-                                    //self::scrapeThumbFromFeedItem($oFeedItem->id);
-                                    self::scheduleFeedItemImageScrape($oFeedItem->id);
-
-                                } else {
-                                    self::scheduleThumbCrunch($sPicURL, $oFeedItem->id);
-                                }
+                    $iItemsFetched += count($oScrapedFeed->aoItems);
 
 
-                                //echo "save item: ", $oFeedItem->guid, "<br/>";
 
-                                $iItemsFetched++;
-                            } else {
-                                //echo "skipped an item?<br/>";
-                            }
-                        }
-                    }
                 }else{
                     // todo: failed to fetch feed
                 }
