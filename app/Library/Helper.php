@@ -170,7 +170,7 @@ class Helper
             case "2.0":
                 // look for feed image
                 if(isset($xmlFeed->channel->image->url)){
-                    $oFeed->thumb = $xmlFeed->channel->image->url;
+                    $oScrapedFeed->thumb = $xmlFeed->channel->image->url;
                 }
                 // look for feed items
                 if(isset($xmlFeed->channel->item))
@@ -198,7 +198,7 @@ class Helper
                             $oTempFeedItem = new \StdClass;
 
                             $oFeedItem = new FeedItem;
-                            $oFeedItem->feed_id = $oFeed->id;
+                            $oFeedItem->feed_id = $oRssFeed->id;
                             $oFeedItem->title = $oItem->title;
                             $oFeedItem->url = $oItem->link;
                             $oFeedItem->guid = $oItem->guid;
@@ -250,10 +250,10 @@ class Helper
                             if (!$bPic) {
 
                                 //self::scrapeThumbFromFeedItem($oFeedItem->id);
-                                self::scheduleFeedItemImageScrape($oFeedItem->id);
+                                Feeds::scheduleFeedItemImageScrape($oFeedItem->id);
 
                             } else {
-                                self::scheduleThumbCrunch($sPicURL, $oFeedItem->id);
+                                Feeds::scheduleThumbCrunch($sPicURL, $oFeedItem->id);
                             }
 
 

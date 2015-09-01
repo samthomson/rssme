@@ -329,6 +329,8 @@ class Feeds extends Controller
                     $oScrapedFeed = Helper::getFeedStructureFromXML($oFeed, $xmlFeed, $sStopAt);
 
                     $iItemsFetched += count($oScrapedFeed->aoItems);
+                    if(isset($oScrapedFeed->thumb))
+                        $oFeed->thumb = $oScrapedFeed->thumb;
 
 
 
