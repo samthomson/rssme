@@ -97,10 +97,10 @@
 
                     <div class="row">
                       <div class="col-xs-6">
-                        <a class="pagination btn btn-default form-control" ng-click="changePage(iPage - 1)" ng-show="iPage > 1"><i class="fa fa-caret-left"></i> newer</a>
+                        <a class="pagination btn btn-primary form-control" ng-click="changePage(iPage - 1)" ng-show="iPage > 1"><i class="fa fa-caret-left"></i> newer</a>
                       </div>
                       <div class="col-xs-6">
-                        <a class="pagination btn btn-default form-control" ng-click="changePage(iPage + 1)" ng-show="iPage < iPagesAvailable">older <i class="fa fa-caret-right"></i></a>
+                        <a class="pagination btn btn-primary form-control" ng-click="changePage(iPage + 1)" ng-show="iPage < iPagesAvailable">older <i class="fa fa-caret-right"></i></a>
                       </div>
                     </div>
 
