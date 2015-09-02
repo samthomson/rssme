@@ -9,10 +9,12 @@ app.controller('MainUI', function($scope, $http, $interval) {
 
 
 	$scope.feeds = [];
-	$scope.feeditems = [];
+    $scope.feeditems = [];
 
 	$scope.iPage = 1;
-	$scope.iFeedId = undefined;
+    $scope.iPagesAvailable = 0;
+
+    $scope.iFeedId = undefined;
 	$scope.bLoggedIn = false;
 	$scope.bSomethingLoading = true;
 
@@ -47,7 +49,9 @@ app.controller('MainUI', function($scope, $http, $interval) {
 	    })
 	    .then(function(response) {
 				$scope.feeds = response.data.jsonFeeds;
-	    		$scope.feeditems = response.data.jsonFeedItems;
+                $scope.feeditems = response.data.jsonFeedItems;
+
+                $scope.iPagesAvailable = response.data.data.iAvailablePages;
 
 				// end loading
 				$scope.bSomethingLoading = false;

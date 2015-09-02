@@ -183,13 +183,21 @@ class Feeds extends Controller
         $oQuery->orderBy('feeditems.pubDate', 'desc')
             ->select(['feeditems.url as url', 'feeditems.title as title', 'feeds.url as feedurl', 'feeds.id as feed_id', 'feeditems.pubDate as date', 'feed_user.name as name', 'feeditems.thumb as thumb', 'feeds.thumb as feedthumb', 'feed_user.colour as feed_colour']);
 
-        
+
 
 
         $iPage = Request::input("page", 1);
         $iPerPage = 20;
 
-        $maFeedItems = $oQuery->skip(($iPage * $iPerPage)-$iPerPage)->take($iPerPage)->get();
+        $iTotalItems = 0;
+
+        //$maFeedItems = $oQuery->skip(($iPage * $iPerPage)-$iPerPage)->take($iPerPage)->get();
+        $maFeedItems = $oQuery->get();
+
+        $iTotalItems = count($maFeedItems);
+        $iTotalPages = ceil($iTotalItems / $iPerPage);
+
+        $maFeedItems = array_slice($maFeedItems, ($iPage * $iPerPage)-$iPerPage, $iPerPage);
 
         //print_r(DB::getQueryLog());
 
@@ -228,8 +236,17 @@ class Feeds extends Controller
         $oaFeeds = Auth::user()->userFeeds;
         $oaFeeds->load('feed');
 
+        $oData = [
+            'iAvailablePages' => $iTotalPages,
+            'iPerPage' => $iPerPage
+        ];
 
-        return response()->json(['jsonFeedItems' => $oaFeedItems, 'jsonFeeds' => $oaFeeds]);
+
+        return response()->json([
+            'jsonFeedItems' => $oaFeedItems,
+            'jsonFeeds' => $oaFeeds,
+            'data' => $oData
+        ]);
 
         //return response(['jsonFeedItems' => $oaFeedItems, 'jsonFeeds' => $oaFeeds], 200);
     }
