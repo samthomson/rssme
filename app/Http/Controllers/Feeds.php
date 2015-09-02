@@ -167,24 +167,32 @@ class Feeds extends Controller
 
     public static function feedsAndCategories()
     {
-        $oQuery = DB::table('feed_user')
-                ->join('feeditems', function($join)
-                    {
-                        $join->on('feed_user.feed_id', '=', 'feeditems.feed_id')
-                        ->where('feed_user.user_id', '=', Auth::id());
-                    })
-                ->join('feeds', "feeds.id", "=", "feed_user.feed_id")
-                ->orderBy('feeditems.pubDate', 'desc')
-                ->select(['feeditems.url as url', 'feeditems.title as title', 'feeds.url as feedurl', 'feeds.id as feed_id', 'feeditems.pubDate as date', 'feed_user.name as name', 'feeditems.thumb as thumb', 'feeds.thumb as feedthumb', 'feed_user.colour as feed_colour']);
+        \DB::enableQueryLog();
 
-        if(Request::has('feed')){
-            $oQuery->where("feeds.id", "=", Request::get('feed'));
-        }
+        $oQuery = DB::table('feed_user')
+            ->join('feeditems', function($join)
+            {
+                $join->on('feed_user.feed_id', '=', 'feeditems.feed_id')
+                    ->where('feed_user.user_id', '=', Auth::id());
+
+                if(Request::has('feed')){
+                    $join->where("feeditems.feed_id", "=", Request::get('feed'));
+                }
+            })
+            ->join('feeds', "feeds.id", "=", "feed_user.feed_id");
+        $oQuery->orderBy('feeditems.pubDate', 'desc')
+            ->select(['feeditems.url as url', 'feeditems.title as title', 'feeds.url as feedurl', 'feeds.id as feed_id', 'feeditems.pubDate as date', 'feed_user.name as name', 'feeditems.thumb as thumb', 'feeds.thumb as feedthumb', 'feed_user.colour as feed_colour']);
+
+        
+
 
         $iPage = Request::input("page", 1);
         $iPerPage = 20;
 
-        $maFeedItems = $oQuery->skip($iPage * $iPerPage)->take($iPerPage)->get();
+        $maFeedItems = $oQuery->skip(($iPage * $iPerPage)-$iPerPage)->take($iPerPage)->get();
+
+        //print_r(DB::getQueryLog());
+
 
         $oaFeedItems = [];
 

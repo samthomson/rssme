@@ -216,18 +216,18 @@ app.controller('MainUI', function($scope, $http, $interval) {
     $scope.changePage = function(iNewPage){
     	$scope.iPage = iNewPage;
     	$scope.getItems();
-    }
+    };
     $scope.changeFeed = function(iNewFeed){
     	$scope.iFeedId = iNewFeed;
     	$scope.iPage = 1;
     	$scope.getItems();
-    }
+    };
 
     $scope.home = function(){
     	$scope.iFeedId = undefined;
     	$scope.iPage = 1;
     	$scope.getItems();
-    }
+    };
 
 	$scope.getItems();
 });
