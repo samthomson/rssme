@@ -77,9 +77,7 @@
                   <div class="col-xs-2 hidden-xs">
 
                     <a class="feed_link" ng-repeat="feed in feeds" ng-click="changeFeed(feed.feed_id)">
-                      <span>@{{feed.name}}</span>
-                      <br/>
-                    </a>
+                      <div class="feed-link-thumb-wrapper"><img ng-src="@{{feed.feed.thumb}}" class="feed-link-thumb"></div><span class="feed-link-title">@{{feed.name}}</span></a>
                   </div>
                   <div class="col-xs-12 col-sm-10">
 

@@ -13,17 +13,40 @@ $i_border_radius: 8px;
 body{
 	/*background-color: $silver_background;*/
   font-family: 'Noto Sans', sans-serif;
-  font-family: 'PT Sans Caption', sans-serif;
 }
 
 a.feed_link{
   display: block;
   font-size: smaller;
   color: black;
-  text-transform: capitalize;
+  font-weight: bold;
   background-color:$colour_white;
   padding-bottom: 4px;
   padding-top: 4px;
+  border-bottom: 1px solid $silver_background;
+}
+a.feed_link .feed-link-thumb-wrapper{
+  height: 18px;
+  width: 18px;
+  display: inline-block;
+  margin-right: 8px;
+}
+a.feed_link img.feed-link-thumb{
+  max-height: 18px;
+  width: auto;
+  max-width: 18px;
+  display: block;
+
+  background-color: $colour_white;
+}
+a.feed_link span.feed-link-title{
+  max-height: 18px;
+  width: auto;
+  max-width: 18px;
+  display: block;
+  margin-right: 8px;
+
+  display: inline-block;
 }
 a.feed-item{
 	color: black;
@@ -156,15 +179,15 @@ ul.nav.nav-tabs{
 }
 .btn-primary,
 .btn-primary:active{
-  background: $colour_white;
-  color:$colour_orange;
-  border-color:$colour_orange;
+  background: $colour_white !important;
+  color:$colour_orange !important;
+  border-color:$colour_orange !important;
 }
 .btn-primary:hover,
 .btn-primary:focus{
-  background: $colour_orange;
-  color:$colour_white;
-  border-color:$colour_orange;
+  background: $colour_orange !important;
+  color:$colour_white !important;
+  border-color:$colour_orange !important;
 }
 .btn-danger,
 .btn-danger:active{
@@ -182,9 +205,9 @@ ul.nav.nav-tabs{
 
 
 .btn-default{
-  background: $silver_background;
-  color:$colour_orange;
-  border-color:$silver_background;
+  background: $silver_background !important;
+  color:$colour_orange !important;
+  border-color:$silver_background !important;
 }
 .btn-default:hover,
 .btn-default:focus{

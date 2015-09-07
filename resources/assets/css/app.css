@@ -1,17 +1,38 @@
 /* app specific scss */
 body {
   /*background-color: $silver_background;*/
-  font-family: 'Noto Sans', sans-serif;
-  font-family: 'PT Sans Caption', sans-serif; }
+  font-family: 'Noto Sans', sans-serif; }
 
 a.feed_link {
   display: block;
   font-size: smaller;
   color: black;
-  text-transform: capitalize;
+  font-weight: bold;
   background-color: #fff;
   padding-bottom: 4px;
-  padding-top: 4px; }
+  padding-top: 4px;
+  border-bottom: 1px solid #F5F5F5; }
+
+a.feed_link .feed-link-thumb-wrapper {
+  height: 18px;
+  width: 18px;
+  display: inline-block;
+  margin-right: 8px; }
+
+a.feed_link img.feed-link-thumb {
+  max-height: 18px;
+  width: auto;
+  max-width: 18px;
+  display: block;
+  background-color: #fff; }
+
+a.feed_link span.feed-link-title {
+  max-height: 18px;
+  width: auto;
+  max-width: 18px;
+  display: block;
+  margin-right: 8px;
+  display: inline-block; }
 
 a.feed-item {
   color: black;
@@ -152,15 +173,15 @@ ul.nav.nav-tabs {
 
 .btn-primary,
 .btn-primary:active {
-  background: #fff;
-  color: #F56423;
-  border-color: #F56423; }
+  background: #fff !important;
+  color: #F56423 !important;
+  border-color: #F56423 !important; }
 
 .btn-primary:hover,
 .btn-primary:focus {
-  background: #F56423;
-  color: #fff;
-  border-color: #F56423; }
+  background: #F56423 !important;
+  color: #fff !important;
+  border-color: #F56423 !important; }
 
 .btn-danger,
 .btn-danger:active {
@@ -175,9 +196,9 @@ ul.nav.nav-tabs {
   border-color: #e74c3c; }
 
 .btn-default {
-  background: #F5F5F5;
-  color: #F56423;
-  border-color: #F5F5F5; }
+  background: #F5F5F5 !important;
+  color: #F56423 !important;
+  border-color: #F5F5F5 !important; }
 
 .btn-default:hover,
 .btn-default:focus {
