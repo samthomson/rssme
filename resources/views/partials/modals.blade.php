@@ -43,7 +43,7 @@ manage feeds
                         </div>
                         <div class="col-xs-2" ng-show="iFeedUpdating != key">
                             <!-- edit feed -->
-                            <a ng-click="editFeed(key)" ng-show="iFeedEditing != key" class="btn btn-default">edit</a>
+                            <a ng-click="editFeed(key)" ng-show="iFeedEditing != key" class="btn btn-primary">edit</a>
                             <!-- update/save [changes] -->
                             <a ng-show="iFeedEditing == key" ng-click="updateFeed(key)" class="btn btn-primary">save</a>
                         </div>

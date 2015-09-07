@@ -2,6 +2,7 @@
 $colour_white:#fff;
 $silver_background: #F5F5F5;
 $colour_orange:#F56423;
+$colour_red:#e74c3c;
 $colour_grey:#bdc3c7;
 $colour_success:green;
 $i_feed_item_height: 28px;
@@ -10,19 +11,29 @@ $i_border_radius: 8px;
 
 
 body{
-	background-color: $silver_background;
-    font-family: 'Noto Sans', sans-serif;
+	/*background-color: $silver_background;*/
+  font-family: 'Noto Sans', sans-serif;
+  font-family: 'PT Sans Caption', sans-serif;
 }
 
+a.feed_link{
+  display: block;
+  font-size: smaller;
+  color: black;
+  text-transform: capitalize;
+  background-color:$colour_white;
+  padding-bottom: 4px;
+  padding-top: 4px;
+}
 a.feed-item{
-	font-weight:bold;
 	color: black;
-	background-color:$colour_white;
+  background-color: $silver_background;
 	font-size: smaller;
 	display: block;
   padding-bottom: 8px;
   padding-top: 8px;
   border-bottom:1px solid $silver_background;
+  font-weight: bold;
 }
 
 a.feed-item span{
@@ -46,9 +57,8 @@ div.row div {
 */
 
 a.feed-item:visited{
-	font-weight: 100 !important;
 	color: gray;
-	background-color: $silver_background;
+  background-color:$colour_white;
 }
 
 a.pagination, a.feed_link, a#home_link{
@@ -78,7 +88,7 @@ ul.pager li.disabled{
 }
 
 .navbar-brand{
-	font-size: 44px;
+	font-size: 36px;
 }
 
 #home_link{font-family: 'PT Sans Caption', sans-serif;}
@@ -115,8 +125,8 @@ ul.pager li.disabled{
   margin:auto;
   margin-top:30px;
   max-width:350px;
-
-  border: 1px solid $colour_orange;
+/*
+  border: 1px solid $colour_orange;*/
   background-color:$colour_white;
   border-radius: $i_border_radius;
 }
@@ -127,12 +137,25 @@ ul.pager li.disabled{
   overflow-x: hidden;
 }
 
-a{cursor: pointer;}
-
-.btn{
-
+.menu-toggle-button{
+  display: inline-block;
 }
-.btn-primary{
+.menu-text{
+  line-height: 17px;
+  vertical-align: top;
+}
+
+a{cursor: pointer;}
+img.aspect-scaled{max-width: 100%;height:auto;}
+
+ul.nav.nav-tabs{
+  margin-bottom: 16px;
+}
+.btn{
+  box-shadow:none;
+}
+.btn-primary,
+.btn-primary:active{
   background: $colour_white;
   color:$colour_orange;
   border-color:$colour_orange;
@@ -143,6 +166,20 @@ a{cursor: pointer;}
   color:$colour_white;
   border-color:$colour_orange;
 }
+.btn-danger,
+.btn-danger:active{
+  background: $colour_white;
+  color:$colour_red;
+  border-color:$colour_red;
+}
+.btn-danger:hover,
+.btn-danger:focus{
+  background: $colour_red;
+  color:$colour_white;
+  border-color:$colour_red;
+}
+
+
 
 .btn-default{
   background: $silver_background;
@@ -177,4 +214,8 @@ a{cursor: pointer;}
   background-color:$colour_success;
   border-color:$colour_success;
   color:$colour_white;
+}
+
+.nav > li, .nav > li > ul {
+  text-align: right;
 }

@@ -24,11 +24,14 @@
               <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
-                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false" ng-show="bLoggedIn">
                     <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+                    <div class="menu-toggle-button">
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                    </div>
+                    <span class="menu-text">menu</span>
                   </button>
                   <a class="navbar-brand" ng-click="home()" id="home_link"><span class="brand rss">RSS</span><span class="brand me">me</span></a>
                 </div>
@@ -96,10 +99,10 @@
                     </a>
 
                     <div class="row">
-                      <div class="col-xs-6">
+                      <div class="col-xs-5 col-md-3 col-lg-2 pull-left">
                         <a class="pagination btn btn-primary form-control" ng-click="changePage(iPage - 1)" ng-show="iPage > 1"><i class="fa fa-caret-left"></i> newer</a>
                       </div>
-                      <div class="col-xs-6">
+                      <div class="col-xs-5 col-md-3 col-lg-2 pull-right">
                         <a class="pagination btn btn-primary form-control" ng-click="changePage(iPage + 1)" ng-show="iPage < iPagesAvailable">older <i class="fa fa-caret-right"></i></a>
                       </div>
                     </div>
@@ -114,7 +117,14 @@
               <div ng-show="bLoggedIn == false && !bSomethingLoading">
                 <div class="row">
 
-                  @include('app.login')
+                  <div class="hidden-xs hidden-sm col-md-6">
+                    <img src="/img/CJnRZi6WUAAsW6I.png" class="aspect-scaled" alt="RSSme - Sign up or Log in" alt="RSSme - Sign up or Log in" />
+                  </div>
+
+                  <div class="col-xs-12 col-md-6">
+                    @include('app.login')
+                  </div>
+
                 </div>
               </div>
 

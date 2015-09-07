@@ -1,17 +1,27 @@
 /* app specific scss */
 body {
-  background-color: #F5F5F5;
-  font-family: 'Noto Sans', sans-serif; }
+  /*background-color: $silver_background;*/
+  font-family: 'Noto Sans', sans-serif;
+  font-family: 'PT Sans Caption', sans-serif; }
+
+a.feed_link {
+  display: block;
+  font-size: smaller;
+  color: black;
+  text-transform: capitalize;
+  background-color: #fff;
+  padding-bottom: 4px;
+  padding-top: 4px; }
 
 a.feed-item {
-  font-weight: bold;
   color: black;
-  background-color: #fff;
+  background-color: #F5F5F5;
   font-size: smaller;
   display: block;
   padding-bottom: 8px;
   padding-top: 8px;
-  border-bottom: 1px solid #F5F5F5; }
+  border-bottom: 1px solid #F5F5F5;
+  font-weight: bold; }
 
 a.feed-item span {
   padding: 4px;
@@ -33,9 +43,8 @@ div.row div {
 }
 */
 a.feed-item:visited {
-  font-weight: 100 !important;
   color: gray;
-  background-color: #F5F5F5; }
+  background-color: #fff; }
 
 a.pagination, a.feed_link, a#home_link {
   cursor: pointer; }
@@ -73,7 +82,7 @@ ul.pager li.disabled {
   display: inline-block; }
 
 .navbar-brand {
-  font-size: 44px; }
+  font-size: 36px; }
 
 #home_link {
   font-family: 'PT Sans Caption', sans-serif; }
@@ -111,7 +120,8 @@ ul.pager li.disabled {
   margin: auto;
   margin-top: 30px;
   max-width: 350px;
-  border: 1px solid #F56423;
+  /*
+  border: 1px solid $colour_orange;*/
   background-color: #fff;
   border-radius: 8px; }
 
@@ -120,10 +130,28 @@ ul.pager li.disabled {
   overflow-y: auto;
   overflow-x: hidden; }
 
+.menu-toggle-button {
+  display: inline-block; }
+
+.menu-text {
+  line-height: 17px;
+  vertical-align: top; }
+
 a {
   cursor: pointer; }
 
-.btn-primary {
+img.aspect-scaled {
+  max-width: 100%;
+  height: auto; }
+
+ul.nav.nav-tabs {
+  margin-bottom: 16px; }
+
+.btn {
+  box-shadow: none; }
+
+.btn-primary,
+.btn-primary:active {
   background: #fff;
   color: #F56423;
   border-color: #F56423; }
@@ -133,6 +161,18 @@ a {
   background: #F56423;
   color: #fff;
   border-color: #F56423; }
+
+.btn-danger,
+.btn-danger:active {
+  background: #fff;
+  color: #e74c3c;
+  border-color: #e74c3c; }
+
+.btn-danger:hover,
+.btn-danger:focus {
+  background: #e74c3c;
+  color: #fff;
+  border-color: #e74c3c; }
 
 .btn-default {
   background: #F5F5F5;
@@ -164,5 +204,8 @@ a {
   background-color: green;
   border-color: green;
   color: #fff; }
+
+.nav > li, .nav > li > ul {
+  text-align: right; }
 
 /*# sourceMappingURL=app.css.map */
