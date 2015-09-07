@@ -16,7 +16,7 @@
 
 
 
-				<form>
+				<form ng-keyup="$event.keyCode == 13 && login()">
 					<div class="feedback"></div>
 					<div class="form-group">
 						<label for="exampleInputEmail1">Email address</label>
@@ -47,7 +47,7 @@
 			<!---- register tab ---->
 			<div role="tabpanel" class="tab-pane" id="register">
 				<!-- ngIf: alert.register -->
-				<form role="form" id="register_form">
+				<form role="form" id="register_form" ng-keyup="$event.keyCode == 13 && register()">
 					<div class="register_feedback"></div>
 					<div class="form-group">
 						<label for="exampleInputEmail1">Email address</label>

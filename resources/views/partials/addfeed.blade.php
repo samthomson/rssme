@@ -1,4 +1,4 @@
-<form role="form" name="addfeed" class="form-horizontal">
+<form role="form" name="addfeed" class="form-horizontal" ng-keyup="$event.keyCode == 13 && addFeedSubmit()">
     {!! csrf_field() !!}
     <div class="form-group">
 

@@ -36,7 +36,7 @@ manage feeds
                     <div ng-repeat="(key, feed) in feeds" class="row form-group">
                         <div class="col-xs-4">
                             <span ng-show="iFeedEditing != key">@{{ feeds[key].name  }}</span>
-                            <input type="text" ng-show="iFeedEditing == key" ng-model="feeds[key].name  "/>
+                            <input type="text" ng-show="iFeedEditing == key" ng-model="feeds[key].name  " ng-keyup="$event.keyCode == 13 && updateFeed(key)"/>
                         </div>
                         <div class="col-xs-4 limit ellipsis">
                             <span>@{{ feed.feed.url  }}</span>
