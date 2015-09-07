@@ -87,6 +87,35 @@ app.controller('MainUI', function($scope, $http, $interval) {
 		}));
 	};
 
+	$scope.register = function(){
+		$scope.bSomethingLoading = true;
+		// parse form and submit
+		$http({
+			method: "POST",
+			url: "/app/auth/register",
+			params: {
+				'email': $scope.register_email,
+				'password': $scope.register_password
+			}
+		}).then(function(response) {
+
+			if(response.status == 200)
+			{
+				$scope.bLoggedIn = true;
+                // now fetch items
+                $scope.getItems();
+                $(".register_feedback").html('');
+			}else{
+                
+			}
+			// end loading
+			$scope.bSomethingLoading = false;
+		}, (function(response){
+			$(".register_feedback").html(response.data);
+			$scope.bSomethingLoading = false;
+		}));
+	};
+
 	$scope.logout = function(){
 		$scope.bSomethingLoading = true;
 		// parse form and submit
@@ -94,20 +123,20 @@ app.controller('MainUI', function($scope, $http, $interval) {
 			method: "POST",
 			url: "/app/auth/logout"
 		})
-			.success(function(response) {
+		.success(function(response) {
 
-				if(response.status == 200)
-				{
-					$scope.bLoggedIn = false;
-				}
-				// end loading
-				$scope.bSomethingLoading = false;
-				// user may be logged in or out now
-				$scope.bLoggedIn = (response.status == 200 ? true : false);
-			})
-			.error(function(){
-				$scope.bSomethingLoading = false;
-			});
+			if(response.status == 200)
+			{
+				$scope.bLoggedIn = false;
+			}
+			// end loading
+			$scope.bSomethingLoading = false;
+			// user may be logged in or out now
+			$scope.bLoggedIn = (response.status == 200 ? true : false);
+		})
+		.error(function(){
+			$scope.bSomethingLoading = false;
+		});
 	};
 
 	$scope.addFeed = function() {

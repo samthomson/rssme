@@ -3,23 +3,14 @@
 	<div id="loginRegisterDialog" class="ng-scope">
 
 		<!-- Nav tabs -->
-		<ul class="nav nav-tabs" role="tablist" id="login_register_tablist">
-			<li role="presentation" ng-class="{active: tab == 'login'}" class="active" style=""><a role="tab" data-toggle="tab" ng-click="setActiveTab('login')">login</a></li>
-			<li role="presentation" ng-class="{active: tab == 'register'}"><a role="tab" data-toggle="tab" ng-click="setActiveTab('register')">register</a></li>
-			<li role="presentation" class=""></li>
+		<ul class="nav nav-tabs" role="tablist">
+			<li role="presentation" class="active"><a href="#login" aria-controls="home" role="tab" data-toggle="tab">Login</a></li>
+			<li role="presentation"><a href="#register" aria-controls="profile" role="tab" data-toggle="tab">Register</a></li>
 		</ul>
-
-
 		<!-- Tab panes -->
 		<div class="tab-content">
 			<!---- login tab ---->
-			<div role="tabpanel" class="tab-pane active" ng-class="{active: tab == 'login'}" id="login">
-
-
-
-
-
-
+			<div role="tabpanel" class="tab-pane active"id="login">
 
 
 
@@ -53,26 +44,20 @@
 
 
 
-
-
-
-
-
 			<!---- register tab ---->
-			<div role="tabpanel" class="tab-pane" ng-class="{active: tab == 'register'}" id="register">
+			<div role="tabpanel" class="tab-pane" id="register">
 				<!-- ngIf: alert.register -->
-				<form role="form" id="register_form" method="post" ng-submit="register()" class="ng-pristine ng-valid ng-valid-email">
-					<div class="feedback"></div>
-					<div class="loading alert app"><i class="fa fa-spinner fa-spin"></i> loading</div>
+				<form role="form" id="register_form">
+					<div class="register_feedback"></div>
 					<div class="form-group">
 						<label for="exampleInputEmail1">Email address</label>
-						<input ng-model="email" name="email" type="email" class="form-control ng-pristine ng-untouched ng-valid ng-valid-email" id="register_email" placeholder="Enter email">
+						<input ng-model="register_email" name="email" type="email" class="form-control " id="register_email" placeholder="Enter email">
 					</div>
 					<div class="form-group">
 						<label for="exampleInputPassword1">Password</label>
-						<input ng-model="password" name="password" type="password" class="form-control ng-pristine ng-untouched ng-valid" id="register_password" placeholder="Password">
+						<input ng-model="register_password" name="password" type="password" class="form-control" id="register_password" placeholder="Password">
 					</div>
-					<button type="submit" class="btn btn-default main-color flat btn-lg btn-block">register</button>
+					<button type="submit" class="btn btn-default main-color flat btn-lg btn-block" ng-click="register()">register</button>
 				</form>
 
 			</div>

@@ -18,6 +18,7 @@ Route::get('/', ['uses' => 'Feeds@serveAngularApp']);
 
 
 
+Route::post('/app/auth/register',  ['uses' => 'CustomAuthController@register']);
 Route::post('/app/auth/login',  ['uses' => 'CustomAuthController@login']);
 Route::post('/app/auth/logout',  ['uses' => 'CustomAuthController@logout']);
 

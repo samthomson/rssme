@@ -50,9 +50,52 @@ class CustomAuthController extends Controller
     {
         return response("logged out", (Auth::logout() ? 401 : 200));
     }
+    public function register()
+    {
+        $iResponseCode = -1;
+        $sResponseData = '';
 
+        if(Request::has('email') && Request::has('password'))
+        {
+            // validate credentials, create user, login them in, return 200
+            $validator = Validator::make(
+                Request::only(['email','password']),
+                [
+                    'password' => 'required|min:6',
+                    'email' => 'required|email|unique:users'
+                ]
+            );
 
+            if ($validator->fails())
+            {
+                $sResponseData = '<div class="alert alert-danger"><strong>Registration failed</strong> Make sure your email and password meet the following requirements:';
 
+                $iResponseCode = 412;
+                $sResponseData .= '<ul>';
+                foreach($validator->messages()->all('<li>:message</li>') as $message)
+                {
+                    //$sResponseData .= "<li><strong>sField</strong> $sError</li>";
+                    $sResponseData .= $message;
+                }
+                $sResponseData .= '</ul></div>';
 
+            }else{
+                // succesful; create user, log them in, return 200
+                $oUser = new User;
+                $oUser->email = Request::get('email');
+                $oUser->password = \Hash::make(Request::get('password'));
+
+                $oUser->save();
+
+                Auth::attempt(['email' => $oUser->email, 'password' => $oUser->password], true);
+
+                $iResponseCode = 200;
+            }
+        }else{
+            $iResponseCode = 412;
+            $sResponseData = '<div class="alert alert-danger"><strong>Registration failed</strong> Enter an email and password to register</div>';
+        }
+        return response($sResponseData, $iResponseCode);
+    }
 
 }
