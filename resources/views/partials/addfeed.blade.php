@@ -22,7 +22,7 @@
 
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
-            <button type="button" name="submit" class="btn btn-primary form-control" id="add_button" ng-click="addFeedSubmit()">add</button>
+            <button type="button" name="submit" class="btn btn-primary form-control" id="add_button" ng-click="addFeedSubmit()"><i class="fa fa-plus"></i> add</button>
         </div>
 
     </div>

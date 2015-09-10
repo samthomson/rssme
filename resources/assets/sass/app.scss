@@ -1,9 +1,13 @@
 /* app specific scss */
 $colour_white:#fff;
-$silver_background: #F5F5F5;
+
+$colour_background: #F5F5F5;
+$colour_silver: rgb(229,229,229);
+$colour_visited: #f2f2f2;
+$colour_new: #fefefe;
+$colour_grey:#bdc3c7;
 $colour_orange:#F56423;
 $colour_red:#e74c3c;
-$colour_grey:#bdc3c7;
 $colour_success:green;
 $i_feed_item_height: 28px;
 
@@ -11,8 +15,12 @@ $i_border_radius: 8px;
 
 
 body{
-	/*background-color: $silver_background;*/
+	background-color: $colour_background;
   font-family: 'Noto Sans', sans-serif;
+}
+
+#feed_manage_controls{
+  font-size: smaller;
 }
 
 a.feed_link{
@@ -20,10 +28,10 @@ a.feed_link{
   font-size: smaller;
   color: black;
   font-weight: bold;
-  background-color:$colour_white;
+  background-color:$colour_background;
   padding-bottom: 4px;
   padding-top: 4px;
-  border-bottom: 1px solid $silver_background;
+  border-bottom: 1px solid $colour_silver;
 }
 a.feed_link .feed-link-thumb-wrapper{
   height: 18px;
@@ -37,7 +45,7 @@ a.feed_link img.feed-link-thumb{
   max-width: 18px;
   display: block;
 
-  background-color: $colour_white;
+  background-color: $colour_background;
 }
 a.feed_link span.feed-link-title{
   max-height: 18px;
@@ -50,13 +58,17 @@ a.feed_link span.feed-link-title{
 }
 a.feed-item{
 	color: black;
-  background-color: $silver_background;
+  background-color: $colour_new;
 	font-size: smaller;
 	display: block;
   padding-bottom: 8px;
   padding-top: 8px;
-  border-bottom:1px solid $silver_background;
+  border-bottom:1px solid $colour_silver;
   font-weight: bold;
+}
+a.feed-item:visited{
+  color: gray;
+  background-color:$colour_background;
 }
 
 a.feed-item span{
@@ -71,18 +83,7 @@ a.feed-item span{
 .limit.ellipsis{
 	text-overflow: ellipsis;	
 }
-/*
-div.row div {
-	padding: 0px !important;
-	height: $i_feed_item_height;
-	overflow-x:hidden;
-}
-*/
 
-a.feed-item:visited{
-	color: gray;
-  background-color:$colour_white;
-}
 
 a.pagination, a.feed_link, a#home_link{
 	cursor: pointer;
@@ -111,7 +112,7 @@ ul.pager li.disabled{
 }
 
 .navbar-brand{
-	font-size: 36px;
+	font-size: 44px;
 }
 
 #home_link{font-family: 'PT Sans Caption', sans-serif;}
@@ -150,7 +151,7 @@ ul.pager li.disabled{
   max-width:350px;
 /*
   border: 1px solid $colour_orange;*/
-  background-color:$colour_white;
+  background-color:$colour_background;
   border-radius: $i_border_radius;
 }
 
@@ -177,9 +178,23 @@ ul.nav.nav-tabs{
 .btn{
   box-shadow:none;
 }
+
+
+.btn-default{
+  background: $colour_silver !important;
+  color:$colour_orange !important;
+  border-color:$colour_silver !important;
+}
+.btn-default:hover,
+.btn-default:focus{
+  background: $colour_orange;
+  color:$colour_white;
+  border-color:$colour_orange;
+}
+
 .btn-primary,
 .btn-primary:active{
-  background: $colour_white !important;
+  background: $colour_background !important;
   color:$colour_orange !important;
   border-color:$colour_orange !important;
 }
@@ -189,9 +204,23 @@ ul.nav.nav-tabs{
   color:$colour_white !important;
   border-color:$colour_orange !important;
 }
+
+.btn-secondary,
+.btn-secondary:active{
+  background: $colour_background !important;
+  color:$colour_grey !important;
+  border-color:$colour_grey !important;
+}
+.btn-secondary:hover,
+.btn-secondary:focus{
+  background: $colour_grey !important;
+  color:$colour_white !important;
+  border-color:$colour_grey !important;
+}
+
 .btn-danger,
 .btn-danger:active{
-  background: $colour_white;
+  background: $colour_background;
   color:$colour_red;
   border-color:$colour_red;
 }
@@ -202,19 +231,6 @@ ul.nav.nav-tabs{
   border-color:$colour_red;
 }
 
-
-
-.btn-default{
-  background: $silver_background !important;
-  color:$colour_orange !important;
-  border-color:$silver_background !important;
-}
-.btn-default:hover,
-.btn-default:focus{
-  background: $colour_orange;
-  color:$colour_white;
-  border-color:$colour_orange;
-}
 
 #fixed_output{
 }
@@ -241,4 +257,21 @@ ul.nav.nav-tabs{
 
 .nav > li, .nav > li > ul {
   text-align: right;
+}
+
+.alert.alert-danger{
+  background: $colour_background;
+  border-color: $colour_red;
+  color: $colour_red;
+}
+
+.navbar{
+  border:none;
+  border-bottom: 1px solid $colour_silver;
+}
+.navbar-default{
+  background-image: none;
+  background-color: $colour_background;
+  box-shadow:none;
+  border-radius: 0px;
 }

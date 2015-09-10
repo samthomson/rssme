@@ -77,6 +77,8 @@ app.controller('MainUI', function($scope, $http, $interval) {
 			if(response.status == 200)
 			{
 				$scope.bLoggedIn = true;
+				$scope.email = '';
+				$scope.password = '';
                 // now fetch items
                 $scope.getItems();
 			}

@@ -51,10 +51,7 @@
 
 
                     <ul class="nav navbar-nav navbar-right" ng-show="bLoggedIn">
-                      <li><a ng-click="manageFeeds()"><i class="fa fa-list"></i> feeds</a></li>
-                      <li><a ng-click="addFeed()"><i class="fa fa-plus"></i> Add</a></li>
-
-
+                      <li><a ng-click="manageFeeds()" class=""><i class="fa fa-cog"></i> Manage</a></li>
                       <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" alt="account menu"><i class="fa fa-user"></i> Account <span class="caret"></span></a>
                         <ul class="dropdown-menu">
@@ -75,6 +72,12 @@
                 <div class="row">
 
                   <div class="col-xs-2 hidden-xs">
+
+                    <div class="row" id="feed_manage_controls">
+                      <div class="col-xs-12">
+                        <a ng-click="addFeed()" class="form-control btn btn-primary"><i class="fa fa-plus"></i> Subscription</a>
+                      </div>                        
+                    </div>
 
                     <a class="feed_link" ng-repeat="feed in feeds" ng-click="changeFeed(feed.feed_id)">
                       <div class="feed-link-thumb-wrapper"><img ng-src="@{{feed.feed.thumb}}" class="feed-link-thumb"></div><span class="feed-link-title">@{{feed.name}}</span></a>
