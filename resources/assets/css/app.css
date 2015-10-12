@@ -21,7 +21,9 @@ a.feed_link .feed-link-thumb-wrapper {
   height: 18px;
   width: 18px;
   display: inline-block;
-  margin-right: 8px; }
+  margin-right: 8px;
+  margin-left: 8px;
+  padding-top: 4px; }
 
 a.feed_link img.feed-link-thumb {
   max-height: 18px;
@@ -33,10 +35,13 @@ a.feed_link img.feed-link-thumb {
 a.feed_link span.feed-link-title {
   max-height: 18px;
   width: auto;
-  max-width: 18px;
   display: block;
   margin-right: 8px;
-  display: inline-block; }
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: absolute; }
 
 a.feed-item {
   color: black;
@@ -93,7 +98,8 @@ ul.pager li.disabled {
 .feed-item img.feed-thumb {
   max-width: 42px;
   height: auto;
-  max-height: 28px; }
+  max-height: 28px;
+  padding-left: 6px; }
 
 .feed-item .feed-thumb-wrapper {
   width: 42px;
