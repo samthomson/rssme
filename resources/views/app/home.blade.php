@@ -1,5 +1,3 @@
-
-
 <!-- Stored in resources/views/layouts/master.blade.php -->
 
 <html>
@@ -51,6 +49,7 @@
 
 
                     <ul class="nav navbar-nav navbar-right" ng-show="bLoggedIn">
+                    <li><a ng-click="addFeed()" class="btn btn-primary"><i class="fa fa-plus"></i> Subscription</a></li>
                       <li><a ng-click="manageFeeds()" class=""><i class="fa fa-cog"></i> Manage</a></li>
                       <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" alt="account menu"><i class="fa fa-user"></i> Account <span class="caret"></span></a>
@@ -74,13 +73,11 @@
                   <div class="col-xs-2 hidden-xs">
 
                     <div class="row" id="feed_manage_controls">
-                      <div class="col-xs-12">
-                        <a ng-click="addFeed()" class="form-control btn btn-primary"><i class="fa fa-plus"></i> Subscription</a>
-                      </div>                        
+                      <div class="col-xs-12"></div>                        
                     </div>
 
                     <a class="feed_link" ng-repeat="feed in feeds" ng-click="changeFeed(feed.feed_id)">
-                      <div class="feed-link-thumb-wrapper"><img ng-src="@{{feed.feed.thumb}}" class="feed-link-thumb"></div><span class="feed-link-title">@{{feed.name}}</span></a>
+                      <div class="feed-link-thumb-wrapper"><img ng-src="@{{feed.feed.thumb}}" class="feed-link-thumb" imageonerror ></div><span class="feed-link-title">@{{feed.name}}</span></a>
                   </div>
                   <div class="col-xs-12 col-sm-10">
 
@@ -123,7 +120,7 @@
                   </div>
 
                   <div class="col-xs-12 col-md-6">
-                    @include('app.login')
+                  	@include('app.login')
                   </div>
 
                 </div>

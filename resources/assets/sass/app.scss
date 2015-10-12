@@ -1,7 +1,7 @@
 /* app specific scss */
 $colour_white:#fff;
 
-$colour_background: #F5F5F5;
+$colour_background: #E9EAEC;
 $colour_silver: rgb(229,229,229);
 $colour_visited: #f2f2f2;
 $colour_new: #fefefe;
@@ -11,12 +11,15 @@ $colour_red:#e74c3c;
 $colour_success:green;
 $i_feed_item_height: 28px;
 
+$color_menu_white: #f9f9fa;
+
 $i_border_radius: 8px;
 
 
 body{
 	background-color: $colour_background;
-  font-family: 'Noto Sans', sans-serif;
+	font-family: 'Noto Sans', sans-serif;
+	visibility: hidden;
 }
 
 #feed_manage_controls{
@@ -28,7 +31,7 @@ a.feed_link{
   font-size: smaller;
   color: black;
   font-weight: bold;
-  background-color:$colour_background;
+  background-color:$color_menu_white;
   padding-bottom: 4px;
   padding-top: 4px;
   border-bottom: 1px solid $colour_silver;
@@ -194,9 +197,9 @@ ul.nav.nav-tabs{
 
 .btn-primary,
 .btn-primary:active{
-  background: $colour_background !important;
+  background: $colour_white !important;
   color:$colour_orange !important;
-  border-color:$colour_orange !important;
+  border-color:$colour_white !important;
 }
 .btn-primary:hover,
 .btn-primary:focus{
@@ -271,7 +274,13 @@ ul.nav.nav-tabs{
 }
 .navbar-default{
   background-image: none;
-  background-color: $colour_background;
+  background-color: $colour_white;
   box-shadow:none;
   border-radius: 0px;
+}
+
+ul.navbar-right > li > a {
+	padding-top:4px;
+	padding-bottom:4px;
+	margin-top:8px;
 }

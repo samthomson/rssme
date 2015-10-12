@@ -1,7 +1,8 @@
 /* app specific scss */
 body {
-  background-color: #F5F5F5;
-  font-family: 'Noto Sans', sans-serif; }
+  background-color: #E9EAEC;
+  font-family: 'Noto Sans', sans-serif;
+  visibility: hidden; }
 
 #feed_manage_controls {
   font-size: smaller; }
@@ -11,7 +12,7 @@ a.feed_link {
   font-size: smaller;
   color: black;
   font-weight: bold;
-  background-color: #F5F5F5;
+  background-color: #f9f9fa;
   padding-bottom: 4px;
   padding-top: 4px;
   border-bottom: 1px solid #e5e5e5; }
@@ -27,7 +28,7 @@ a.feed_link img.feed-link-thumb {
   width: auto;
   max-width: 18px;
   display: block;
-  background-color: #F5F5F5; }
+  background-color: #E9EAEC; }
 
 a.feed_link span.feed-link-title {
   max-height: 18px;
@@ -49,7 +50,7 @@ a.feed-item {
 
 a.feed-item:visited {
   color: gray;
-  background-color: #F5F5F5; }
+  background-color: #E9EAEC; }
 
 a.feed-item span {
   padding: 4px;
@@ -139,7 +140,7 @@ ul.pager li.disabled {
   max-width: 350px;
   /*
   border: 1px solid $colour_orange;*/
-  background-color: #F5F5F5;
+  background-color: #E9EAEC;
   border-radius: 8px; }
 
 #manageFeeds {
@@ -180,9 +181,9 @@ ul.nav.nav-tabs {
 
 .btn-primary,
 .btn-primary:active {
-  background: #F5F5F5 !important;
+  background: #fff !important;
   color: #F56423 !important;
-  border-color: #F56423 !important; }
+  border-color: #fff !important; }
 
 .btn-primary:hover,
 .btn-primary:focus {
@@ -192,7 +193,7 @@ ul.nav.nav-tabs {
 
 .btn-secondary,
 .btn-secondary:active {
-  background: #F5F5F5 !important;
+  background: #E9EAEC !important;
   color: #bdc3c7 !important;
   border-color: #bdc3c7 !important; }
 
@@ -204,7 +205,7 @@ ul.nav.nav-tabs {
 
 .btn-danger,
 .btn-danger:active {
-  background: #F5F5F5;
+  background: #E9EAEC;
   color: #e74c3c;
   border-color: #e74c3c; }
 
@@ -238,7 +239,7 @@ ul.nav.nav-tabs {
   text-align: right; }
 
 .alert.alert-danger {
-  background: #F5F5F5;
+  background: #E9EAEC;
   border-color: #e74c3c;
   color: #e74c3c; }
 
@@ -248,8 +249,13 @@ ul.nav.nav-tabs {
 
 .navbar-default {
   background-image: none;
-  background-color: #F5F5F5;
+  background-color: #fff;
   box-shadow: none;
   border-radius: 0px; }
+
+ul.navbar-right > li > a {
+  padding-top: 4px;
+  padding-bottom: 4px;
+  margin-top: 8px; }
 
 /*# sourceMappingURL=app.css.map */

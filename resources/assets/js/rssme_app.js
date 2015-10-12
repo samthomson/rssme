@@ -4,6 +4,17 @@ var app = angular
 		$httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
 	}]);
 
+// css hide 'bad' images
+app.directive('imageonerror', function() {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            element.bind('error', function() {
+            	$(element).css("display", "none");
+            });
+        }
+    };
+});
 
 app.controller('MainUI', function($scope, $http, $interval) {
 
@@ -265,4 +276,8 @@ app.controller('MainUI', function($scope, $http, $interval) {
     };
 
 	$scope.getItems();
+});
+
+$(document).ready(function(){
+	$('body').css("visibility", "visible");
 });
