@@ -77,7 +77,7 @@
                     </div>
 
                     <a class="feed_link" ng-repeat="feed in feeds" ng-click="changeFeed(feed.feed_id)">
-                      <div class="feed-link-thumb-wrapper"><img ng-src="@{{feed.feed.thumb}}" class="feed-link-thumb" imageonerror ></div><span class="feed-link-title">@{{feed.name}}</span></a>
+                      <div class="feed-link-thumb-wrapper"><img ng-src="@{{feed.feed.thumb}}" class="feed-link-thumb" imageonerror></div><span class="feed-link-title">@{{feed.name}}</span></a>
                   </div>
                   <div class="col-xs-12 col-sm-10">
 
@@ -85,7 +85,7 @@
                     <a ng-repeat="feeditem in feeditems" target="_blank" class="feed-item" href="@{{feeditem.url}}">
                       <div class="row feed-item">
                         <div class="col-xs-2 col-sm-1">
-                          <img class="feed-thumb" ng-src="@{{feeditem.thumb}}" />
+                          <img class="feed-thumb" ng-src="@{{feeditem.thumb}}" imageonerror/>
                         </div>
 
                         <div class="col-xs-0 col-sm-1 hidden-xs">@{{feeditem.name}}</div>

@@ -40,6 +40,7 @@ class CustomAuthController extends Controller
     {
         //print_r(Auth::attempt(['email'=> Request::get('email'), 'password'=> Request::get('password')]));exit();
         $bResponse = null;
+        $sResponseData = '';
         if(Auth::attempt(['email'=> Request::get('email'), 'password'=> Request::get('password')]))
             $bResponse = 200;
         else
