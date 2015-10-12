@@ -99,7 +99,9 @@ ul.pager li.disabled {
   max-width: 42px;
   height: auto;
   max-height: 28px;
-  padding-left: 6px; }
+  padding-left: 6px;
+  margin: 0 auto;
+  display: block; }
 
 .feed-item .feed-thumb-wrapper {
   width: 42px;

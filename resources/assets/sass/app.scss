@@ -117,6 +117,8 @@ ul.pager li.disabled{
 	height: auto;
 	max-height: $i_feed_item_height;
     padding-left: 6px;
+    margin: 0 auto;
+    display: block;
 }
 .feed-item .feed-thumb-wrapper{
 	width: ($i_feed_item_height * 1.5);
