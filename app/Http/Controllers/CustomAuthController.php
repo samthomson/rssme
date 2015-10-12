@@ -43,8 +43,14 @@ class CustomAuthController extends Controller
         if(Auth::attempt(['email'=> Request::get('email'), 'password'=> Request::get('password')]))
             $bResponse = 200;
         else
+        {
             $bResponse = 401;
-        return response("$bResponse", $bResponse);
+            $sResponseData = '<div class="alert alert-danger"><strong>Login failed</strong> Enter the correct email and password or register.</div>';
+        }
+
+
+
+        return response($sResponseData, $bResponse);
     }
     public function logout()
     {

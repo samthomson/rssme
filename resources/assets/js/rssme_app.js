@@ -92,10 +92,12 @@ app.controller('MainUI', function($scope, $http, $interval) {
 				$scope.password = '';
                 // now fetch items
                 $scope.getItems();
+                $(".feedback").html('');
 			}
 			// end loading
 			$scope.bSomethingLoading = false;
 		}, (function(response){
+			$(".feedback").html(response.data);
 			$scope.bSomethingLoading = false;
 		}));
 	};
