@@ -15,9 +15,8 @@
 
 
 -->
-
-
-				<form <!-- ng-keyup="$event.keyCode == 13 && login()"--> ng-submit="login()" >
+				
+				<form {{-- ng-keyup="$event.keyCode == 13 && login()"--}} ng-submit="login()" >
 					<div class="feedback"></div>
 					<div class="register_feedback"></div>
 
