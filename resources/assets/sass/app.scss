@@ -189,8 +189,32 @@ img.aspect-scaled{max-width: 100%;height:auto;}
 ul.nav.nav-tabs{
   margin-bottom: 16px;
 }
+
+#toggle-resp-nav, #toggle-resp-nav:visited{
+	border: none;
+	float:left;
+	margin-left: 15px;
+	margin-right: 0px;
+}
+#toggle-resp-nav span.icon-bar{
+	height:3px;
+}
+
+#toggle-resp-nav[aria-expanded="true"], #toggle-resp-nav:hover,#toggle-resp-nav:active, #toggle-resp-nav:focus{
+	background: $colour_white;
+}
+
+#toggle-resp-nav[aria-expanded="true"] span.icon-bar, #toggle-resp-nav:hover span.icon-bar{
+	background-color: $colour_orange;
+}
+
+.colour-primary{
+  color:$colour_orange !important;
+}
+
 .btn{
   box-shadow:none;
+  text-shadow:none !important;
 }
 
 
@@ -210,7 +234,7 @@ ul.nav.nav-tabs{
 .btn-primary:active{
   background: $colour_white !important;
   color:$colour_orange !important;
-  border-color:$colour_white !important;
+  border-color:$colour_orange !important;
 }
 .btn-primary:hover,
 .btn-primary:focus{
@@ -267,10 +291,6 @@ ul.nav.nav-tabs{
   background-color:$colour_success;
   border-color:$colour_success;
   color:$colour_white;
-}
-
-.nav > li, .nav > li > ul {
-  text-align: right;
 }
 
 .alert.alert-danger{

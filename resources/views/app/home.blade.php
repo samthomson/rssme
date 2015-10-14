@@ -23,14 +23,14 @@
               <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
-                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false" ng-show="bLoggedIn">
+                  <button id="toggle-resp-nav" type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false" ng-show="bLoggedIn">
                     <span class="sr-only">Toggle navigation</span>
                     <div class="menu-toggle-button">
                       <span class="icon-bar"></span>
                       <span class="icon-bar"></span>
                       <span class="icon-bar"></span>
                     </div>
-                    <span class="menu-text">menu</span>
+                    {{--<!--<span class="menu-text">menu</span>-->--}}
                   </button>
                   <a class="navbar-brand" ng-click="home()" id="home_link"><span class="brand rss">RSS</span><span class="brand me">me</span></a>
                 </div>
@@ -50,7 +50,7 @@
 
 
                     <ul class="nav navbar-nav navbar-right" ng-show="bLoggedIn">
-                    <li><a ng-click="addFeed()" class="btn btn-primary"><i class="fa fa-plus"></i> Subscription</a></li>
+                    <li><a ng-click="addFeed()" class="colour-primary"><i class="fa fa-plus"></i> Subscription</a></li>
                       <li><a ng-click="manageFeeds()" class=""><i class="fa fa-cog"></i> Manage</a></li>
                       <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" alt="account menu"><i class="fa fa-user"></i> Account <span class="caret"></span></a>
