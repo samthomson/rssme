@@ -11,17 +11,17 @@ class AppAPITest extends TestCase
      *
      * @return void
      */
+    
     public function testResponseIsJson()
     {
-        /*
+        /**/
         $response = $this->call('GET', '/');
 
         $this->assertEquals(200, $response->status());
-        */
+        
         
 
-        $this->visit('/app/user/feedsandcategories')
-             ->seeJson();
-        /*     */
+        /*$this->visit('/app/user/feedsandcategories')
+             ->seeJson();*/
     }
 }
