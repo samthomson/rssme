@@ -39,6 +39,7 @@ Route::group(['middleware' => 'auth'], function () {
 	});
 	Route::post('/app/feeds/add', ['uses' => 'Feeds@create']);
 
+	// restful individual feed routes
 	Route::delete('/app/feeds/{id}', ['uses' => 'Feeds@delete']);
 	Route::get('/app/feeds/{id}', ['uses' => 'Feeds@edit']);
 	Route::post('/app/feeds/{id}', ['uses' => 'Feeds@update']);
