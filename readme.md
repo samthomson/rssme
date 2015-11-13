@@ -1,5 +1,7 @@
 ## RSSme
 
+[![travis ci](https://travis-ci.org/samthomson/rssme.svg "travis ci")](https://travis-ci.org/samthomson/rssme)
+
 standalone php/mysql rss client (webbased) built on laravel 5
 
 built to be a minimal rss client, similar to googles old reader and without limits (run on your own hardware).
