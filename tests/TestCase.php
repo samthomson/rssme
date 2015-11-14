@@ -14,15 +14,12 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
      *
      * @return \Illuminate\Foundation\Application
      */
-    public function testcreateApplication()
+    public function createApplication()
     {
-        return true;
-        /*
         $app = require __DIR__.'/../bootstrap/app.php';
 
         $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
 
         return $app;
-        */
     }
 }
