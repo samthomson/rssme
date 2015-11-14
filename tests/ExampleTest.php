@@ -13,7 +13,7 @@ class ExampleTest extends TestCase
      */
     public function testBasicExample()
     {
-        $this->visit('/')
+        $this->visit('http://rssme.dev')
              ->see('RSS');
     }
 
