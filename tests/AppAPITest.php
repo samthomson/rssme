@@ -23,7 +23,6 @@ class AppAPITest extends TestCase
 
         /*$this->visit('/app/user/feedsandcategories')
              ->seeJson();*/
-*/
         $this->assertEquals(true, true);
     }
 }
