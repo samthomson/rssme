@@ -13,10 +13,8 @@ class ExampleTest extends TestCase
      */
     public function testBasicExample()
     {
-        $this->assertEquals(true, true);
-        /*
         $this->visit('/')
-             ->see('RSS');*/
+             ->see('RSS');
     }
 
 }
