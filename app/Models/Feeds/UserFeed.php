@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Feeds;
+namespace App\Models\Feeds;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,7 +11,7 @@ class UserFeed extends Model
 
     public function feed()
     {
-    	return $this->hasOne('App\Feeds\Feed', 'id', 'feed_id');
+    	return $this->hasOne('App\Models\Feeds\Feed', 'id', 'feed_id');
     	//return $this->belongsTo('App\Feeds\Feed', 'feed_id', 'id');
     }
 }

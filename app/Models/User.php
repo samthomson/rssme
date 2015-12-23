@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
@@ -35,13 +35,13 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     public function feeds()
     {
-        return $this->belongsToMany('App\Feeds\Feed');
+        return $this->belongsToMany('App\Models\Feeds\Feed');
     }
     public function userFeeds(){
-        return $this->hasMany('App\Feeds\UserFeed');
+        return $this->hasMany('App\Models\Feeds\UserFeed');
     }
     public function feedItems()
     {
-        return $this->hasManyThrough('App\Feeds\FeedItem', 'App\Feeds\UserFeed');
+        return $this->hasManyThrough('App\Models\Feeds\FeedItem', 'App\Models\Feeds\UserFeed');
     }
 }

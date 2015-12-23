@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 #use Illuminate\Http\Request;
 
-use App\Feeds\Feed;
-use App\Feeds\UserFeed;
-use App\Feeds\FeedItem;
+use App\Models\Feeds\Feed;
+use App\Models\Feeds\UserFeed;
+use App\Models\Feeds\FeedItem;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;

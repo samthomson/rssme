@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Auto;
+namespace App\Models\Auto;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
