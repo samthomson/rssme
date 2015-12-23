@@ -3,7 +3,7 @@
 namespace App\Library;
 
 
-use App\Feeds\FeedItem;
+use App\Models\Feeds\FeedItem;
 
 use Carbon\Carbon;
 use DOMDocument;

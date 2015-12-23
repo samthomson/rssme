@@ -18,7 +18,7 @@ use Auth;
 use Carbon\Carbon;
 use DB;
 use App\Library\Helper;
-use App\Auto\Task;
+use App\Models\Auto\Task;
 
 use Intervention\Image\Facades\Image;
 
