@@ -106,9 +106,11 @@ class Feeds extends Controller
             $iFeedId = $oFeed->id;
         }
 
+        $aoCategories = Auth::user()->userCategories;
+
         $oUserFeed = new UserFeed;
         $oUserFeed->feed_id = $iFeedId;
-        $oUserFeed->user_id = Auth::id();
+        $oUserFeed->category_id = $aoCategories[0]->id;
         $oUserFeed->name = $sFeedName;
         $oUserFeed->colour = Helper::sRandomUserFeedColour();
         $oUserFeed->save();
@@ -169,11 +171,16 @@ class Feeds extends Controller
     {
         \DB::enableQueryLog();
 
-        $oQuery = DB::table('feed_user')
+        $oQuery = DB::table('categories')
+            ->join('feed_user', function($join)
+            {
+                $join->on('categories.id', '=', 'feed_user.category_id')
+                    ->where('categories.user_id', '=', Auth::id());
+            })
             ->join('feeditems', function($join)
             {
-                $join->on('feed_user.feed_id', '=', 'feeditems.feed_id')
-                    ->where('feed_user.user_id', '=', Auth::id());
+                $join->on('feed_user.feed_id', '=', 'feeditems.feed_id')/*
+                    ->where('feed_user.feed_id', '=', 'feeditems.id')*/;
 
                 if(Request::has('feed')){
                     $join->where("feeditems.feed_id", "=", Request::get('feed'));
@@ -181,7 +188,7 @@ class Feeds extends Controller
             })
             ->join('feeds', "feeds.id", "=", "feed_user.feed_id");
         $oQuery->orderBy('feeditems.pubDate', 'desc')
-            ->select(['feeditems.url as url', 'feeditems.title as title', 'feeds.url as feedurl', 'feeds.id as feed_id', 'feeditems.pubDate as date', 'feed_user.name as name', 'feeditems.thumb as thumb', 'feeds.thumb as feedthumb', 'feed_user.colour as feed_colour']);
+            ->select(['feeditems.url as url', 'feeditems.title as title', 'feeds.url as feedurl', 'feeds.id as feed_id', 'feeditems.pubDate as date', 'feed_user.name as name', 'feeditems.thumb as thumb', 'feeds.thumb as feedthumb', 'feed_user.colour as feed_colour', 'categories.id as cat_id']);
 
 
 
@@ -194,12 +201,14 @@ class Feeds extends Controller
         //$maFeedItems = $oQuery->skip(($iPage * $iPerPage)-$iPerPage)->take($iPerPage)->get();
         $maFeedItems = $oQuery->get();
 
+        #print_r($maFeedItems);die();
+
         $iTotalItems = count($maFeedItems);
         $iTotalPages = ceil($iTotalItems / $iPerPage);
 
         $maFeedItems = array_slice($maFeedItems, ($iPage * $iPerPage)-$iPerPage, $iPerPage);
 
-        //print_r(DB::getQueryLog());
+        #print_r(DB::getQueryLog());
 
 
         $oaFeedItems = [];
@@ -221,6 +230,7 @@ class Feeds extends Controller
                 "title" => $oFeedItem->title,
                 "feedurl" => $oFeedItem->feedurl,
                 "feed_id" => $oFeedItem->feed_id,
+                "category_id" => $oFeedItem->cat_id,
                 "date" => $sDate,
                 "name" => $oFeedItem->name,
                 "thumb" => $oFeedItem->thumb !== '' ? /*'http://rssme.samt.st'.*/$oFeedItem->thumb : $oFeedItem->feedthumb,
@@ -233,18 +243,39 @@ class Feeds extends Controller
             $oQuery->where("feeds.id", "=", Request::get('feed'));
         }
 
-        $oaFeeds = Auth::user()->userFeeds;
-        $oaFeeds->load('feed');
+        $oUser = Auth::user();
+        $oUser->load('userCategories.userFeeds.feed');
+
+        #$oaFeeds = Auth::user();->userCategories()->userFeeds;
+        //$oaFeeds = $oUser->userCategories->userFeeds->feed;
+
+        #foreach()
+        // what to return
+        // categories / feed structure
+        // array of feed items
 
         $oData = [
             'iAvailablePages' => $iTotalPages,
             'iPerPage' => $iPerPage
         ];
 
+        $oaCategoryFeeds = [];
+
+        foreach ($oUser->userCategories as $oCategory) {
+            // get feeds in category
+            $aoFeeds = [];
+            foreach($oCategory->userFeeds as $oUserFeed)
+            {
+                array_push($aoFeeds, ["id" => $oUserFeed->id, "name" => $oUserFeed->name]);
+            }
+            // now add category with feeds
+            array_push($oaCategoryFeeds, ["category_id" => $oCategory->id, "category_name" => $oCategory->name, "feeds" => $aoFeeds]);
+        }
+
 
         return response()->json([
             'jsonFeedItems' => $oaFeedItems,
-            'jsonFeeds' => $oaFeeds,
+            'jsonCategoryFeeds' => $oaCategoryFeeds,
             'data' => $oData
         ]);
 

@@ -94,6 +94,13 @@ class CustomAuthController extends Controller
 
                 $oUser->save();
 
+
+                // create their default category
+                $oCategory = new Category;
+                $oCategory->user_id = $oUser->id;
+                $oCategory->name = "all";
+                $oCategory->save();
+
                 Auth::attempt(['email' => $oUser->email, 'password' => $oUser->password], true);
 
                 $iResponseCode = 200;
